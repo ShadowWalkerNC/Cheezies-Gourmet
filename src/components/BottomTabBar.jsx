@@ -52,6 +52,7 @@ export default function BottomTabBar() {
             <Icon
               size={active ? 22 : 20}
               strokeWidth={active ? 2.2 : 1.8}
+              className="transition-all duration-200"
             />
             <span
               className="text-[10px] font-bold tracking-wider uppercase"
