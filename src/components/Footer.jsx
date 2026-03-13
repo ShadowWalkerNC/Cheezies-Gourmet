@@ -1,9 +1,23 @@
 export default function Footer() {
   return (
-    <footer className="bg-black border-t border-white/5 py-10 px-6 text-center">
-      <p className="text-[#f5c518] font-black text-2xl mb-1">Cheezies</p>
-      <p className="text-white/30 text-sm mb-4">Gourmet Grilled Creations · Akron, Ohio</p>
-      <p className="text-white/20 text-xs">
+    <footer
+      className="py-12 px-6 text-center"
+      style={{ background: "#0e0803", borderTop: "1px solid rgba(245,197,24,0.08)" }}
+    >
+      <p
+        className="font-black text-3xl mb-1"
+        style={{ fontFamily: "Georgia, serif", color: "#f5c518" }}
+      >
+        Cheezies
+      </p>
+      <p className="text-sm mb-1" style={{ color: "rgba(255,235,180,0.35)" }}>
+        Gourmet Grilled Creations · Akron, Ohio
+      </p>
+      <p className="text-sm mb-6" style={{ color: "rgba(255,235,180,0.25)" }}>
+        330-510-8875
+      </p>
+      <div className="w-16 h-px mx-auto mb-6" style={{ background: "rgba(245,197,24,0.15)" }} />
+      <p className="text-xs" style={{ color: "rgba(255,235,180,0.2)" }}>
         © {new Date().getFullYear()} Cheezies Food Truck. All rights reserved.
       </p>
     </footer>

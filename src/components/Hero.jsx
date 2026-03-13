@@ -2,69 +2,98 @@ import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0a0a]">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#1a1200] via-[#0a0a0a] to-[#0a0a0a]" />
+    <section
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      style={{ background: "linear-gradient(135deg, #2a1505 0%, #1c1008 50%, #0e0803 100%)" }}
+    >
+      {/* Warm texture overlay */}
+      <div
+        className="absolute inset-0 opacity-30"
+        style={{
+          backgroundImage: `radial-gradient(ellipse at 20% 50%, rgba(180,90,20,0.3) 0%, transparent 60%),
+                            radial-gradient(ellipse at 80% 20%, rgba(245,197,24,0.15) 0%, transparent 50%),
+                            radial-gradient(ellipse at 60% 80%, rgba(160,60,10,0.2) 0%, transparent 50%)`,
+        }}
+      />
 
-      {/* Decorative glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#f5c518]/5 blur-3xl pointer-events-none" />
+      {/* Grain texture */}
+      <div
+        className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
+          backgroundSize: "128px 128px",
+        }}
+      />
 
-      {/* Food truck image */}
-      <div className="absolute inset-0 opacity-10">
-        <img
-          src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/user_690e03ca6954e9eb9fa1a6ef/558419bfd_IMG_0804.png"
-          alt="Cheezies Food Truck"
-          className="w-full h-full object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/70 to-[#0a0a0a]/40" />
+      {/* Large decorative cheese emoji blur */}
+      <div className="absolute text-[22rem] opacity-[0.04] select-none pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 blur-sm">
+        🧀
       </div>
 
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto pt-24">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 1, ease: "easeOut" }}
         >
-          <p className="text-[#f5c518] text-sm font-bold tracking-[0.3em] uppercase mb-4">
-            Gourmet Grilled Creations
-          </p>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-8 text-xs font-bold tracking-[0.25em] uppercase"
+            style={{ background: "rgba(245,197,24,0.12)", border: "1px solid rgba(245,197,24,0.25)", color: "#f5c518" }}
+          >
+            ✦ Gourmet Grilled Creations · Akron, Ohio ✦
+          </motion.div>
 
-          <h1 className="text-7xl md:text-9xl font-black text-white mb-4 leading-none tracking-tight">
-            Chee<span className="text-[#f5c518]">zies</span>
+          <h1
+            className="text-7xl sm:text-8xl md:text-[10rem] font-black leading-none mb-6"
+            style={{
+              fontFamily: "Georgia, serif",
+              color: "#fff8e8",
+              textShadow: "0 0 80px rgba(245,197,24,0.2), 0 4px 32px rgba(0,0,0,0.8)",
+              letterSpacing: "-0.03em",
+            }}
+          >
+            Chee<span style={{ color: "#f5c518" }}>zies</span>
           </h1>
 
-          <p className="text-white/60 text-lg md:text-xl mb-2 tracking-wide">
-            Akron, Ohio
-          </p>
-
-          <p className="text-white/40 text-base md:text-lg mb-10 max-w-xl mx-auto">
-            Handcrafted gourmet grilled cheese sandwiches made fresh on our food truck.
-            Follow us on social media to find us today.
+          <p
+            className="text-lg md:text-xl mb-12 max-w-lg mx-auto leading-relaxed"
+            style={{ color: "rgba(255,235,180,0.55)" }}
+          >
+            Handcrafted gourmet grilled cheese sandwiches made fresh to order.
+            Follow us to find out where we're rolling next.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
               href="#menu"
-              className="px-8 py-4 rounded-full bg-[#f5c518] text-black font-bold text-base hover:bg-yellow-400 hover:scale-105 transition-all duration-200 shadow-lg shadow-yellow-500/20"
+              className="px-9 py-4 rounded-full font-bold text-base transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+              style={{ background: "#f5c518", color: "#1c1008", boxShadow: "0 8px 32px rgba(245,197,24,0.3)" }}
             >
-              View Our Menu
+              See Our Menu
             </a>
             <a
-              href="#contact"
-              className="px-8 py-4 rounded-full border border-white/20 text-white font-medium text-base hover:border-[#f5c518] hover:text-[#f5c518] transition-all duration-200"
+              href="#catering"
+              className="px-9 py-4 rounded-full font-semibold text-base transition-all duration-300 hover:scale-105"
+              style={{ border: "1.5px solid rgba(245,197,24,0.35)", color: "rgba(255,235,180,0.8)" }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = "#f5c518"; e.currentTarget.style.color = "#f5c518"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(245,197,24,0.35)"; e.currentTarget.style.color = "rgba(255,235,180,0.8)"; }}
             >
-              Find Us Today
+              Book Catering
             </a>
           </div>
         </motion.div>
 
-        {/* Scroll indicator */}
+        {/* Scroll cue */}
         <motion.div
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
+          className="mt-20 flex flex-col items-center gap-2"
+          animate={{ y: [0, 8, 0] }}
+          transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
         >
-          <div className="w-px h-16 bg-gradient-to-b from-[#f5c518]/50 to-transparent mx-auto" />
+          <p className="text-xs tracking-widest uppercase" style={{ color: "rgba(245,197,24,0.4)" }}>Scroll</p>
+          <div className="w-px h-10" style={{ background: "linear-gradient(to bottom, rgba(245,197,24,0.4), transparent)" }} />
         </motion.div>
       </div>
     </section>

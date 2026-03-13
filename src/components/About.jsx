@@ -1,59 +1,87 @@
 import { motion } from "framer-motion";
 
+const features = [
+  { icon: "🔥", title: "Made Fresh", desc: "Every sandwich is crafted to order, never sitting under a heat lamp." },
+  { icon: "🧀", title: "Premium Cheese", desc: "We source quality cheeses that melt beautifully and taste incredible." },
+  { icon: "🚚", title: "Always Moving", desc: "Follow our socials to find where we're parked near you today." },
+  { icon: "❤️", title: "Akron Proud", desc: "Born and raised in Akron, Ohio — serving our community with love." },
+];
+
 export default function About() {
   return (
-    <section id="about" className="py-24 px-6 bg-[#0a0a0a]">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-        
-        {/* Image side */}
+    <section
+      id="about"
+      className="py-28 px-6"
+      style={{ background: "linear-gradient(180deg, #0e0803 0%, #1a0e05 100%)" }}
+    >
+      <div className="max-w-6xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, x: -40 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="relative"
+          className="text-center mb-20"
         >
-          <div className="absolute -inset-4 rounded-3xl bg-[#f5c518]/10 blur-2xl" />
-          <img
-            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/user_690e03ca6954e9eb9fa1a6ef/73dfd6e87_IMG_0805.png"
-            alt="Cheezies Food Truck"
-            className="relative rounded-2xl w-full object-cover shadow-2xl border border-white/5"
-          />
+          <p className="text-xs font-bold tracking-[0.3em] uppercase mb-4" style={{ color: "#f5c518" }}>
+            Our Story
+          </p>
+          <h2
+            className="text-5xl md:text-6xl font-black mb-6 leading-tight"
+            style={{ fontFamily: "Georgia, serif", color: "#fff8e8" }}
+          >
+            More Than Just a<br />
+            <span style={{ color: "#f5c518" }}>Grilled Cheese</span>
+          </h2>
+          <p className="text-lg leading-relaxed max-w-2xl mx-auto" style={{ color: "rgba(255,235,180,0.5)" }}>
+            Cheezies started with one idea: take the most comforting food in the world and make it extraordinary.
+            We blend bold flavors, premium ingredients, and a whole lot of heart into every single sandwich.
+          </p>
         </motion.div>
 
-        {/* Text side */}
-        <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-        >
-          <p className="text-[#f5c518] text-xs font-bold tracking-[0.3em] uppercase mb-4">Our Story</p>
-          <h2 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
-            Gourmet Grilled<br />
-            <span className="text-[#f5c518]">Done Right</span>
-          </h2>
-          <p className="text-white/60 text-lg leading-relaxed mb-6">
-            Cheezies is Akron's premier gourmet grilled cheese food truck, serving up bold, 
-            creative sandwiches made with premium ingredients and a whole lot of cheese.
-          </p>
-          <p className="text-white/50 text-base leading-relaxed mb-8">
-            From classic comfort to adventurous flavors, every sandwich is crafted fresh to order.
-            Follow us on social media to catch us at our next location — we're always on the move!
-          </p>
+        {/* Feature grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {features.map((f, i) => (
+            <motion.div
+              key={f.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.6 }}
+              className="rounded-2xl p-7 text-center group cursor-default transition-all duration-300"
+              style={{
+                background: "rgba(255,200,60,0.04)",
+                border: "1px solid rgba(245,197,24,0.1)",
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = "rgba(245,197,24,0.07)";
+                e.currentTarget.style.borderColor = "rgba(245,197,24,0.25)";
+                e.currentTarget.style.transform = "translateY(-4px)";
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = "rgba(255,200,60,0.04)";
+                e.currentTarget.style.borderColor = "rgba(245,197,24,0.1)";
+                e.currentTarget.style.transform = "translateY(0)";
+              }}
+            >
+              <div className="text-4xl mb-4">{f.icon}</div>
+              <h3 className="font-bold text-lg mb-2" style={{ color: "#fff8e8" }}>{f.title}</h3>
+              <p className="text-sm leading-relaxed" style={{ color: "rgba(255,235,180,0.5)" }}>{f.desc}</p>
+            </motion.div>
+          ))}
+        </div>
 
-          <div className="grid grid-cols-2 gap-6">
-            {[
-              { value: "100%", label: "Fresh Ingredients" },
-              { value: "Made", label: "To Order" },
-              { value: "Akron", label: "Ohio Based" },
-              { value: "Gourmet", label: "Grilled Creations" },
-            ].map((stat) => (
-              <div key={stat.label} className="border border-white/10 rounded-xl p-4">
-                <div className="text-[#f5c518] text-xl font-black">{stat.value}</div>
-                <div className="text-white/50 text-sm mt-1">{stat.label}</div>
-              </div>
-            ))}
+        {/* Divider quote */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, delay: 0.3 }}
+          className="mt-20 text-center"
+        >
+          <div className="inline-block px-8 py-6 rounded-2xl" style={{ background: "rgba(245,197,24,0.06)", border: "1px solid rgba(245,197,24,0.12)" }}>
+            <p className="text-2xl md:text-3xl font-black italic" style={{ fontFamily: "Georgia, serif", color: "#f5c518" }}>
+              "Life's too short for bad grilled cheese."
+            </p>
           </div>
         </motion.div>
       </div>

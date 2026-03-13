@@ -1,0 +1,194 @@
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { base44 } from "@/api/base44Client";
+import { useToast } from "@/components/ui/use-toast";
+
+const packages = [
+  {
+    icon: "🎉",
+    name: "Party Pack",
+    size: "Up to 50 guests",
+    desc: "Perfect for birthday parties, family gatherings, or casual office lunches.",
+    includes: ["2-hour service window", "3 sandwich varieties", "Sides & drinks add-on available", "Setup & breakdown included"],
+  },
+  {
+    icon: "🏢",
+    name: "Corporate Melt",
+    size: "50–150 guests",
+    featured: true,
+    desc: "Fuel your team with something way better than boxed sandwiches. We bring the truck to you.",
+    includes: ["3-hour service window", "Full menu available", "Branded signage optional", "Invoice-friendly billing"],
+  },
+  {
+    icon: "💍",
+    name: "Grand Event",
+    size: "150+ guests",
+    desc: "Weddings, festivals, large corporate events — we scale up and show up.",
+    includes: ["Custom hours", "Custom menu collaboration", "Dedicated event coordinator", "Full logistics support"],
+  },
+];
+
+export default function Catering() {
+  const { toast } = useToast();
+  const [form, setForm] = useState({ name: "", email: "", phone: "", event_type: "", date: "", guests: "", message: "" });
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    await base44.integrations.Core.SendEmail({
+      to: "cheeziesgourmet@gmail.com",
+      subject: `Catering Inquiry from ${form.name}`,
+      body: `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nEvent Type: ${form.event_type}\nDate: ${form.date}\nGuests: ${form.guests}\n\nMessage:\n${form.message}`,
+    });
+    setSubmitting(false);
+    setForm({ name: "", email: "", phone: "", event_type: "", date: "", guests: "", message: "" });
+    toast({ title: "Inquiry Sent!", description: "We'll be in touch within 24 hours." });
+  };
+
+  const inputStyle = {
+    background: "rgba(255,200,60,0.05)",
+    border: "1px solid rgba(245,197,24,0.15)",
+    borderRadius: "12px",
+    color: "#fff8e8",
+    padding: "12px 16px",
+    width: "100%",
+    outline: "none",
+    fontSize: "15px",
+  };
+
+  return (
+    <section
+      id="catering"
+      className="py-28 px-6"
+      style={{ background: "linear-gradient(180deg, #221205 0%, #1a0e05 100%)" }}
+    >
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <p className="text-xs font-bold tracking-[0.3em] uppercase mb-4" style={{ color: "#f5c518" }}>
+            Bring Cheezies To You
+          </p>
+          <h2
+            className="text-5xl md:text-6xl font-black mb-5 leading-tight"
+            style={{ fontFamily: "Georgia, serif", color: "#fff8e8" }}
+          >
+            Catering &<br />
+            <span style={{ color: "#f5c518" }}>Private Events</span>
+          </h2>
+          <p className="text-lg max-w-2xl mx-auto leading-relaxed" style={{ color: "rgba(255,235,180,0.5)" }}>
+            From intimate backyard parties to large corporate events — we bring the grill, the cheese, and the good vibes right to your door.
+          </p>
+        </motion.div>
+
+        {/* Packages */}
+        <div className="grid md:grid-cols-3 gap-6 mb-20">
+          {packages.map((pkg, i) => (
+            <motion.div
+              key={pkg.name}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.12 }}
+              className="rounded-2xl p-7 flex flex-col relative"
+              style={{
+                background: pkg.featured ? "rgba(245,197,24,0.1)" : "rgba(255,200,60,0.04)",
+                border: pkg.featured ? "1.5px solid rgba(245,197,24,0.4)" : "1px solid rgba(245,197,24,0.1)",
+              }}
+            >
+              {pkg.featured && (
+                <div
+                  className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase"
+                  style={{ background: "#f5c518", color: "#1c1008" }}
+                >
+                  Most Popular
+                </div>
+              )}
+              <div className="text-3xl mb-3">{pkg.icon}</div>
+              <h3 className="text-xl font-black mb-1" style={{ color: "#fff8e8" }}>{pkg.name}</h3>
+              <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "#f5c518" }}>{pkg.size}</p>
+              <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(255,235,180,0.5)" }}>{pkg.desc}</p>
+              <ul className="space-y-2 mt-auto">
+                {pkg.includes.map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-sm" style={{ color: "rgba(255,235,180,0.65)" }}>
+                    <span style={{ color: "#f5c518" }}>✓</span> {item}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Inquiry form */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="rounded-3xl p-8 md:p-12"
+          style={{ background: "rgba(255,200,60,0.04)", border: "1px solid rgba(245,197,24,0.12)" }}
+        >
+          <div className="text-center mb-10">
+            <h3 className="text-3xl font-black mb-2" style={{ fontFamily: "Georgia, serif", color: "#fff8e8" }}>
+              Request a Quote
+            </h3>
+            <p className="text-sm" style={{ color: "rgba(255,235,180,0.45)" }}>
+              Fill out the form and we'll get back to you within 24 hours.
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-5">
+            <div>
+              <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>Your Name</label>
+              <input required style={inputStyle} placeholder="Jane Smith" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
+            </div>
+            <div>
+              <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>Email</label>
+              <input required type="email" style={inputStyle} placeholder="jane@example.com" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
+            </div>
+            <div>
+              <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>Phone</label>
+              <input style={inputStyle} placeholder="330-000-0000" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} />
+            </div>
+            <div>
+              <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>Event Type</label>
+              <input required style={inputStyle} placeholder="Birthday party, corporate lunch..." value={form.event_type} onChange={e => setForm({ ...form, event_type: e.target.value })} />
+            </div>
+            <div>
+              <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>Event Date</label>
+              <input type="date" required style={inputStyle} value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} />
+            </div>
+            <div>
+              <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>Estimated Guests</label>
+              <input style={inputStyle} placeholder="e.g. 75" value={form.guests} onChange={e => setForm({ ...form, guests: e.target.value })} />
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>Additional Details</label>
+              <textarea
+                rows={4}
+                style={{ ...inputStyle, resize: "vertical" }}
+                placeholder="Tell us about your event, location, dietary needs, etc."
+                value={form.message}
+                onChange={e => setForm({ ...form, message: e.target.value })}
+              />
+            </div>
+            <div className="md:col-span-2 text-center">
+              <button
+                type="submit"
+                disabled={submitting}
+                className="px-10 py-4 rounded-full font-bold text-base transition-all duration-300 hover:scale-105 disabled:opacity-60"
+                style={{ background: "#f5c518", color: "#1c1008", boxShadow: "0 8px 32px rgba(245,197,24,0.25)" }}
+              >
+                {submitting ? "Sending..." : "Send Catering Inquiry"}
+              </button>
+            </div>
+          </form>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
