@@ -206,48 +206,88 @@ export default function Menu() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="space-y-4"
+          className={section.items.some(i => i.img) ? "grid sm:grid-cols-2 gap-5" : "space-y-4"}
         >
           {section.items.map((item, i) => (
-            <motion.div
-              key={item.name}
-              initial={{ opacity: 0, x: -12 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.06 }}
-              className="flex items-start justify-between gap-6 p-5 rounded-2xl transition-all duration-300"
-              style={{ background: "rgba(255,200,60,0.04)", border: "1px solid rgba(245,197,24,0.1)" }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = "rgba(245,197,24,0.08)";
-                e.currentTarget.style.borderColor = "rgba(245,197,24,0.25)";
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = "rgba(255,200,60,0.04)";
-                e.currentTarget.style.borderColor = "rgba(245,197,24,0.1)";
-              }}
-            >
-              <div className="flex-1">
-                <div className="flex flex-wrap items-center gap-2 mb-1">
-                  <h4 className="font-bold text-base" style={{ color: "#fff8e8" }}>{item.name}</h4>
+            item.img ? (
+              <motion.div
+                key={item.name}
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: i * 0.06 }}
+                className="rounded-2xl overflow-hidden transition-all duration-300 group cursor-default"
+                style={{ background: "rgba(255,200,60,0.04)", border: "1px solid rgba(245,197,24,0.1)" }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.borderColor = "rgba(245,197,24,0.3)";
+                  e.currentTarget.style.transform = "translateY(-3px)";
+                  e.currentTarget.style.boxShadow = "0 12px 40px rgba(0,0,0,0.5)";
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.borderColor = "rgba(245,197,24,0.1)";
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={item.img}
+                    alt={item.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(20,10,0,0.75) 0%, transparent 60%)" }} />
                   {item.tag && (
-                    <span
-                      className="text-xs font-bold px-2 py-0.5 rounded-full"
-                      style={{ background: "#f5c518", color: "#1c1008" }}
-                    >
+                    <span className="absolute top-3 left-3 text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "#f5c518", color: "#1c1008" }}>
                       {item.tag}
                     </span>
                   )}
-                </div>
-                <p className="text-sm leading-relaxed" style={{ color: "rgba(255,225,140,0.7)" }}>{item.desc}</p>
-              </div>
-              {item.price && (
-                <div className="text-right shrink-0">
-                  <span className="text-lg font-black block" style={{ color: "#f5c518" }}>{item.price}</span>
-                  {item.priceNote && (
-                    <span className="text-xs" style={{ color: "rgba(255,220,100,0.5)" }}>{item.priceNote}</span>
+                  {item.price && (
+                    <span className="absolute top-3 right-3 font-black text-base px-3 py-1 rounded-full" style={{ background: "#f5c518", color: "#1c1008" }}>
+                      {item.price}
+                    </span>
                   )}
                 </div>
-              )}
-            </motion.div>
+                <div className="p-5">
+                  <h4 className="font-bold text-base mb-1.5" style={{ color: "#fff8e8" }}>{item.name}</h4>
+                  <p className="text-sm leading-relaxed" style={{ color: "rgba(255,225,140,0.7)" }}>{item.desc}</p>
+                  {item.priceNote && <p className="text-xs mt-1" style={{ color: "rgba(255,220,100,0.5)" }}>{item.priceNote}</p>}
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key={item.name}
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.06 }}
+                className="flex items-start justify-between gap-6 p-5 rounded-2xl transition-all duration-300"
+                style={{ background: "rgba(255,200,60,0.04)", border: "1px solid rgba(245,197,24,0.1)" }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.background = "rgba(245,197,24,0.08)";
+                  e.currentTarget.style.borderColor = "rgba(245,197,24,0.25)";
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.background = "rgba(255,200,60,0.04)";
+                  e.currentTarget.style.borderColor = "rgba(245,197,24,0.1)";
+                }}
+              >
+                <div className="flex-1">
+                  <div className="flex flex-wrap items-center gap-2 mb-1">
+                    <h4 className="font-bold text-base" style={{ color: "#fff8e8" }}>{item.name}</h4>
+                    {item.tag && (
+                      <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "#f5c518", color: "#1c1008" }}>
+                        {item.tag}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-sm leading-relaxed" style={{ color: "rgba(255,225,140,0.7)" }}>{item.desc}</p>
+                </div>
+                {item.price && (
+                  <div className="text-right shrink-0">
+                    <span className="text-lg font-black block" style={{ color: "#f5c518" }}>{item.price}</span>
+                    {item.priceNote && <span className="text-xs" style={{ color: "rgba(255,220,100,0.5)" }}>{item.priceNote}</span>}
+                  </div>
+                )}
+              </motion.div>
+            )
           ))}
         </motion.div>
 
