@@ -10,6 +10,8 @@ export default function MenuPage() {
         <Menu />
       </div>
       <Footer />
+      {/* Space for mobile bottom tab bar */}
+      <div className="md:hidden" style={{ height: "var(--tab-bar-h)" }} />
     </div>
   );
 }
