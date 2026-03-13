@@ -1,6 +1,5 @@
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
-import { useEffect, useState } from "framer-motion";
-import { useEffect as useEff, useState as useSt } from "react";
+import { useEffect, useState } from "react";
 
 // Simple looping pull-apart using motion values
 export default function GrilledCheesePullApart() {
