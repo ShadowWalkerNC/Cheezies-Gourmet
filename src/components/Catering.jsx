@@ -3,6 +3,7 @@ import { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { useToast } from "@/components/ui/use-toast";
 import { ChevronDown } from "lucide-react";
+import BottomSheet from "./BottomSheet";
 
 const packages = [
   {
@@ -62,39 +63,51 @@ const inputStyle = {
   WebkitAppearance: "none",
 };
 
-function NativeSelect({ label, value, onChange, options, placeholder, required }) {
+function SheetSelect({ label, value, onChange, options, placeholder, required }) {
+  const [open, setOpen] = useState(false);
   return (
     <div>
       <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>
         {label}
       </label>
-      <div className="relative">
-        <select
-          required={required}
-          value={value}
-          onChange={e => onChange(e.target.value)}
-          style={{
-            ...inputStyle,
-            paddingRight: "40px",
-            cursor: "pointer",
-            color: value ? "#fff8e8" : "rgba(255,235,180,0.35)",
-          }}
-        >
-          <option value="" disabled style={{ background: "#1c1008", color: "rgba(255,235,180,0.5)" }}>
-            {placeholder}
-          </option>
-          {options.map(opt => (
-            <option key={opt} value={opt} style={{ background: "#1c1008", color: "#fff8e8" }}>
-              {opt}
-            </option>
-          ))}
-        </select>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="w-full flex items-center justify-between select-none active:opacity-70 transition-opacity"
+        style={{
+          ...inputStyle,
+          paddingRight: "40px",
+          cursor: "pointer",
+          color: value ? "#fff8e8" : "rgba(255,235,180,0.35)",
+          textAlign: "left",
+          position: "relative",
+          WebkitTapHighlightColor: "transparent",
+        }}
+      >
+        <span>{value || placeholder}</span>
         <ChevronDown
           size={16}
-          className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2"
-          style={{ color: "rgba(245,197,24,0.5)" }}
+          style={{ color: "rgba(245,197,24,0.5)", position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)" }}
         />
-      </div>
+      </button>
+      {/* Hidden native input for form validation */}
+      {required && (
+        <input
+          tabIndex={-1}
+          required
+          value={value}
+          onChange={() => {}}
+          style={{ position: "absolute", opacity: 0, height: 0, width: 0, pointerEvents: "none" }}
+        />
+      )}
+      <BottomSheet
+        open={open}
+        onClose={() => setOpen(false)}
+        title={label}
+        options={options}
+        value={value}
+        onChange={onChange}
+      />
     </div>
   );
 }
@@ -234,7 +247,7 @@ export default function Catering() {
               />
             </div>
 
-            <NativeSelect
+            <SheetSelect
               label="Event Type"
               value={form.event_type}
               onChange={val => setForm({ ...form, event_type: val })}
@@ -254,7 +267,7 @@ export default function Catering() {
               />
             </div>
 
-            <NativeSelect
+            <SheetSelect
               label="Estimated Guests"
               value={form.guests}
               onChange={val => setForm({ ...form, guests: val })}
