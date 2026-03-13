@@ -2,11 +2,11 @@ export default function Footer() {
   return (
     <footer
       className="py-12 px-6 text-center"
-      style={{ background: "#0e0803", borderTop: "1px solid rgba(245,197,24,0.08)" }}
+      style={{ background: "#fdf3d8", borderTop: "1px solid rgba(180,120,0,0.12)" }}
     >
       <p
         className="font-black text-3xl mb-1"
-        style={{ fontFamily: "Georgia, serif", color: "#f5c518" }}
+        style={{ fontFamily: "Georgia, serif", color: "#c9940a" }}
       >
         Cheezies
       </p>
