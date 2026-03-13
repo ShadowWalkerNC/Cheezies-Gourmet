@@ -134,7 +134,7 @@ export default function Catering() {
     <section
       id="catering"
       className="py-28 px-6"
-      style={{ background: "linear-gradient(180deg, #221205 0%, #1a0e05 100%)" }}
+      style={{ background: "linear-gradient(180deg, #2b1a00 0%, #1e1200 100%)" }}
     >
       <div className="max-w-6xl mx-auto">
         {/* Header */}
@@ -154,7 +154,7 @@ export default function Catering() {
             Catering &<br />
             <span style={{ color: "#f5c518" }}>Private Events</span>
           </h2>
-          <p className="text-lg max-w-2xl mx-auto leading-relaxed" style={{ color: "rgba(255,235,180,0.5)" }}>
+          <p className="text-lg max-w-2xl mx-auto leading-relaxed" style={{ color: "rgba(255,220,120,0.85)" }}>
             From intimate backyard parties to large corporate events — we bring the grill, the cheese, and the good vibes right to your door.
           </p>
         </motion.div>

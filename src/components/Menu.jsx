@@ -44,7 +44,7 @@ export default function Menu() {
     <section
       id="menu"
       className="py-28 px-6"
-      style={{ background: "linear-gradient(180deg, #1a0e05 0%, #221205 100%)" }}
+      style={{ background: "linear-gradient(180deg, #231500 0%, #1e1200 100%)" }}
     >
       <div className="max-w-5xl mx-auto">
         {/* Header */}
