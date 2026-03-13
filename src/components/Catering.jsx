@@ -144,7 +144,7 @@ export default function Catering() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <p className="text-xs font-bold tracking-[0.3em] uppercase mb-4" style={{ color: "#f5c518" }}>
+          <p className="text-xs font-bold tracking-[0.3em] uppercase mb-4" style={{ color: "#c9940a" }}>
             Bring Cheezies To You
           </p>
           <h2
@@ -154,7 +154,7 @@ export default function Catering() {
             Catering &<br />
             <span style={{ color: "#c9940a" }}>Private Events</span>
           </h2>
-          <p className="text-lg max-w-2xl mx-auto leading-relaxed" style={{ color: "rgba(255,220,120,0.85)" }}>
+          <p className="text-lg max-w-2xl mx-auto leading-relaxed" style={{ color: "rgba(80,45,0,0.65)" }}>
             From intimate backyard parties to large corporate events — we bring the grill, the cheese, and the good vibes right to your door.
           </p>
         </motion.div>
