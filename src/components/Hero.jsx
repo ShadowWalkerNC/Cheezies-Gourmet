@@ -66,6 +66,11 @@ export default function Hero() {
             Follow us to find out where we're rolling next.
           </p>
 
+          {/* Grilled cheese pull-apart animation */}
+          <div className="flex justify-center mb-10 mt-2">
+            <GrilledCheesePullApart />
+          </div>
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
               href="https://cheeziesgourmetohio.square.site/?location_id=LXWMCZH8PDQSN&fulfillment=PICKUP"
