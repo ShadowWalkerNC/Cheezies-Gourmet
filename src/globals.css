@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── iOS / Mobile baseline ─────────────────────────────── */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ─── CSS Design Tokens ──────────────────────────────────── */
+:root {
+  --color-bg:        #1c1008;
+  --color-bg-deep:   #0e0803;
+  --color-bg-mid:    #1a0e05;
+  --color-bg-warm:   #221205;
+  --color-bg-warmer: #2a1505;
+  --color-gold:      #f5c518;
+  --color-cream:     #fff8e8;
+  --color-text-muted: rgba(255,235,180,0.5);
+  --color-border:    rgba(245,197,24,0.12);
+
+  /* Safe-area helpers */
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left:   env(safe-area-inset-left, 0px);
+  --safe-right:  env(safe-area-inset-right, 0px);
+
+  /* Bottom tab bar height + safe area */
+  --tab-bar-h: calc(60px + var(--safe-bottom));
+}
+
+/* Dark mode overrides (if system prefers) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
+
+/* ─── Scrollbar cosmetics ────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(245,197,24,0.2); border-radius: 2px; }
+
+/* ─── Bottom tab bar safe-area padding ──────────────────── */
+.tab-safe-bottom {
+  padding-bottom: var(--safe-bottom);
+}
+
+/* ─── Tap highlight suppression ─────────────────────────── */
+a, button {
+  -webkit-tap-highlight-color: transparent;
+}
