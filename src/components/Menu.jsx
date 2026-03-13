@@ -145,7 +145,7 @@ export default function Menu() {
     <section
       id="menu"
       className="py-28 px-6"
-      style={{ background: "linear-gradient(180deg, #231500 0%, #1e1200 100%)" }}
+      style={{ background: "linear-gradient(180deg, #faecc4 0%, #fdf3d8 100%)" }}
     >
       <div className="max-w-4xl mx-auto">
         {/* Header */}
@@ -160,16 +160,16 @@ export default function Menu() {
           </p>
           <h2
             className="text-5xl md:text-6xl font-black mb-4"
-            style={{ fontFamily: "Georgia, serif", color: "#fff8e8" }}
+            style={{ fontFamily: "Georgia, serif", color: "#3d2200" }}
           >
             Our Menu
           </h2>
-          <div className="w-16 h-1 mx-auto rounded-full mb-5" style={{ background: "#f5c518" }} />
+          <div className="w-16 h-1 mx-auto rounded-full mb-5" style={{ background: "#c9940a" }} />
 
           {/* Freshness Guarantee */}
           <div
             className="inline-block px-5 py-3 rounded-2xl text-sm max-w-xl mx-auto"
-            style={{ background: "rgba(245,197,24,0.08)", border: "1px solid rgba(245,197,24,0.2)", color: "rgba(255,225,120,0.9)" }}
+            style={{ background: "rgba(201,148,10,0.1)", border: "1px solid rgba(180,120,0,0.2)", color: "rgba(80,45,0,0.85)" }}
           >
             ✨ <strong>Freshness Guarantee:</strong> Our Prime Rib beef is ground fresh and pressed every morning. Our Bacon Mac is crafted from scratch daily. <em>When we're out, we're out!</em>
           </div>
@@ -184,8 +184,8 @@ export default function Menu() {
               className="px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300"
               style={
                 activeTab === i
-                  ? { background: "#f5c518", color: "#1c1008" }
-                  : { background: "rgba(245,197,24,0.07)", border: "1px solid rgba(245,197,24,0.18)", color: "rgba(255,235,180,0.7)" }
+                  ? { background: "#c9940a", color: "#fff8e8" }
+                  : { background: "rgba(255,255,255,0.7)", border: "1px solid rgba(180,120,0,0.2)", color: "rgba(80,45,0,0.65)" }
               }
             >
               {s.icon} {s.title}
@@ -195,7 +195,7 @@ export default function Menu() {
 
         {/* Section note */}
         {section.note && (
-          <p className="text-center text-sm mb-8 italic" style={{ color: "rgba(255,220,100,0.65)" }}>
+          <p className="text-center text-sm mb-8 italic" style={{ color: "rgba(80,45,0,0.55)" }}>
             {section.note}
           </p>
         )}
@@ -216,16 +216,16 @@ export default function Menu() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: i * 0.06 }}
                 className="rounded-2xl overflow-hidden transition-all duration-300 group cursor-default"
-                style={{ background: "rgba(255,200,60,0.04)", border: "1px solid rgba(245,197,24,0.1)" }}
+                style={{ background: "#ffffff", border: "1px solid rgba(180,120,0,0.15)", boxShadow: "0 2px 12px rgba(180,120,0,0.06)" }}
                 onMouseEnter={e => {
-                  e.currentTarget.style.borderColor = "rgba(245,197,24,0.3)";
+                  e.currentTarget.style.borderColor = "rgba(180,120,0,0.35)";
                   e.currentTarget.style.transform = "translateY(-3px)";
-                  e.currentTarget.style.boxShadow = "0 12px 40px rgba(0,0,0,0.5)";
+                  e.currentTarget.style.boxShadow = "0 12px 40px rgba(180,120,0,0.12)";
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = "rgba(245,197,24,0.1)";
+                  e.currentTarget.style.borderColor = "rgba(180,120,0,0.15)";
                   e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.boxShadow = "none";
+                  e.currentTarget.style.boxShadow = "0 2px 12px rgba(180,120,0,0.06)";
                 }}
               >
                 <div className="relative h-48 overflow-hidden">
@@ -234,22 +234,22 @@ export default function Menu() {
                     alt={item.name}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(20,10,0,0.75) 0%, transparent 60%)" }} />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(60,30,0,0.55) 0%, transparent 60%)" }} />
                   {item.tag && (
-                    <span className="absolute top-3 left-3 text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "#f5c518", color: "#1c1008" }}>
+                    <span className="absolute top-3 left-3 text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "#c9940a", color: "#fff8e8" }}>
                       {item.tag}
                     </span>
                   )}
                   {item.price && (
-                    <span className="absolute top-3 right-3 font-black text-base px-3 py-1 rounded-full" style={{ background: "#f5c518", color: "#1c1008" }}>
+                    <span className="absolute top-3 right-3 font-black text-base px-3 py-1 rounded-full" style={{ background: "#c9940a", color: "#fff8e8" }}>
                       {item.price}
                     </span>
                   )}
                 </div>
                 <div className="p-5">
-                  <h4 className="font-bold text-base mb-1.5" style={{ color: "#fff8e8" }}>{item.name}</h4>
-                  <p className="text-sm leading-relaxed" style={{ color: "rgba(255,225,140,0.7)" }}>{item.desc}</p>
-                  {item.priceNote && <p className="text-xs mt-1" style={{ color: "rgba(255,220,100,0.5)" }}>{item.priceNote}</p>}
+                  <h4 className="font-bold text-base mb-1.5" style={{ color: "#3d2200" }}>{item.name}</h4>
+                  <p className="text-sm leading-relaxed" style={{ color: "rgba(80,45,0,0.65)" }}>{item.desc}</p>
+                  {item.priceNote && <p className="text-xs mt-1" style={{ color: "rgba(80,45,0,0.45)" }}>{item.priceNote}</p>}
                 </div>
               </motion.div>
             ) : (
@@ -259,31 +259,31 @@ export default function Menu() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.06 }}
                 className="flex items-start justify-between gap-6 p-5 rounded-2xl transition-all duration-300"
-                style={{ background: "rgba(255,200,60,0.04)", border: "1px solid rgba(245,197,24,0.1)" }}
+                style={{ background: "#ffffff", border: "1px solid rgba(180,120,0,0.15)", boxShadow: "0 1px 8px rgba(180,120,0,0.05)" }}
                 onMouseEnter={e => {
-                  e.currentTarget.style.background = "rgba(245,197,24,0.08)";
-                  e.currentTarget.style.borderColor = "rgba(245,197,24,0.25)";
+                  e.currentTarget.style.background = "#fffbf0";
+                  e.currentTarget.style.borderColor = "rgba(180,120,0,0.3)";
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.background = "rgba(255,200,60,0.04)";
-                  e.currentTarget.style.borderColor = "rgba(245,197,24,0.1)";
+                  e.currentTarget.style.background = "#ffffff";
+                  e.currentTarget.style.borderColor = "rgba(180,120,0,0.15)";
                 }}
               >
                 <div className="flex-1">
                   <div className="flex flex-wrap items-center gap-2 mb-1">
-                    <h4 className="font-bold text-base" style={{ color: "#fff8e8" }}>{item.name}</h4>
+                    <h4 className="font-bold text-base" style={{ color: "#3d2200" }}>{item.name}</h4>
                     {item.tag && (
-                      <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "#f5c518", color: "#1c1008" }}>
+                      <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "#c9940a", color: "#fff8e8" }}>
                         {item.tag}
                       </span>
                     )}
                   </div>
-                  <p className="text-sm leading-relaxed" style={{ color: "rgba(255,225,140,0.7)" }}>{item.desc}</p>
+                  <p className="text-sm leading-relaxed" style={{ color: "rgba(80,45,0,0.65)" }}>{item.desc}</p>
                 </div>
                 {item.price && (
                   <div className="text-right shrink-0">
-                    <span className="text-lg font-black block" style={{ color: "#f5c518" }}>{item.price}</span>
-                    {item.priceNote && <span className="text-xs" style={{ color: "rgba(255,220,100,0.5)" }}>{item.priceNote}</span>}
+                    <span className="text-lg font-black block" style={{ color: "#c9940a" }}>{item.price}</span>
+                    {item.priceNote && <span className="text-xs" style={{ color: "rgba(80,45,0,0.45)" }}>{item.priceNote}</span>}
                   </div>
                 )}
               </motion.div>
@@ -291,7 +291,7 @@ export default function Menu() {
           ))}
         </motion.div>
 
-        <p className="text-center text-xs mt-10" style={{ color: "rgba(255,235,180,0.25)" }}>
+        <p className="text-center text-xs mt-10" style={{ color: "rgba(80,45,0,0.35)" }}>
           * Prices and availability may vary. Follow us on social media for daily specials.
         </p>
       </div>
