@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { useToast } from "@/components/ui/use-toast";
+import { ChevronDown } from "lucide-react";
 
 const packages = [
   {
@@ -28,6 +29,76 @@ const packages = [
   },
 ];
 
+const EVENT_TYPES = [
+  "Birthday Party",
+  "Corporate Lunch",
+  "Wedding",
+  "Festival / Outdoor Event",
+  "School / Campus Event",
+  "Office Catering",
+  "Private Party",
+  "Other",
+];
+
+const GUEST_RANGES = [
+  "Under 25",
+  "25–50",
+  "50–100",
+  "100–150",
+  "150–300",
+  "300+",
+];
+
+const inputStyle = {
+  background: "rgba(255,200,60,0.05)",
+  border: "1px solid rgba(245,197,24,0.15)",
+  borderRadius: "12px",
+  color: "#fff8e8",
+  padding: "12px 16px",
+  width: "100%",
+  outline: "none",
+  fontSize: "15px",
+  appearance: "none",
+  WebkitAppearance: "none",
+};
+
+function NativeSelect({ label, value, onChange, options, placeholder, required }) {
+  return (
+    <div>
+      <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>
+        {label}
+      </label>
+      <div className="relative">
+        <select
+          required={required}
+          value={value}
+          onChange={e => onChange(e.target.value)}
+          style={{
+            ...inputStyle,
+            paddingRight: "40px",
+            cursor: "pointer",
+            color: value ? "#fff8e8" : "rgba(255,235,180,0.35)",
+          }}
+        >
+          <option value="" disabled style={{ background: "#1c1008", color: "rgba(255,235,180,0.5)" }}>
+            {placeholder}
+          </option>
+          {options.map(opt => (
+            <option key={opt} value={opt} style={{ background: "#1c1008", color: "#fff8e8" }}>
+              {opt}
+            </option>
+          ))}
+        </select>
+        <ChevronDown
+          size={16}
+          className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2"
+          style={{ color: "rgba(245,197,24,0.5)" }}
+        />
+      </div>
+    </div>
+  );
+}
+
 export default function Catering() {
   const { toast } = useToast();
   const [form, setForm] = useState({ name: "", email: "", phone: "", event_type: "", date: "", guests: "", message: "" });
@@ -44,17 +115,6 @@ export default function Catering() {
     setSubmitting(false);
     setForm({ name: "", email: "", phone: "", event_type: "", date: "", guests: "", message: "" });
     toast({ title: "Inquiry Sent!", description: "We'll be in touch within 24 hours." });
-  };
-
-  const inputStyle = {
-    background: "rgba(255,200,60,0.05)",
-    border: "1px solid rgba(245,197,24,0.15)",
-    borderRadius: "12px",
-    color: "#fff8e8",
-    padding: "12px 16px",
-    width: "100%",
-    outline: "none",
-    fontSize: "15px",
   };
 
   return (
@@ -144,28 +204,64 @@ export default function Catering() {
           <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-5">
             <div>
               <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>Your Name</label>
-              <input required style={inputStyle} placeholder="Jane Smith" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
+              <input
+                required
+                style={inputStyle}
+                placeholder="Jane Smith"
+                value={form.name}
+                onChange={e => setForm({ ...form, name: e.target.value })}
+              />
             </div>
             <div>
               <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>Email</label>
-              <input required type="email" style={inputStyle} placeholder="jane@example.com" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
+              <input
+                required
+                type="email"
+                style={inputStyle}
+                placeholder="jane@example.com"
+                value={form.email}
+                onChange={e => setForm({ ...form, email: e.target.value })}
+              />
             </div>
             <div>
               <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>Phone</label>
-              <input style={inputStyle} placeholder="330-000-0000" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} />
+              <input
+                type="tel"
+                style={inputStyle}
+                placeholder="330-000-0000"
+                value={form.phone}
+                onChange={e => setForm({ ...form, phone: e.target.value })}
+              />
             </div>
-            <div>
-              <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>Event Type</label>
-              <input required style={inputStyle} placeholder="Birthday party, corporate lunch..." value={form.event_type} onChange={e => setForm({ ...form, event_type: e.target.value })} />
-            </div>
+
+            <NativeSelect
+              label="Event Type"
+              value={form.event_type}
+              onChange={val => setForm({ ...form, event_type: val })}
+              options={EVENT_TYPES}
+              placeholder="Select event type…"
+              required
+            />
+
             <div>
               <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>Event Date</label>
-              <input type="date" required style={inputStyle} value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} />
+              <input
+                type="date"
+                required
+                style={inputStyle}
+                value={form.date}
+                onChange={e => setForm({ ...form, date: e.target.value })}
+              />
             </div>
-            <div>
-              <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>Estimated Guests</label>
-              <input style={inputStyle} placeholder="e.g. 75" value={form.guests} onChange={e => setForm({ ...form, guests: e.target.value })} />
-            </div>
+
+            <NativeSelect
+              label="Estimated Guests"
+              value={form.guests}
+              onChange={val => setForm({ ...form, guests: val })}
+              options={GUEST_RANGES}
+              placeholder="Select guest range…"
+            />
+
             <div className="md:col-span-2">
               <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>Additional Details</label>
               <textarea
@@ -180,10 +276,10 @@ export default function Catering() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="px-10 py-4 rounded-full font-bold text-base transition-all duration-300 hover:scale-105 disabled:opacity-60"
-                style={{ background: "#f5c518", color: "#1c1008", boxShadow: "0 8px 32px rgba(245,197,24,0.25)" }}
+                className="px-10 py-4 rounded-full font-bold text-base transition-all duration-300 hover:scale-105 disabled:opacity-60 select-none"
+                style={{ background: "#f5c518", color: "#1c1008", boxShadow: "0 8px 32px rgba(245,197,24,0.25)", WebkitTapHighlightColor: "transparent" }}
               >
-                {submitting ? "Sending..." : "Send Catering Inquiry"}
+                {submitting ? "Sending…" : "Send Catering Inquiry"}
               </button>
             </div>
           </form>
