@@ -28,10 +28,10 @@ export default function BottomTabBar() {
     <nav
       className="fixed bottom-0 left-0 right-0 z-50 md:hidden flex items-stretch"
       style={{
-        background: "rgba(14,8,3,0.97)",
+        background: "rgba(255,248,220,0.97)",
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
-        borderTop: "1px solid rgba(245,197,24,0.12)",
+        borderTop: "1px solid rgba(180,120,0,0.12)",
         paddingBottom: "var(--safe-bottom)",
       }}
     >
@@ -47,7 +47,7 @@ export default function BottomTabBar() {
             onClick={() => handleTab(path)}   // desktop fallback
             className="flex-1 flex flex-col items-center justify-center gap-1 py-3 relative select-none"
             style={{
-              color: active ? "#f5c518" : "rgba(255,235,180,0.4)",
+              color: active ? "#c9940a" : "rgba(80,45,0,0.45)",
               background: "none",
               border: "none",
               outline: "none",
@@ -77,7 +77,7 @@ export default function BottomTabBar() {
                   transform: "translateX(-50%)",
                   width: 28,
                   height: 3,
-                  background: "#f5c518",
+                  background: "#c9940a",
                   borderRadius: "3px 3px 0 0",
                 }}
               />
