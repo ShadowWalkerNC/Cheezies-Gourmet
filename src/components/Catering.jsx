@@ -152,7 +152,7 @@ export default function Catering() {
             style={{ fontFamily: "Georgia, serif", color: "#3d2200" }}
           >
             Catering &<br />
-            <span style={{ color: "#f5c518" }}>Private Events</span>
+            <span style={{ color: "#c9940a" }}>Private Events</span>
           </h2>
           <p className="text-lg max-w-2xl mx-auto leading-relaxed" style={{ color: "rgba(255,220,120,0.85)" }}>
             From intimate backyard parties to large corporate events — we bring the grill, the cheese, and the good vibes right to your door.
@@ -210,14 +210,14 @@ export default function Catering() {
             <h3 className="text-3xl font-black mb-2" style={{ fontFamily: "Georgia, serif", color: "#3d2200" }}>
               Request a Quote
             </h3>
-            <p className="text-sm" style={{ color: "rgba(255,235,180,0.45)" }}>
+            <p className="text-sm" style={{ color: "rgba(80,45,0,0.5)" }}>
               Fill out the form and we'll get back to you within 24 hours.
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-5">
             <div>
-              <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>Your Name</label>
+              <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(120,70,0,0.7)" }}>Your Name</label>
               <input
                 required
                 style={inputStyle}
@@ -227,7 +227,7 @@ export default function Catering() {
               />
             </div>
             <div>
-              <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>Email</label>
+              <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(120,70,0,0.7)" }}>Email</label>
               <input
                 required
                 type="email"
@@ -238,7 +238,7 @@ export default function Catering() {
               />
             </div>
             <div>
-              <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>Phone</label>
+              <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(120,70,0,0.7)" }}>Phone</label>
               <input
                 type="tel"
                 style={inputStyle}
@@ -258,7 +258,7 @@ export default function Catering() {
             />
 
             <div>
-              <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>Event Date</label>
+              <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(120,70,0,0.7)" }}>Event Date</label>
               <input
                 type="date"
                 required
@@ -277,7 +277,7 @@ export default function Catering() {
             />
 
             <div className="md:col-span-2">
-              <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>Additional Details</label>
+              <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(120,70,0,0.7)" }}>Additional Details</label>
               <textarea
                 rows={4}
                 style={{ ...inputStyle, resize: "vertical" }}
