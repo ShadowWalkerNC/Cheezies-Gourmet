@@ -14,15 +14,15 @@ body {
 
 /* ─── CSS Design Tokens ──────────────────────────────────── */
 :root {
-  --color-bg:        #1e1200;
-  --color-bg-deep:   #150d00;
-  --color-bg-mid:    #231500;
-  --color-bg-warm:   #2b1a00;
-  --color-bg-warmer: #321e00;
-  --color-gold:      #f5c518;
-  --color-cream:     #fff8e8;
-  --color-text-muted: rgba(255,220,100,0.75);
-  --color-border:    rgba(245,197,24,0.22);
+  --color-bg:        #fffbf0;
+  --color-bg-deep:   #fff8e8;
+  --color-bg-mid:    #fdf3d8;
+  --color-bg-warm:   #faecc4;
+  --color-bg-warmer: #f5e0a0;
+  --color-gold:      #c9940a;
+  --color-cream:     #3d2200;
+  --color-text-muted: rgba(80,45,0,0.6);
+  --color-border:    rgba(180,120,0,0.2);
 
   /* Safe-area helpers */
   --safe-top:    env(safe-area-inset-top, 0px);
