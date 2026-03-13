@@ -9,7 +9,7 @@ import Footer from "../components/Footer";
 
 export default function Home() {
   return (
-    <div className="min-h-screen font-sans" style={{ background: "#1c1008" }}>
+    <div className="min-h-screen font-sans" style={{ background: "var(--color-bg)" }}>
       <NavBar />
       <Hero />
       <About />
@@ -18,6 +18,8 @@ export default function Home() {
       <Newsletter />
       <Contact />
       <Footer />
+      {/* Space for mobile bottom tab bar */}
+      <div className="md:hidden" style={{ height: "var(--tab-bar-h)" }} />
     </div>
   );
 }
