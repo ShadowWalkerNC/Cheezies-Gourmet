@@ -6,12 +6,12 @@ const menuSections = [
     title: "Signature Grilled Cheese",
     icon: "🧀",
     items: [
-      { name: "The Classic", desc: "American cheese on toasted white bread, buttered to perfection", price: "$7" },
-      { name: "The Spicy Melt", desc: "Pepper jack, jalapeños, sriracha aioli on sourdough", price: "$9" },
-      { name: "The BBQ Bacon Melt", desc: "Smoked gouda, crispy bacon, caramelized onions, BBQ drizzle", price: "$10" },
-      { name: "The Southwest", desc: "Cheddar, roasted peppers, corn, chipotle spread", price: "$9" },
-      { name: "The Truffle Melt", desc: "Gruyère, mushrooms, truffle oil, fresh thyme", price: "$11" },
-      { name: "The Mac Attack", desc: "Creamy mac & cheese stuffed between two slices of Texas toast", price: "$10" },
+      { name: "The Classic", desc: "American cheese on toasted white bread, buttered to perfection", price: "$7", img: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b40a4e8804cd9d7b3d9198/7de281d32_generated_image.png" },
+      { name: "The Spicy Melt", desc: "Pepper jack, jalapeños, sriracha aioli on sourdough", price: "$9", img: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b40a4e8804cd9d7b3d9198/76e449e73_generated_image.png" },
+      { name: "The BBQ Bacon Melt", desc: "Smoked gouda, crispy bacon, caramelized onions, BBQ drizzle", price: "$10", img: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b40a4e8804cd9d7b3d9198/1b8fb5e38_generated_image.png" },
+      { name: "The Southwest", desc: "Cheddar, roasted peppers, corn, chipotle spread", price: "$9", img: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b40a4e8804cd9d7b3d9198/3ff92c286_generated_image.png" },
+      { name: "The Truffle Melt", desc: "Gruyère, mushrooms, truffle oil, fresh thyme", price: "$11", img: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b40a4e8804cd9d7b3d9198/afaafedbf_generated_image.png" },
+      { name: "The Mac Attack", desc: "Creamy mac & cheese stuffed between two slices of Texas toast", price: "$10", img: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b40a4e8804cd9d7b3d9198/097bd0a5f_generated_image.png" },
     ],
   },
   {
