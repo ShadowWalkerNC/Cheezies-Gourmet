@@ -70,7 +70,7 @@ export default function NavBar() {
                 className="text-sm font-semibold tracking-widest uppercase transition-colors duration-200 select-none"
                 style={{
                   background: "none", border: "none", cursor: "pointer",
-                  color: active ? "var(--color-gold)" : "rgba(255,235,180,0.7)",
+                  color: active ? "var(--color-gold)" : "rgba(255,235,180,0.92)",
                 }}
                 onMouseEnter={e => (e.currentTarget.style.color = "var(--color-gold)")}
                 onMouseLeave={e => (e.currentTarget.style.color = active ? "var(--color-gold)" : "rgba(255,235,180,0.7)")}
