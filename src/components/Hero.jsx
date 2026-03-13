@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import GrilledCheesePullApart from "./GrilledCheesePullApart";
 
 export default function Hero() {
   const navigate = useNavigate();
