@@ -1,6 +1,14 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 export default function Hero() {
+  const navigate = useNavigate();
+
+  const goTo = (path) => {
+    navigate(path);
+    window.scrollTo({ top: 0, behavior: "instant" });
+  };
+
   return (
     <section
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
@@ -25,7 +33,7 @@ export default function Hero() {
         }}
       />
 
-      {/* Large decorative cheese emoji blur */}
+      {/* Large decorative cheese emoji */}
       <div className="absolute text-[22rem] opacity-[0.04] select-none pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 blur-sm">
         🧀
       </div>
@@ -67,22 +75,22 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a
-              href="#menu"
-              className="px-9 py-4 rounded-full font-bold text-base transition-all duration-300 hover:scale-105 hover:shadow-2xl"
-              style={{ background: "#f5c518", color: "#1c1008", boxShadow: "0 8px 32px rgba(245,197,24,0.3)" }}
+            <button
+              onClick={() => goTo("/Menu")}
+              className="px-9 py-4 rounded-full font-bold text-base transition-all duration-300 hover:scale-105 hover:shadow-2xl select-none"
+              style={{ background: "#f5c518", color: "#1c1008", boxShadow: "0 8px 32px rgba(245,197,24,0.3)", border: "none", cursor: "pointer", WebkitTapHighlightColor: "transparent" }}
             >
               See Our Menu
-            </a>
-            <a
-              href="#catering"
-              className="px-9 py-4 rounded-full font-semibold text-base transition-all duration-300 hover:scale-105"
-              style={{ border: "1.5px solid rgba(245,197,24,0.35)", color: "rgba(255,235,180,0.8)" }}
+            </button>
+            <button
+              onClick={() => goTo("/Catering")}
+              className="px-9 py-4 rounded-full font-semibold text-base transition-all duration-300 hover:scale-105 select-none"
+              style={{ border: "1.5px solid rgba(245,197,24,0.35)", color: "rgba(255,235,180,0.8)", background: "transparent", cursor: "pointer", WebkitTapHighlightColor: "transparent" }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = "#f5c518"; e.currentTarget.style.color = "#f5c518"; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(245,197,24,0.35)"; e.currentTarget.style.color = "rgba(255,235,180,0.8)"; }}
             >
               Book Catering
-            </a>
+            </button>
           </div>
         </motion.div>
 
