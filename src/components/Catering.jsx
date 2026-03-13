@@ -51,10 +51,10 @@ const GUEST_RANGES = [
 ];
 
 const inputStyle = {
-  background: "rgba(255,200,60,0.05)",
-  border: "1px solid rgba(245,197,24,0.15)",
+  background: "#fffbf0",
+  border: "1px solid rgba(180,120,0,0.2)",
   borderRadius: "12px",
-  color: "#fff8e8",
+  color: "#3d2200",
   padding: "12px 16px",
   width: "100%",
   outline: "none",
@@ -67,7 +67,7 @@ function SheetSelect({ label, value, onChange, options, placeholder, required })
   const [open, setOpen] = useState(false);
   return (
     <div>
-      <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(245,197,24,0.6)" }}>
+      <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(120,70,0,0.7)" }}>
         {label}
       </label>
       <button
@@ -78,7 +78,7 @@ function SheetSelect({ label, value, onChange, options, placeholder, required })
           ...inputStyle,
           paddingRight: "40px",
           cursor: "pointer",
-          color: value ? "#fff8e8" : "rgba(255,235,180,0.35)",
+          color: value ? "#3d2200" : "rgba(80,45,0,0.35)",
           textAlign: "left",
           position: "relative",
           WebkitTapHighlightColor: "transparent",
@@ -87,7 +87,7 @@ function SheetSelect({ label, value, onChange, options, placeholder, required })
         <span>{value || placeholder}</span>
         <ChevronDown
           size={16}
-          style={{ color: "rgba(245,197,24,0.5)", position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)" }}
+          style={{ color: "rgba(180,120,0,0.5)", position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)" }}
         />
       </button>
       {/* Hidden native input for form validation */}
@@ -134,7 +134,7 @@ export default function Catering() {
     <section
       id="catering"
       className="py-28 px-6"
-      style={{ background: "linear-gradient(180deg, #2b1a00 0%, #1e1200 100%)" }}
+      style={{ background: "linear-gradient(180deg, #faecc4 0%, #fdf3d8 100%)" }}
     >
       <div className="max-w-6xl mx-auto">
         {/* Header */}
@@ -149,7 +149,7 @@ export default function Catering() {
           </p>
           <h2
             className="text-5xl md:text-6xl font-black mb-5 leading-tight"
-            style={{ fontFamily: "Georgia, serif", color: "#fff8e8" }}
+            style={{ fontFamily: "Georgia, serif", color: "#3d2200" }}
           >
             Catering &<br />
             <span style={{ color: "#f5c518" }}>Private Events</span>
@@ -170,26 +170,27 @@ export default function Catering() {
               transition={{ delay: i * 0.12 }}
               className="rounded-2xl p-7 flex flex-col relative"
               style={{
-                background: pkg.featured ? "rgba(245,197,24,0.1)" : "rgba(255,200,60,0.04)",
-                border: pkg.featured ? "1.5px solid rgba(245,197,24,0.4)" : "1px solid rgba(245,197,24,0.1)",
+                background: pkg.featured ? "rgba(201,148,10,0.08)" : "#ffffff",
+                border: pkg.featured ? "1.5px solid rgba(180,120,0,0.35)" : "1px solid rgba(180,120,0,0.15)",
+                boxShadow: "0 2px 16px rgba(180,120,0,0.06)",
               }}
             >
               {pkg.featured && (
                 <div
                   className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase"
-                  style={{ background: "#f5c518", color: "#1c1008" }}
+                  style={{ background: "#c9940a", color: "#fff8e8" }}
                 >
                   Most Popular
                 </div>
               )}
               <div className="text-3xl mb-3">{pkg.icon}</div>
-              <h3 className="text-xl font-black mb-1" style={{ color: "#fff8e8" }}>{pkg.name}</h3>
-              <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "#f5c518" }}>{pkg.size}</p>
-              <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(255,235,180,0.5)" }}>{pkg.desc}</p>
+              <h3 className="text-xl font-black mb-1" style={{ color: "#3d2200" }}>{pkg.name}</h3>
+              <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "#c9940a" }}>{pkg.size}</p>
+              <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(80,45,0,0.6)" }}>{pkg.desc}</p>
               <ul className="space-y-2 mt-auto">
                 {pkg.includes.map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-sm" style={{ color: "rgba(255,235,180,0.65)" }}>
-                    <span style={{ color: "#f5c518" }}>✓</span> {item}
+                  <li key={item} className="flex items-start gap-2 text-sm" style={{ color: "rgba(80,45,0,0.65)" }}>
+                    <span style={{ color: "#c9940a" }}>✓</span> {item}
                   </li>
                 ))}
               </ul>
@@ -203,10 +204,10 @@ export default function Catering() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="rounded-3xl p-8 md:p-12"
-          style={{ background: "rgba(255,200,60,0.04)", border: "1px solid rgba(245,197,24,0.12)" }}
+          style={{ background: "#ffffff", border: "1px solid rgba(180,120,0,0.15)", boxShadow: "0 2px 20px rgba(180,120,0,0.06)" }}
         >
           <div className="text-center mb-10">
-            <h3 className="text-3xl font-black mb-2" style={{ fontFamily: "Georgia, serif", color: "#fff8e8" }}>
+            <h3 className="text-3xl font-black mb-2" style={{ fontFamily: "Georgia, serif", color: "#3d2200" }}>
               Request a Quote
             </h3>
             <p className="text-sm" style={{ color: "rgba(255,235,180,0.45)" }}>
@@ -290,7 +291,7 @@ export default function Catering() {
                 type="submit"
                 disabled={submitting}
                 className="px-10 py-4 rounded-full font-bold text-base transition-all duration-300 hover:scale-105 disabled:opacity-60 select-none"
-                style={{ background: "#f5c518", color: "#1c1008", boxShadow: "0 8px 32px rgba(245,197,24,0.25)", WebkitTapHighlightColor: "transparent" }}
+                style={{ background: "#c9940a", color: "#fff8e8", boxShadow: "0 8px 32px rgba(180,120,0,0.25)", WebkitTapHighlightColor: "transparent" }}
               >
                 {submitting ? "Sending…" : "Send Catering Inquiry"}
               </button>
