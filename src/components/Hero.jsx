@@ -12,15 +12,15 @@ export default function Hero() {
   return (
     <section
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #3d1f08 0%, #2a1505 50%, #1c1008 100%)" }}
+      style={{ background: "linear-gradient(160deg, #2e1a00 0%, #1e1200 50%, #150d00 100%)" }}
     >
       {/* Warm texture overlay */}
       <div
-        className="absolute inset-0 opacity-30"
+        className="absolute inset-0 opacity-60"
         style={{
-          backgroundImage: `radial-gradient(ellipse at 20% 50%, rgba(180,90,20,0.3) 0%, transparent 60%),
-                            radial-gradient(ellipse at 80% 20%, rgba(245,197,24,0.15) 0%, transparent 50%),
-                            radial-gradient(ellipse at 60% 80%, rgba(160,60,10,0.2) 0%, transparent 50%)`,
+          backgroundImage: `radial-gradient(ellipse at 20% 50%, rgba(220,140,0,0.4) 0%, transparent 60%),
+                            radial-gradient(ellipse at 80% 20%, rgba(245,197,24,0.3) 0%, transparent 50%),
+                            radial-gradient(ellipse at 60% 80%, rgba(200,120,0,0.3) 0%, transparent 50%)`,
         }}
       />
 
@@ -49,7 +49,7 @@ export default function Hero() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-8 text-xs font-bold tracking-[0.25em] uppercase"
-            style={{ background: "rgba(245,197,24,0.2)", border: "1px solid rgba(245,197,24,0.5)", color: "#f5c518" }}
+            style={{ background: "#f5c518", border: "none", color: "#1e1200" }}
           >
             ✦ Gourmet Grilled Creations · Akron, Ohio ✦
           </motion.div>
@@ -58,8 +58,8 @@ export default function Hero() {
             className="text-7xl sm:text-8xl md:text-[10rem] font-black leading-none mb-6"
             style={{
               fontFamily: "Georgia, serif",
-              color: "#ffffff",
-              textShadow: "0 0 60px rgba(245,197,24,0.35), 0 2px 16px rgba(0,0,0,0.6)",
+              color: "#f5c518",
+              textShadow: "0 0 80px rgba(245,197,24,0.6), 0 4px 24px rgba(0,0,0,0.5)",
               letterSpacing: "-0.03em",
             }}
           >
@@ -68,7 +68,7 @@ export default function Hero() {
 
           <p
             className="text-lg md:text-xl mb-12 max-w-lg mx-auto leading-relaxed"
-            style={{ color: "rgba(255,235,180,0.85)" }}
+            style={{ color: "rgba(255,230,140,0.95)" }}
           >
             Handcrafted gourmet grilled cheese sandwiches made fresh to order.
             Follow us to find out where we're rolling next.
