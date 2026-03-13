@@ -1,17 +1,16 @@
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { useEffect, useState } from "react";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 
-// Simple looping pull-apart using motion values
 export default function GrilledCheesePullApart() {
-  const progress = useMotionValue(0); // 0 = together, 1 = pulled apart
+  const progress = useMotionValue(0);
   const [hovered, setHovered] = useState(false);
+  const [sep, setSep] = useState(0);
 
   const topY = useTransform(progress, [0, 1], [0, -44]);
   const botY = useTransform(progress, [0, 1], [0, 44]);
-  const [sep, setSep] = useState(0);
 
   useEffect(() => {
-    progress.on("change", v => setSep(v * 88));
+    return progress.on("change", v => setSep(v * 88));
   }, []);
 
   useEffect(() => {
@@ -19,12 +18,10 @@ export default function GrilledCheesePullApart() {
 
     const loop = async () => {
       while (!stopped) {
-        // Pull apart
         await animate(progress, 1, { duration: 1.5, ease: "easeInOut" });
         if (stopped) break;
         await new Promise(r => setTimeout(r, 700));
         if (stopped) break;
-        // Snap back
         await animate(progress, 0, { duration: 0.4, ease: [0.34, 1.56, 0.64, 1] });
         if (stopped) break;
         await new Promise(r => setTimeout(r, 1200));
@@ -60,8 +57,12 @@ export default function GrilledCheesePullApart() {
       onTouchStart={() => setHovered(true)}
       onTouchEnd={() => setHovered(false)}
     >
-      <svg viewBox="0 0 110 220" width="200" height="220" style={{ position: "absolute", top: 0, left: 0, overflow: "visible" }}>
-
+      <svg
+        viewBox="0 0 110 220"
+        width="200"
+        height="220"
+        style={{ position: "absolute", top: 0, left: 0, overflow: "visible" }}
+      >
         {/* Drop shadow */}
         <ellipse cx="55" cy="205" rx="30" ry="5" fill="rgba(180,100,0,0.12)" />
 
@@ -70,9 +71,9 @@ export default function GrilledCheesePullApart() {
           const midY = (topY0 + botY0) / 2;
           const d = `M ${s.x1} ${topY0} C ${s.x1 + s.cp} ${midY - 5}, ${s.x2 - s.cp} ${midY + 5}, ${s.x2} ${botY0}`;
           const sw = Math.max(0.8, 3.5 - sep * 0.03);
-          const opacity = Math.max(0.2, 1 - sep * 0.007);
+          const op = Math.max(0.2, 1 - sep * 0.007);
           return (
-            <path key={i} d={d} stroke="#f5c518" strokeWidth={sw} fill="none" strokeLinecap="round" opacity={opacity} />
+            <path key={i} d={d} stroke="#f5c518" strokeWidth={sw} fill="none" strokeLinecap="round" opacity={op} />
           );
         })}
 
