@@ -55,3 +55,23 @@ body {
 a, button {
   -webkit-tap-highlight-color: transparent;
 }
+
+/* ─── User-select: none on interactive elements ─────────── */
+button, a, nav, [role="tab"], [role="button"] {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ─── Page transition wrapper ───────────────────────────── */
+.page-transition {
+  width: 100%;
+  min-height: 100%;
+}
+
+/* ─── Pull-to-refresh spinner ───────────────────────────── */
+@keyframes ptr-spin {
+  to { transform: rotate(360deg); }
+}
+.ptr-spinner {
+  animation: ptr-spin 0.7s linear infinite;
+}
