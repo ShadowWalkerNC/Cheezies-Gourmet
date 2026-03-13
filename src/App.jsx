@@ -1,18 +1,37 @@
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'react-router-dom';
+import { AnimatePresence } from "framer-motion";
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import BottomTabBar from './components/BottomTabBar';
 import ChatWidget from './components/ChatWidget';
 
-// Add page imports here
+// Page imports
 import Home from "./pages/Home";
 import MenuPage from "./pages/MenuPage";
 import CateringPage from "./pages/CateringPage";
 import ContactPage from "./pages/ContactPage";
+import ProfilePage from "./pages/ProfilePage";
+
+function AnimatedRoutes() {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<Navigate to="/Home" replace />} />
+        <Route path="/Home" element={<Home />} />
+        <Route path="/Menu" element={<MenuPage />} />
+        <Route path="/Catering" element={<CateringPage />} />
+        <Route path="/Contact" element={<ContactPage />} />
+        <Route path="/Profile" element={<ProfilePage />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </AnimatePresence>
+  );
+}
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -36,17 +55,8 @@ const AuthenticatedApp = () => {
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Navigate to="/Home" replace />} />
-        <Route path="/Home" element={<Home />} />
-        <Route path="/Menu" element={<MenuPage />} />
-        <Route path="/Catering" element={<CateringPage />} />
-        <Route path="/Contact" element={<ContactPage />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-      {/* Persistent mobile bottom tab bar */}
+      <AnimatedRoutes />
       <BottomTabBar />
-      {/* AI Chat Widget */}
       <ChatWidget />
     </>
   );

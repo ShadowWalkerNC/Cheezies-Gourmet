@@ -1,20 +1,22 @@
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Home, UtensilsCrossed, CalendarHeart, Phone } from "lucide-react";
+import { Home, UtensilsCrossed, CalendarHeart, Phone, UserCircle } from "lucide-react";
 
 const tabs = [
-  { label: "Home",     path: "/Home",       Icon: Home },
-  { label: "Menu",     path: "/Menu",        Icon: UtensilsCrossed },
-  { label: "Catering", path: "/Catering",    Icon: CalendarHeart },
-  { label: "Contact",  path: "/Contact",     Icon: Phone },
+  { label: "Home",     path: "/Home",      Icon: Home },
+  { label: "Menu",     path: "/Menu",       Icon: UtensilsCrossed },
+  { label: "Catering", path: "/Catering",   Icon: CalendarHeart },
+  { label: "Contact",  path: "/Contact",    Icon: Phone },
+  { label: "Profile",  path: "/Profile",    Icon: UserCircle },
 ];
 
 export default function BottomTabBar() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [pressed, setPressed] = useState(null);
 
   const handleTab = (path) => {
     if (location.pathname === path) {
-      // already on this tab → scroll to top
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       navigate(path);
@@ -35,11 +37,15 @@ export default function BottomTabBar() {
     >
       {tabs.map(({ label, path, Icon }) => {
         const active = location.pathname === path;
+        const isPressed = pressed === path;
         return (
           <button
             key={path}
-            onClick={() => handleTab(path)}
-            className="flex-1 flex flex-col items-center justify-center gap-1 py-3 select-none transition-all duration-200 active:scale-95"
+            onTouchStart={() => setPressed(path)}
+            onTouchEnd={() => { setPressed(null); handleTab(path); }}
+            onTouchCancel={() => setPressed(null)}
+            onClick={() => handleTab(path)}   // desktop fallback
+            className="flex-1 flex flex-col items-center justify-center gap-1 py-3 relative select-none"
             style={{
               color: active ? "#f5c518" : "rgba(255,235,180,0.4)",
               background: "none",
@@ -47,12 +53,14 @@ export default function BottomTabBar() {
               outline: "none",
               WebkitTapHighlightColor: "transparent",
               touchAction: "manipulation",
+              transform: isPressed ? "scale(0.88)" : "scale(1)",
+              transition: "transform 0.1s ease, color 0.15s ease",
+              opacity: isPressed ? 0.7 : 1,
             }}
           >
             <Icon
               size={active ? 22 : 20}
               strokeWidth={active ? 2.2 : 1.8}
-              className="transition-all duration-200"
             />
             <span
               className="text-[10px] font-bold tracking-wider uppercase"
@@ -62,13 +70,15 @@ export default function BottomTabBar() {
             </span>
             {active && (
               <span
-                className="absolute bottom-0 rounded-full"
                 style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: "50%",
+                  transform: "translateX(-50%)",
                   width: 28,
                   height: 3,
                   background: "#f5c518",
                   borderRadius: "3px 3px 0 0",
-                  marginBottom: "var(--safe-bottom)",
                 }}
               />
             )}
