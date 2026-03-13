@@ -75,19 +75,30 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a
+              href="https://cheeziesgourmetohio.square.site/?location_id=LXWMCZH8PDQSN&fulfillment=PICKUP"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-9 py-4 rounded-full font-bold text-base transition-all duration-300 hover:scale-105 hover:shadow-2xl select-none"
+              style={{ background: "#f5c518", color: "#1c1008", boxShadow: "0 8px 32px rgba(245,197,24,0.3)", textDecoration: "none", WebkitTapHighlightColor: "transparent" }}
+            >
+              🛒 Order Online
+            </a>
             <button
               onClick={() => goTo("/Menu")}
-              className="px-9 py-4 rounded-full font-bold text-base transition-all duration-300 hover:scale-105 hover:shadow-2xl select-none"
-              style={{ background: "#f5c518", color: "#1c1008", boxShadow: "0 8px 32px rgba(245,197,24,0.3)", border: "none", cursor: "pointer", WebkitTapHighlightColor: "transparent" }}
+              className="px-9 py-4 rounded-full font-semibold text-base transition-all duration-300 hover:scale-105 select-none"
+              style={{ border: "1.5px solid rgba(245,197,24,0.35)", color: "rgba(255,235,180,0.8)", background: "transparent", cursor: "pointer", WebkitTapHighlightColor: "transparent" }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = "#f5c518"; e.currentTarget.style.color = "#f5c518"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(245,197,24,0.35)"; e.currentTarget.style.color = "rgba(255,235,180,0.8)"; }}
             >
               See Our Menu
             </button>
             <button
               onClick={() => goTo("/Catering")}
               className="px-9 py-4 rounded-full font-semibold text-base transition-all duration-300 hover:scale-105 select-none"
-              style={{ border: "1.5px solid rgba(245,197,24,0.35)", color: "rgba(255,235,180,0.8)", background: "transparent", cursor: "pointer", WebkitTapHighlightColor: "transparent" }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = "#f5c518"; e.currentTarget.style.color = "#f5c518"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(245,197,24,0.35)"; e.currentTarget.style.color = "rgba(255,235,180,0.8)"; }}
+              style={{ border: "1.5px solid rgba(245,197,24,0.15)", color: "rgba(255,235,180,0.5)", background: "transparent", cursor: "pointer", WebkitTapHighlightColor: "transparent" }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(245,197,24,0.35)"; e.currentTarget.style.color = "rgba(255,235,180,0.8)"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(245,197,24,0.15)"; e.currentTarget.style.color = "rgba(255,235,180,0.5)"; }}
             >
               Book Catering
             </button>
