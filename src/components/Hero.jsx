@@ -12,20 +12,31 @@ export default function Hero() {
   return (
     <section
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      style={{ background: "linear-gradient(160deg, #fff8e8 0%, #fdf0c8 50%, #fae8a0 100%)" }}
+      style={{ background: "linear-gradient(135deg, #fffbe8 0%, #fef3c0 30%, #fde68a 60%, #fbbf24 100%)" }}
     >
-      {/* Warm radial highlights */}
+      {/* Layered radial glow overlays */}
       <div
-        className="absolute inset-0 opacity-50"
+        className="absolute inset-0"
         style={{
-          backgroundImage: `radial-gradient(ellipse at 20% 50%, rgba(245,197,24,0.35) 0%, transparent 60%),
-                            radial-gradient(ellipse at 80% 20%, rgba(220,150,0,0.2) 0%, transparent 50%),
-                            radial-gradient(ellipse at 60% 80%, rgba(255,200,50,0.25) 0%, transparent 50%)`,
+          backgroundImage: `
+            radial-gradient(ellipse 80% 60% at 15% 40%, rgba(251,191,36,0.45) 0%, transparent 55%),
+            radial-gradient(ellipse 60% 50% at 85% 15%, rgba(245,158,11,0.3) 0%, transparent 50%),
+            radial-gradient(ellipse 70% 60% at 55% 90%, rgba(252,211,77,0.4) 0%, transparent 55%),
+            radial-gradient(ellipse 40% 40% at 70% 50%, rgba(255,237,153,0.5) 0%, transparent 50%)
+          `,
+        }}
+      />
+      {/* Subtle noise / grain texture overlay */}
+      <div
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+          backgroundSize: "200px 200px",
         }}
       />
 
       {/* Large decorative cheese emoji */}
-      <div className="absolute text-[22rem] opacity-[0.06] select-none pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 blur-sm">
+      <div className="absolute text-[22rem] opacity-[0.05] select-none pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 blur-sm">
         🧀
       </div>
 
