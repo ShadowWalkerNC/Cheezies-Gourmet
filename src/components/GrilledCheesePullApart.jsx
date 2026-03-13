@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 // Simple looping pull-apart using motion values
 export default function GrilledCheesePullApart() {
   const progress = useMotionValue(0); // 0 = together, 1 = pulled apart
-  const [hovered, setHovered] = useSt(false);
+  const [hovered, setHovered] = useState(false);
 
   const topY = useTransform(progress, [0, 1], [0, -44]);
   const botY = useTransform(progress, [0, 1], [0, 44]);
-  const [sep, setSep] = useSt(0);
+  const [sep, setSep] = useState(0);
 
   useEffect(() => {
     progress.on("change", v => setSep(v * 88));
