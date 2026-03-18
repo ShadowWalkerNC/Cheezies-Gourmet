@@ -8,6 +8,9 @@ import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import PageTransition from "../components/PageTransition";
 import PullToRefresh from "../components/PullToRefresh";
+import NewsletterPopup from "../components/NewsletterPopup";
+import SocialDiscount from "../components/SocialDiscount";
+import MerchTeaser from "../components/MerchTeaser";
 
 export default function Home() {
   const handleRefresh = () =>
@@ -16,12 +19,15 @@ export default function Home() {
   return (
     <div className="min-h-screen font-sans" style={{ background: "var(--color-bg)" }}>
       <NavBar />
+      <NewsletterPopup />
       <PageTransition>
         <PullToRefresh onRefresh={handleRefresh}>
           <Hero />
           <About />
           <Menu />
+          <SocialDiscount />
           <Catering />
+          <MerchTeaser />
           <Newsletter />
           <Contact />
           <Footer />
