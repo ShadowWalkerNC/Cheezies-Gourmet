@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 
 const menuSections = [
   {
@@ -137,6 +138,159 @@ const menuSections = [
   },
 ];
 
+function ImageCard({ item, index }) {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <motion.div
+      key={item.name}
+      initial={{ opacity: 0, scale: 0.94 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay: index * 0.07 }}
+      onClick={() => setExpanded(!expanded)}
+      className="rounded-2xl overflow-hidden cursor-pointer select-none"
+      style={{
+        background: "#ffffff",
+        border: expanded ? "1.5px solid rgba(201,148,10,0.5)" : "1px solid rgba(180,120,0,0.15)",
+        boxShadow: expanded ? "0 16px 48px rgba(180,120,0,0.18)" : "0 2px 12px rgba(180,120,0,0.06)",
+        transform: expanded ? "scale(1.01)" : "scale(1)",
+        transition: "all 0.3s ease",
+      }}
+    >
+      <div className="relative h-52 overflow-hidden">
+        <img
+          src={item.img}
+          alt={item.name}
+          className="w-full h-full object-cover transition-transform duration-700"
+          style={{ transform: expanded ? "scale(1.08)" : "scale(1)" }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(to top, rgba(40,20,0,0.7) 0%, transparent 55%)" }}
+        />
+        {item.tag && (
+          <span
+            className="absolute top-3 left-3 text-xs font-bold px-2.5 py-1 rounded-full"
+            style={{ background: "#c9940a", color: "#fff8e8" }}
+          >
+            {item.tag}
+          </span>
+        )}
+        {item.price && (
+          <span
+            className="absolute top-3 right-3 font-black text-base px-3 py-1 rounded-full"
+            style={{ background: "#c9940a", color: "#fff8e8" }}
+          >
+            {item.price}
+          </span>
+        )}
+        {/* Name on image */}
+        <div className="absolute bottom-0 left-0 right-0 px-4 pb-3">
+          <h4 className="font-black text-base text-white leading-tight drop-shadow">{item.name}</h4>
+          {item.priceNote && <p className="text-xs text-white/70 mt-0.5">{item.priceNote}</p>}
+        </div>
+        {/* Tap hint */}
+        <div
+          className="absolute bottom-3 right-3 flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest"
+          style={{ color: "rgba(255,248,224,0.65)" }}
+        >
+          <ChevronDown size={12} style={{ transform: expanded ? "rotate(180deg)" : "rotate(0)", transition: "transform 0.3s" }} />
+          {expanded ? "Less" : "Details"}
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {expanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <div className="px-5 py-4">
+              <p className="text-sm leading-relaxed" style={{ color: "rgba(80,45,0,0.7)" }}>{item.desc}</p>
+              <a
+                href="https://cheeziesgourmetohio.square.site/?location_id=LXWMCZH8PDQSN&fulfillment=PICKUP"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={e => e.stopPropagation()}
+                className="inline-flex items-center gap-1.5 mt-4 px-5 py-2.5 rounded-full font-bold text-sm transition-all duration-200 hover:scale-105"
+                style={{ background: "#c9940a", color: "#fff8e8", textDecoration: "none" }}
+              >
+                🛒 Order This
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+function TextCard({ item, index }) {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <motion.div
+      key={item.name}
+      initial={{ opacity: 0, x: -12 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: index * 0.06 }}
+      onClick={() => setExpanded(!expanded)}
+      className="flex items-start justify-between gap-6 p-5 rounded-2xl cursor-pointer select-none transition-all duration-300"
+      style={{
+        background: expanded ? "#fffbf0" : "#ffffff",
+        border: expanded ? "1.5px solid rgba(201,148,10,0.4)" : "1px solid rgba(180,120,0,0.15)",
+        boxShadow: expanded ? "0 8px 24px rgba(180,120,0,0.1)" : "0 1px 8px rgba(180,120,0,0.05)",
+      }}
+    >
+      <div className="flex-1">
+        <div className="flex flex-wrap items-center gap-2 mb-1">
+          <h4 className="font-bold text-base" style={{ color: "#3d2200" }}>{item.name}</h4>
+          {item.tag && (
+            <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "#c9940a", color: "#fff8e8" }}>
+              {item.tag}
+            </span>
+          )}
+        </div>
+        <AnimatePresence>
+          {expanded ? (
+            <motion.p
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="text-sm leading-relaxed overflow-hidden"
+              style={{ color: "rgba(80,45,0,0.65)" }}
+            >
+              {item.desc}
+            </motion.p>
+          ) : (
+            <p className="text-sm leading-relaxed line-clamp-1" style={{ color: "rgba(80,45,0,0.5)" }}>
+              {item.desc}
+            </p>
+          )}
+        </AnimatePresence>
+      </div>
+      <div className="flex flex-col items-end gap-1 shrink-0">
+        {item.price && (
+          <span className="text-lg font-black" style={{ color: "#c9940a" }}>{item.price}</span>
+        )}
+        {item.priceNote && <span className="text-xs" style={{ color: "rgba(80,45,0,0.45)" }}>{item.priceNote}</span>}
+        <ChevronDown
+          size={16}
+          style={{
+            color: "rgba(180,120,0,0.5)",
+            transform: expanded ? "rotate(180deg)" : "rotate(0)",
+            transition: "transform 0.3s",
+            marginTop: "4px",
+          }}
+        />
+      </div>
+    </motion.div>
+  );
+}
+
 export default function Menu() {
   const [activeTab, setActiveTab] = useState(0);
   const section = menuSections[activeTab];
@@ -166,7 +320,6 @@ export default function Menu() {
           </h2>
           <div className="w-16 h-1 mx-auto rounded-full mb-5" style={{ background: "#c9940a" }} />
 
-          {/* Freshness Guarantee */}
           <div
             className="inline-block px-5 py-3 rounded-2xl text-sm max-w-xl mx-auto"
             style={{ background: "rgba(201,148,10,0.1)", border: "1px solid rgba(180,120,0,0.2)", color: "rgba(80,45,0,0.85)" }}
@@ -178,118 +331,73 @@ export default function Menu() {
         {/* Tab switcher */}
         <div className="flex justify-center mb-10 mt-10 gap-2 flex-wrap">
           {menuSections.map((s, i) => (
-            <button
+            <motion.button
               key={s.title}
               onClick={() => setActiveTab(i)}
-              className="px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300"
+              whileTap={{ scale: 0.95 }}
+              className="px-4 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 relative"
               style={
                 activeTab === i
-                  ? { background: "#c9940a", color: "#fff8e8" }
+                  ? { background: "#c9940a", color: "#fff8e8", boxShadow: "0 4px 16px rgba(180,120,0,0.35)" }
                   : { background: "rgba(255,255,255,0.7)", border: "1px solid rgba(180,120,0,0.2)", color: "rgba(80,45,0,0.65)" }
               }
             >
               {s.icon} {s.title}
-            </button>
+              {activeTab === i && (
+                <motion.div
+                  layoutId="tab-indicator"
+                  className="absolute inset-0 rounded-full -z-10"
+                  style={{ background: "#c9940a" }}
+                  transition={{ type: "spring", damping: 20, stiffness: 300 }}
+                />
+              )}
+            </motion.button>
           ))}
         </div>
 
         {/* Section note */}
         {section.note && (
-          <p className="text-center text-sm mb-8 italic" style={{ color: "rgba(80,45,0,0.55)" }}>
+          <motion.p
+            key={`note-${activeTab}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center text-sm mb-8 italic"
+            style={{ color: "rgba(80,45,0,0.55)" }}
+          >
             {section.note}
-          </p>
+          </motion.p>
         )}
 
-        {/* Items */}
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35 }}
-          className={section.items.some(i => i.img) ? "grid sm:grid-cols-2 gap-5" : "space-y-4"}
+        {/* Tap-to-expand hint */}
+        <motion.p
+          key={`hint-${activeTab}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center text-xs mb-6 font-semibold tracking-wide"
+          style={{ color: "rgba(180,120,0,0.5)" }}
         >
-          {section.items.map((item, i) => (
-            item.img ? (
-              <motion.div
-                key={item.name}
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: i * 0.06 }}
-                className="rounded-2xl overflow-hidden transition-all duration-300 group cursor-default"
-                style={{ background: "#ffffff", border: "1px solid rgba(180,120,0,0.15)", boxShadow: "0 2px 12px rgba(180,120,0,0.06)" }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.borderColor = "rgba(180,120,0,0.35)";
-                  e.currentTarget.style.transform = "translateY(-3px)";
-                  e.currentTarget.style.boxShadow = "0 12px 40px rgba(180,120,0,0.12)";
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = "rgba(180,120,0,0.15)";
-                  e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.boxShadow = "0 2px 12px rgba(180,120,0,0.06)";
-                }}
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={item.img}
-                    alt={item.name}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(60,30,0,0.55) 0%, transparent 60%)" }} />
-                  {item.tag && (
-                    <span className="absolute top-3 left-3 text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "#c9940a", color: "#fff8e8" }}>
-                      {item.tag}
-                    </span>
-                  )}
-                  {item.price && (
-                    <span className="absolute top-3 right-3 font-black text-base px-3 py-1 rounded-full" style={{ background: "#c9940a", color: "#fff8e8" }}>
-                      {item.price}
-                    </span>
-                  )}
-                </div>
-                <div className="p-5">
-                  <h4 className="font-bold text-base mb-1.5" style={{ color: "#3d2200" }}>{item.name}</h4>
-                  <p className="text-sm leading-relaxed" style={{ color: "rgba(80,45,0,0.65)" }}>{item.desc}</p>
-                  {item.priceNote && <p className="text-xs mt-1" style={{ color: "rgba(80,45,0,0.45)" }}>{item.priceNote}</p>}
-                </div>
-              </motion.div>
-            ) : (
-              <motion.div
-                key={item.name}
-                initial={{ opacity: 0, x: -12 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.06 }}
-                className="flex items-start justify-between gap-6 p-5 rounded-2xl transition-all duration-300"
-                style={{ background: "#ffffff", border: "1px solid rgba(180,120,0,0.15)", boxShadow: "0 1px 8px rgba(180,120,0,0.05)" }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.background = "#fffbf0";
-                  e.currentTarget.style.borderColor = "rgba(180,120,0,0.3)";
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.background = "#ffffff";
-                  e.currentTarget.style.borderColor = "rgba(180,120,0,0.15)";
-                }}
-              >
-                <div className="flex-1">
-                  <div className="flex flex-wrap items-center gap-2 mb-1">
-                    <h4 className="font-bold text-base" style={{ color: "#3d2200" }}>{item.name}</h4>
-                    {item.tag && (
-                      <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "#c9940a", color: "#fff8e8" }}>
-                        {item.tag}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-sm leading-relaxed" style={{ color: "rgba(80,45,0,0.65)" }}>{item.desc}</p>
-                </div>
-                {item.price && (
-                  <div className="text-right shrink-0">
-                    <span className="text-lg font-black block" style={{ color: "#c9940a" }}>{item.price}</span>
-                    {item.priceNote && <span className="text-xs" style={{ color: "rgba(80,45,0,0.45)" }}>{item.priceNote}</span>}
-                  </div>
-                )}
-              </motion.div>
-            )
-          ))}
-        </motion.div>
+          👆 Tap any item to see the full description
+        </motion.p>
+
+        {/* Items */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.3 }}
+            className={section.items.some(i => i.img) ? "grid sm:grid-cols-2 gap-5" : "space-y-4"}
+          >
+            {section.items.map((item, i) =>
+              item.img ? (
+                <ImageCard key={item.name} item={item} index={i} />
+              ) : (
+                <TextCard key={item.name} item={item} index={i} />
+              )
+            )}
+          </motion.div>
+        </AnimatePresence>
 
         <p className="text-center text-xs mt-10" style={{ color: "rgba(80,45,0,0.35)" }}>
           * Prices and availability may vary. Follow us on social media for daily specials.
