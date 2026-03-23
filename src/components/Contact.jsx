@@ -38,7 +38,7 @@ export default function Contact() {
             <div className="space-y-5">
               {[
                 { href: "tel:3305108875", Icon: Phone, label: "Call Us", value: "330-510-8875" },
-                { href: "http://CheeziesGourmet.com", Icon: Globe, label: "Website", value: "CheeziesGourmet.com" },
+                { href: "http://cheeziesgourmetohio.com", Icon: Globe, label: "Website", value: "cheeziesgourmetohio.com" },
                 { href: null, Icon: MapPin, label: "Based In", value: "Akron, Ohio" },
               ].map(({ href, Icon, label, value }) => {
                 const inner = (
@@ -80,9 +80,9 @@ export default function Contact() {
             </p>
             <div className="space-y-4">
               {[
-                { href: "https://twitter.com/CheeziesOhio", Icon: Twitter, label: "Twitter", sub: "@CheeziesOhio", hoverColor: "#1da1f2" },
-                { href: "https://facebook.com/CheeziesOhio", Icon: Facebook, label: "Facebook", sub: "Daily location updates", hoverColor: "#1877f2" },
-                { href: "https://instagram.com/CheeziesOhio", Icon: Instagram, label: "Instagram", sub: "See our daily creations", hoverColor: "#e1306c" },
+                { href: "https://twitter.com/cheeziesohio", Icon: Twitter, label: "X (Twitter)", sub: "@cheeziesohio", hoverColor: "#1da1f2" },
+                { href: "https://www.facebook.com/profile.php?id=61572987417963", Icon: Facebook, label: "Facebook", sub: "@cheeziesohio · Daily location updates", hoverColor: "#1877f2" },
+                { href: "https://instagram.com/cheeziesohio", Icon: Instagram, label: "Instagram", sub: "@cheeziesohio · See our daily creations", hoverColor: "#e1306c" },
               ].map(({ href, Icon, label, sub, hoverColor }) => (
                 <a
                   key={label}

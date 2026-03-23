@@ -13,8 +13,11 @@ export default function Footer() {
       <p className="text-sm mb-1" style={{ color: "rgba(80,45,0,0.5)" }}>
         Gourmet Grilled Creations · Akron, Ohio
       </p>
-      <p className="text-sm mb-6" style={{ color: "rgba(80,45,0,0.4)" }}>
-        330-510-8875
+      <p className="text-sm mb-1" style={{ color: "rgba(80,45,0,0.4)" }}>
+        (330)-510-8875 · cheeziesgourmetohio.com
+      </p>
+      <p className="text-sm mb-6" style={{ color: "rgba(80,45,0,0.35)" }}>
+        Instagram / Facebook / TikTok / X: @cheeziesohio
       </p>
       <div className="w-16 h-px mx-auto mb-6" style={{ background: "rgba(180,120,0,0.15)" }} />
       <p className="text-xs" style={{ color: "rgba(80,45,0,0.3)" }}>
