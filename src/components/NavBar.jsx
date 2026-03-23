@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Sun, Moon } from "lucide-react";
+import { useTheme } from "@/lib/ThemeContext";
 
 const tabs = [
   { label: "About",    path: "/Home",     hash: "" },
@@ -13,6 +15,7 @@ export default function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40);
@@ -79,6 +82,14 @@ export default function NavBar() {
               </button>
             );
           })}
+          <button
+            onClick={toggleTheme}
+            className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-105 select-none"
+            style={{ background: "rgba(201,148,10,0.12)", border: "1px solid rgba(180,120,0,0.15)" }}
+            aria-label="Toggle dark mode"
+          >
+            {theme === "dark" ? <Sun size={16} style={{ color: "#c9940a" }} /> : <Moon size={16} style={{ color: "#c9940a" }} />}
+          </button>
           <a
             href="tel:3305108875"
             className="px-5 py-2.5 rounded-full font-bold text-sm transition-all duration-200 hover:scale-105 select-none"
