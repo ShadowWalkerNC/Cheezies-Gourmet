@@ -38,26 +38,32 @@ export default function Newsletter() {
         >
           {/* Top banner */}
           <div
-            className="px-10 py-8 text-center"
+            className="relative px-10 py-10 text-center overflow-hidden"
             style={{ background: "linear-gradient(135deg, #c9940a 0%, #e8b800 60%, #f5c518 100%)" }}
           >
-            <div className="text-4xl mb-3">📍</div>
-            <h2
-              className="text-4xl md:text-5xl font-black mb-2 leading-tight"
-              style={{ fontFamily: "Georgia, serif", color: "#3d2200" }}
-            >
-              Know Where We Are
-            </h2>
-            <p className="text-sm font-semibold" style={{ color: "rgba(61,34,0,0.65)" }}>
-              Daily locations, specials &amp; events — straight to your inbox.
-            </p>
+            <div className="absolute inset-0 opacity-20 pointer-events-none">
+              <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=800&q=60" alt="" aria-hidden="true" className="w-full h-full object-cover" />
+            </div>
+            <div className="relative z-10">
+              <h2
+                className="text-4xl md:text-5xl font-black mb-2 leading-tight"
+                style={{ fontFamily: "Georgia, serif", color: "#3d2200" }}
+              >
+                Know Where We Are
+              </h2>
+              <p className="text-sm font-semibold" style={{ color: "rgba(61,34,0,0.65)" }}>
+                Daily locations, specials &amp; events — straight to your inbox.
+              </p>
+            </div>
           </div>
 
           {/* Body */}
           <div className="px-10 py-8" style={{ background: "#fffbf0" }}>
             {done ? (
               <div className="text-center py-6">
-                <div className="text-5xl mb-3">🎉</div>
+                <div className="w-14 h-14 rounded-full mx-auto mb-4 overflow-hidden border-2" style={{ borderColor: "rgba(180,120,0,0.2)" }}>
+                  <img src="https://images.unsplash.com/photo-1528736235302-52922df5c122?w=200&q=80" alt="Grilled cheese" className="w-full h-full object-cover" />
+                </div>
                 <p className="text-xl font-black" style={{ color: "#3d2200" }}>You're on the list!</p>
                 <p className="text-sm mt-2" style={{ color: "rgba(80,45,0,0.6)" }}>See you at the truck. No spam — just cheese.</p>
               </div>
@@ -89,7 +95,7 @@ export default function Newsletter() {
                     className="px-7 py-3.5 rounded-full font-bold text-sm transition-all duration-300 hover:scale-105 disabled:opacity-60 whitespace-nowrap"
                     style={{ background: "#c9940a", color: "#fff8e8", boxShadow: "0 6px 24px rgba(180,120,0,0.25)" }}
                   >
-                    {submitting ? "Subscribing…" : "🔔 Subscribe"}
+                    Subscribe
                   </button>
                 </form>
 
