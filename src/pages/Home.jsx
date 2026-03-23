@@ -10,7 +10,6 @@ import PageTransition from "../components/PageTransition";
 import PullToRefresh from "../components/PullToRefresh";
 import NewsletterPopup from "../components/NewsletterPopup";
 import SocialDiscount from "../components/SocialDiscount";
-import MerchTeaser from "../components/MerchTeaser";
 import WhatsAppSignup from "../components/WhatsAppSignup";
 
 export default function Home() {
@@ -30,7 +29,6 @@ export default function Home() {
           <WhatsAppSignup />
           <SocialDiscount />
           <Catering />
-          <MerchTeaser />
           <Contact />
           <Footer />
           <div className="md:hidden" style={{ height: "var(--tab-bar-h)" }} />
