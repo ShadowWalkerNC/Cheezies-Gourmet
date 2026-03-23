@@ -1,0 +1,38 @@
+{
+  "name": "Cheezies Gourmet",
+  "short_name": "Cheezies",
+  "description": "Gourmet Grilled Creations — Akron, Ohio",
+  "start_url": "/Home",
+  "display": "standalone",
+  "background_color": "#fffbf0",
+  "theme_color": "#c9940a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b410ceece31b13c728497b/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b410ceece31b13c728497b/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["food", "lifestyle"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "View Menu",
+      "url": "/Menu",
+      "description": "Browse our full menu"
+    },
+    {
+      "name": "Catering",
+      "url": "/Catering",
+      "description": "Book catering for your event"
+    }
+  ]
+}
