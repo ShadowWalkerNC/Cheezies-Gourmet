@@ -6,21 +6,19 @@ import { useToast } from "@/components/ui/use-toast";
 export default function Newsletter() {
   const { toast } = useToast();
   const [email, setEmail] = useState("");
-  const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // Optimistic: show success immediately
     setDone(true);
+    const captured = email;
     setEmail("");
-    toast({ title: "You're on the list! 🧀", description: "We'll let you know when we're rolling your way." });
-    // Background send
+    toast({ title: "You're on the list!", description: "We'll let you know when we're rolling your way." });
     base44.integrations.Core.SendEmail({
       to: "cheeziesgourmet@gmail.com",
       subject: "New Newsletter Subscriber",
-      body: `New subscriber: ${email}`,
-    }).finally(() => setSubmitting(false));
+      body: `New subscriber: ${captured}`,
+    });
   };
 
   return (
@@ -28,103 +26,108 @@ export default function Newsletter() {
       className="py-20 px-6"
       style={{ background: "#fffbf0", borderTop: "1px solid rgba(180,120,0,0.1)" }}
     >
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="rounded-3xl overflow-hidden"
-          style={{ border: "1.5px solid rgba(180,120,0,0.2)", boxShadow: "0 4px 40px rgba(180,120,0,0.08)" }}
+          className="text-center mb-12"
         >
-          {/* Top banner */}
-          <div
-            className="relative px-10 py-10 text-center overflow-hidden"
-            style={{ background: "linear-gradient(135deg, #c9940a 0%, #e8b800 60%, #f5c518 100%)" }}
-          >
-            <div className="absolute inset-0 opacity-20 pointer-events-none">
-              <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=800&q=60" alt="" aria-hidden="true" className="w-full h-full object-cover" />
-            </div>
-            <div className="relative z-10">
-              <h2
-                className="text-4xl md:text-5xl font-black mb-2 leading-tight"
-                style={{ fontFamily: "Georgia, serif", color: "#3d2200" }}
-              >
-                Know Where We Are
-              </h2>
-              <p className="text-sm font-semibold" style={{ color: "rgba(61,34,0,0.65)" }}>
-                Daily locations, specials &amp; events — straight to your inbox.
-              </p>
-            </div>
-          </div>
+          <p className="text-xs font-bold tracking-[0.3em] uppercase mb-3" style={{ color: "#c9940a" }}>Stay Connected</p>
+          <h2 className="text-4xl md:text-5xl font-black mb-3" style={{ fontFamily: "Georgia, serif", color: "#2a1200" }}>
+            Know Where We Are
+          </h2>
+          <p className="text-base max-w-lg mx-auto" style={{ color: "rgba(61,34,0,0.55)" }}>
+            Daily locations, specials, and events — never miss the truck.
+          </p>
+        </motion.div>
 
-          {/* Body */}
-          <div className="px-10 py-8" style={{ background: "#fffbf0" }}>
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Email signup */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="rounded-2xl p-8"
+            style={{ background: "#fff", border: "1px solid rgba(180,120,0,0.15)", boxShadow: "0 2px 16px rgba(180,120,0,0.06)" }}
+          >
+            <h3 className="font-black text-xl mb-2" style={{ color: "#2a1200" }}>Email Newsletter</h3>
+            <p className="text-sm mb-6" style={{ color: "rgba(61,34,0,0.5)" }}>
+              Get our location drops and specials straight to your inbox.
+            </p>
             {done ? (
-              <div className="text-center py-6">
-                <div className="w-14 h-14 rounded-full mx-auto mb-4 overflow-hidden border-2" style={{ borderColor: "rgba(180,120,0,0.2)" }}>
-                  <img src="https://images.unsplash.com/photo-1528736235302-52922df5c122?w=200&q=80" alt="Grilled cheese" className="w-full h-full object-cover" />
-                </div>
-                <p className="text-xl font-black" style={{ color: "#3d2200" }}>You're on the list!</p>
-                <p className="text-sm mt-2" style={{ color: "rgba(80,45,0,0.6)" }}>See you at the truck. No spam — just cheese.</p>
+              <div className="py-4">
+                <p className="font-black text-lg" style={{ color: "#c9940a" }}>You're on the list!</p>
+                <p className="text-sm mt-1" style={{ color: "rgba(61,34,0,0.5)" }}>See you at the truck. No spam — just cheese.</p>
               </div>
             ) : (
-              <>
-                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-6">
-                  <input
-                    required
-                    type="email"
-                    placeholder="your@email.com"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    className="flex-1"
-                    style={{
-                      background: "#fff",
-                      border: "1.5px solid rgba(180,120,0,0.2)",
-                      borderRadius: "999px",
-                      color: "#3d2200",
-                      padding: "14px 22px",
-                      outline: "none",
-                      fontSize: "15px",
-                    }}
-                    onFocus={e => (e.target.style.borderColor = "#c9940a")}
-                    onBlur={e => (e.target.style.borderColor = "rgba(180,120,0,0.2)")}
-                  />
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                    className="px-7 py-3.5 rounded-full font-bold text-sm transition-all duration-300 hover:scale-105 disabled:opacity-60 whitespace-nowrap"
-                    style={{ background: "#c9940a", color: "#fff8e8", boxShadow: "0 6px 24px rgba(180,120,0,0.25)" }}
-                  >
-                    Subscribe
-                  </button>
-                </form>
-
-                <div className="flex items-center gap-3 mb-5 max-w-md mx-auto">
-                  <div className="flex-1 h-px" style={{ background: "rgba(180,120,0,0.15)" }} />
-                  <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "rgba(80,45,0,0.4)" }}>or follow</span>
-                  <div className="flex-1 h-px" style={{ background: "rgba(180,120,0,0.15)" }} />
-                </div>
-
-                <div className="flex justify-center">
-                  <a
-                    href="https://www.facebook.com/profile.php?id=61572987417963"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-3 px-7 py-3.5 rounded-full font-bold text-sm transition-all duration-300 hover:scale-105"
-                    style={{ background: "#1877F2", color: "#ffffff", textDecoration: "none", boxShadow: "0 4px 20px rgba(24,119,242,0.25)" }}
-                  >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                    Follow us on Facebook
-                  </a>
-                </div>
-              </>
+              <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+                <input
+                  required
+                  type="email"
+                  placeholder="your@email.com"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  className="w-full outline-none"
+                  style={{
+                    background: "#fffbf0",
+                    border: "1.5px solid rgba(180,120,0,0.2)",
+                    borderRadius: "10px",
+                    color: "#2a1200",
+                    padding: "13px 18px",
+                    fontSize: "15px",
+                  }}
+                  onFocus={e => (e.target.style.borderColor = "#c9940a")}
+                  onBlur={e => (e.target.style.borderColor = "rgba(180,120,0,0.2)")}
+                />
+                <button
+                  type="submit"
+                  className="py-3 rounded-lg font-bold text-sm transition-all duration-200 hover:scale-105"
+                  style={{ background: "#c9940a", color: "#fff8e8" }}
+                >
+                  Subscribe
+                </button>
+              </form>
             )}
+            <p className="text-xs mt-4" style={{ color: "rgba(61,34,0,0.3)" }}>Unsubscribe anytime.</p>
+          </motion.div>
 
-            <p className="text-xs mt-6 text-center" style={{ color: "rgba(80,45,0,0.35)" }}>
-              Unsubscribe anytime. We respect your inbox.
+          {/* Follow on social */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="rounded-2xl p-8"
+            style={{ background: "#fff", border: "1px solid rgba(180,120,0,0.15)", boxShadow: "0 2px 16px rgba(180,120,0,0.06)" }}
+          >
+            <h3 className="font-black text-xl mb-2" style={{ color: "#2a1200" }}>Follow for Daily Spots</h3>
+            <p className="text-sm mb-6" style={{ color: "rgba(61,34,0,0.5)" }}>
+              We post our location every morning. Follow us so you always know where to find the truck.
             </p>
-          </div>
-        </motion.div>
+            <div className="flex flex-col gap-3">
+              <a
+                href="https://www.facebook.com/profile.php?id=61572987417963"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-3 py-3 rounded-lg font-bold text-sm transition-all duration-200 hover:scale-105 select-none"
+                style={{ background: "#1877F2", color: "#fff", textDecoration: "none" }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                Follow on Facebook
+              </a>
+              <a
+                href="https://instagram.com/cheeziesohio"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-3 py-3 rounded-lg font-bold text-sm transition-all duration-200 hover:scale-105 select-none"
+                style={{ background: "linear-gradient(135deg, #f09433, #dc2743, #bc1888)", color: "#fff", textDecoration: "none" }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                Follow on Instagram
+              </a>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

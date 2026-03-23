@@ -10,7 +10,7 @@ import PageTransition from "../components/PageTransition";
 import PullToRefresh from "../components/PullToRefresh";
 import NewsletterPopup from "../components/NewsletterPopup";
 import SocialDiscount from "../components/SocialDiscount";
-import WhatsAppSignup from "../components/WhatsAppSignup";
+
 
 export default function Home() {
   const handleRefresh = () =>
@@ -26,7 +26,6 @@ export default function Home() {
           <About />
           <Menu />
           <Newsletter />
-          <WhatsAppSignup />
           <SocialDiscount />
           <Catering />
           <Contact />
