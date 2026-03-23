@@ -11,16 +11,16 @@ export default function Newsletter() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitting(true);
-    await base44.integrations.Core.SendEmail({
+    // Optimistic: show success immediately
+    setDone(true);
+    setEmail("");
+    toast({ title: "You're on the list! 🧀", description: "We'll let you know when we're rolling your way." });
+    // Background send
+    base44.integrations.Core.SendEmail({
       to: "cheeziesgourmet@gmail.com",
       subject: "New Newsletter Subscriber",
       body: `New subscriber: ${email}`,
-    });
-    setSubmitting(false);
-    setEmail("");
-    setDone(true);
-    toast({ title: "You're on the list! 🧀", description: "We'll let you know when we're rolling your way." });
+    }).finally(() => setSubmitting(false));
   };
 
   return (

@@ -26,16 +26,16 @@ export default function NewsletterPopup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitting(true);
-    await base44.integrations.Core.SendEmail({
+    // Optimistic: show success immediately
+    setDone(true);
+    toast({ title: "🧀 You're in!", description: "We'll let you know where we're rolling next." });
+    setTimeout(() => dismiss(), 2200);
+    // Background send
+    base44.integrations.Core.SendEmail({
       to: "cheeziesgourmet@gmail.com",
       subject: "New Newsletter Subscriber",
       body: `New subscriber: ${email}`,
     });
-    setSubmitting(false);
-    setDone(true);
-    toast({ title: "🧀 You're in!", description: "We'll let you know where we're rolling next." });
-    setTimeout(() => dismiss(), 2200);
   };
 
   return (

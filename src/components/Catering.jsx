@@ -116,18 +116,21 @@ export default function Catering() {
   const { toast } = useToast();
   const [form, setForm] = useState({ name: "", email: "", phone: "", event_type: "", date: "", guests: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
+  const [done, setDone] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Optimistic UI: immediately show success
     setSubmitting(true);
-    await base44.integrations.Core.SendEmail({
+    setDone(true);
+    setForm({ name: "", email: "", phone: "", event_type: "", date: "", guests: "", message: "" });
+    toast({ title: "Inquiry Sent! 🎉", description: "We'll be in touch within 24 hours." });
+    // Fire-and-forget background send
+    base44.integrations.Core.SendEmail({
       to: "cheeziesgourmet@gmail.com",
       subject: `Catering Inquiry from ${form.name}`,
       body: `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nEvent Type: ${form.event_type}\nDate: ${form.date}\nGuests: ${form.guests}\n\nMessage:\n${form.message}`,
-    });
-    setSubmitting(false);
-    setForm({ name: "", email: "", phone: "", event_type: "", date: "", guests: "", message: "" });
-    toast({ title: "Inquiry Sent!", description: "We'll be in touch within 24 hours." });
+    }).finally(() => setSubmitting(false));
   };
 
   return (
@@ -215,7 +218,15 @@ export default function Catering() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-5">
+          {done && (
+            <div className="text-center py-6 mb-4 rounded-2xl" style={{ background: "rgba(201,148,10,0.08)", border: "1px solid rgba(180,120,0,0.2)" }}>
+              <div className="text-4xl mb-2">🎉</div>
+              <p className="font-black text-lg" style={{ color: "#3d2200" }}>Inquiry received!</p>
+              <p className="text-sm mt-1" style={{ color: "rgba(80,45,0,0.6)" }}>We'll be in touch within 24 hours.</p>
+              <button onClick={() => setDone(false)} className="mt-3 text-xs underline" style={{ color: "#c9940a", background: "none", border: "none", cursor: "pointer" }}>Submit another inquiry</button>
+            </div>
+          )}
+          {!done && <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-5">
             <div>
               <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "rgba(120,70,0,0.7)" }}>Your Name</label>
               <input
@@ -293,10 +304,10 @@ export default function Catering() {
                 className="px-10 py-4 rounded-full font-bold text-base transition-all duration-300 hover:scale-105 disabled:opacity-60 select-none"
                 style={{ background: "#c9940a", color: "#fff8e8", boxShadow: "0 8px 32px rgba(180,120,0,0.25)", WebkitTapHighlightColor: "transparent" }}
               >
-                {submitting ? "Sending…" : "Send Catering Inquiry"}
+                Send Catering Inquiry
               </button>
             </div>
-          </form>
+          </form>}
         </motion.div>
       </div>
     </section>
