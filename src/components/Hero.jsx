@@ -35,9 +35,9 @@ export default function Hero() {
         }}
       />
 
-      {/* Large decorative cheese emoji */}
-      <div className="absolute text-[22rem] opacity-[0.05] select-none pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 blur-sm">
-        🧀
+      {/* Decorative food truck image watermark */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.06]">
+        <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=800&q=60" alt="" aria-hidden="true" className="w-full h-full object-cover blur-sm" />
       </div>
 
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto pt-24">
@@ -53,7 +53,7 @@ export default function Hero() {
             className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-8 text-xs font-bold tracking-[0.25em] uppercase"
             style={{ background: "#c9940a", color: "#fff8e8" }}
           >
-            ✦ Gourmet Grilled Creations · Akron, Ohio ✦
+            Gourmet Grilled Creations · Akron, Ohio
           </motion.div>
 
           <h1
@@ -84,7 +84,7 @@ export default function Hero() {
               className="px-9 py-4 rounded-full font-bold text-base transition-all duration-300 hover:scale-105 hover:shadow-xl select-none"
               style={{ background: "#c9940a", color: "#fff8e8", boxShadow: "0 8px 32px rgba(180,120,0,0.3)", textDecoration: "none", WebkitTapHighlightColor: "transparent" }}
             >
-              🛒 Order Online
+              Order Online
             </a>
             <button
               onClick={() => goTo("/Menu")}

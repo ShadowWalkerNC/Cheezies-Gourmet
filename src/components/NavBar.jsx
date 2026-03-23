@@ -41,10 +41,10 @@ export default function NavBar() {
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
       style={{
         paddingTop: "var(--safe-top)",
-        background: scrolled ? "rgba(255,248,220,0.97)" : "transparent",
-        backdropFilter: scrolled ? "blur(12px)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
-        borderBottom: scrolled ? "1px solid rgba(180,120,0,0.15)" : "none",
+        background: scrolled ? "rgba(255,248,220,0.97)" : "rgba(255,248,220,0.75)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        borderBottom: scrolled ? "1px solid rgba(180,120,0,0.15)" : "1px solid transparent",
         boxShadow: scrolled ? "0 4px 24px rgba(180,120,0,0.1)" : "none",
       }}
     >

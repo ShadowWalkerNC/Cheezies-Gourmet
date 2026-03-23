@@ -1,10 +1,21 @@
 import { motion } from "framer-motion";
-import { Camera, Share2, Tag } from "lucide-react";
 
 const steps = [
-  { icon: Camera, emoji: "📸", label: "Snap It", desc: "Take a drool-worthy photo of your Cheezies order." },
-  { icon: Share2, emoji: "📲", label: "Post It", desc: "Share it on Facebook or Instagram — public post." },
-  { icon: Tag, emoji: "🏷️", label: "Tag Us", desc: "Tag @CheeziesGourmet and use #CheeziesGourmet." },
+  {
+    img: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&q=80",
+    label: "Snap It",
+    desc: "Take a drool-worthy photo of your Cheezies order.",
+  },
+  {
+    img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=400&q=80",
+    label: "Post It",
+    desc: "Share it on Facebook or Instagram — public post.",
+  },
+  {
+    img: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=400&q=80",
+    label: "Tag Us",
+    desc: "Tag @CheeziesGourmet and use #CheeziesGourmet.",
+  },
 ];
 
 export default function SocialDiscount() {
@@ -13,9 +24,14 @@ export default function SocialDiscount() {
       className="py-20 px-6 relative overflow-hidden"
       style={{ background: "linear-gradient(135deg, #3d2200 0%, #5a3500 50%, #3d2200 100%)" }}
     >
-      {/* Background cheese emoji watermark */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.04] text-[30rem]">
-        🧀
+      {/* Background image overlay */}
+      <div className="absolute inset-0 pointer-events-none select-none opacity-[0.07]">
+        <img
+          src="https://images.unsplash.com/photo-1528736235302-52922df5c122?w=1200&q=60"
+          alt=""
+          aria-hidden="true"
+          className="w-full h-full object-cover"
+        />
       </div>
 
       <div className="max-w-4xl mx-auto relative z-10">
@@ -25,15 +41,10 @@ export default function SocialDiscount() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          {/* Badge */}
-          <div
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-6 text-xs font-bold tracking-[0.25em] uppercase"
-            style={{ background: "rgba(201,148,10,0.25)", border: "1px solid rgba(201,148,10,0.4)", color: "#f5c518" }}
-          >
-            ✦ Share the Love ✦
-          </div>
+          <p className="text-xs font-bold tracking-[0.3em] uppercase mb-4" style={{ color: "rgba(245,197,24,0.8)" }}>
+            Share the Love
+          </p>
 
-          {/* Big discount */}
           <div className="mb-4">
             <span
               className="text-[7rem] md:text-[9rem] font-black leading-none block"
@@ -48,16 +59,13 @@ export default function SocialDiscount() {
             >
               10%
             </span>
-            <p
-              className="text-2xl md:text-3xl font-black -mt-4"
-              style={{ color: "#fff8e8" }}
-            >
+            <p className="text-2xl md:text-3xl font-black -mt-4" style={{ color: "#fff8e8" }}>
               OFF Your Next Order
             </p>
           </div>
 
           <p className="text-base max-w-xl mx-auto leading-relaxed" style={{ color: "rgba(255,248,224,0.65)" }}>
-            Show your love for Cheezies on social media and we'll reward you with a discount on your next visit!
+            Show your love for Cheezies on social media and we'll reward you with a discount on your next visit.
           </p>
         </motion.div>
 
@@ -70,21 +78,25 @@ export default function SocialDiscount() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="rounded-2xl p-6 text-center flex flex-col items-center gap-3"
+              className="rounded-2xl overflow-hidden flex flex-col"
               style={{
                 background: "rgba(255,248,224,0.06)",
                 border: "1px solid rgba(255,248,224,0.12)",
               }}
             >
-              <div className="text-4xl">{step.emoji}</div>
-              <div
-                className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-black"
-                style={{ background: "#c9940a", color: "#fff8e8" }}
-              >
-                {i + 1}
+              <div className="w-full h-36 overflow-hidden">
+                <img src={step.img} alt={step.label} className="w-full h-full object-cover" />
               </div>
-              <h4 className="font-black text-lg" style={{ color: "#f5c518" }}>{step.label}</h4>
-              <p className="text-sm leading-relaxed" style={{ color: "rgba(255,248,224,0.6)" }}>{step.desc}</p>
+              <div className="p-5 flex flex-col items-center text-center gap-2">
+                <div
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-black"
+                  style={{ background: "#c9940a", color: "#fff8e8" }}
+                >
+                  {i + 1}
+                </div>
+                <h4 className="font-black text-lg" style={{ color: "#f5c518" }}>{step.label}</h4>
+                <p className="text-sm leading-relaxed" style={{ color: "rgba(255,248,224,0.6)" }}>{step.desc}</p>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -97,18 +109,18 @@ export default function SocialDiscount() {
           className="text-center"
         >
           <div
-            className="inline-block rounded-2xl px-8 py-5"
+            className="inline-block rounded-2xl px-8 py-5 mb-6"
             style={{ background: "rgba(201,148,10,0.15)", border: "1px solid rgba(201,148,10,0.3)" }}
           >
             <p className="text-base font-bold mb-1" style={{ color: "#f5c518" }}>
               Then show us your post at the truck!
             </p>
             <p className="text-sm" style={{ color: "rgba(255,248,224,0.55)" }}>
-              📍 Find us at our next location — follow Facebook for daily spots.
+              Find us at our next location — follow Facebook for daily spots.
             </p>
           </div>
 
-          <div className="flex justify-center gap-4 mt-6 flex-wrap">
+          <div className="flex justify-center gap-4 flex-wrap">
             <a
               href="https://www.facebook.com/profile.php?id=61572987417963"
               target="_blank"
@@ -131,7 +143,7 @@ export default function SocialDiscount() {
                 boxShadow: "0 4px 20px rgba(220,39,67,0.3)",
               }}
             >
-              📸 Instagram
+              Instagram
             </a>
           </div>
         </motion.div>
