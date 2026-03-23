@@ -22,7 +22,7 @@ export default function SocialDiscount() {
   return (
     <section
       className="py-20 px-6 relative overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #3d2200 0%, #5a3500 50%, #3d2200 100%)" }}
+      style={{ background: "#2a1200" }}
     >
       {/* Background image overlay */}
       <div className="absolute inset-0 pointer-events-none select-none opacity-[0.07]">

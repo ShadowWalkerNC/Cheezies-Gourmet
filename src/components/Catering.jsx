@@ -136,8 +136,8 @@ export default function Catering() {
   return (
     <section
       id="catering"
-      className="py-28 px-6"
-      style={{ background: "linear-gradient(180deg, #faecc4 0%, #fdf3d8 100%)" }}
+      className="py-20 px-6"
+      style={{ background: "#fffbf0", borderTop: "1px solid rgba(180,120,0,0.1)" }}
     >
       <div className="max-w-6xl mx-auto">
         {/* Header */}

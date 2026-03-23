@@ -277,8 +277,8 @@ export default function Menu() {
   return (
     <section
       id="menu"
-      className="py-28 px-6"
-      style={{ background: "linear-gradient(180deg, #faecc4 0%, #fdf3d8 100%)" }}
+      className="py-20 px-6"
+      style={{ background: "#fdf6e3", borderTop: "1px solid rgba(180,120,0,0.1)" }}
     >
       <div className="max-w-4xl mx-auto">
         {/* Header */}
@@ -292,8 +292,8 @@ export default function Menu() {
             What We Serve
           </p>
           <h2
-            className="text-5xl md:text-6xl font-black mb-4"
-            style={{ fontFamily: "Georgia, serif", color: "#3d2200" }}
+            className="text-4xl md:text-5xl font-black mb-4"
+            style={{ fontFamily: "Georgia, serif", color: "#2a1200" }}
           >
             Our Menu
           </h2>

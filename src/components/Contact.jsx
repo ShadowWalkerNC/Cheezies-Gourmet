@@ -5,8 +5,8 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="py-28 px-6"
-      style={{ background: "linear-gradient(180deg, #fdf3d8 0%, #fff8e8 100%)" }}
+      className="py-20 px-6"
+      style={{ background: "#fdf6e3", borderTop: "1px solid rgba(180,120,0,0.1)" }}
     >
       <div className="max-w-5xl mx-auto">
         <motion.div

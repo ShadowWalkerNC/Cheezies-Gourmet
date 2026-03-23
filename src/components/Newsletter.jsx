@@ -25,8 +25,8 @@ export default function Newsletter() {
 
   return (
     <section
-      className="py-24 px-6"
-      style={{ background: "linear-gradient(180deg, #fdf3d8 0%, #faecc4 100%)" }}
+      className="py-20 px-6"
+      style={{ background: "#fffbf0", borderTop: "1px solid rgba(180,120,0,0.1)" }}
     >
       <div className="max-w-3xl mx-auto">
         <motion.div
