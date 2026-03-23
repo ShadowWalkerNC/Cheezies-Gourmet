@@ -5,9 +5,11 @@ import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'r
 import { AnimatePresence } from "framer-motion";
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
+import { ThemeProvider } from '@/lib/ThemeContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import BottomTabBar from './components/BottomTabBar';
 import ChatWidget from './components/ChatWidget';
+import InstallBanner from './components/InstallBanner';
 
 // Page imports
 import Home from "./pages/Home";
@@ -58,20 +60,23 @@ const AuthenticatedApp = () => {
       <AnimatedRoutes />
       <BottomTabBar />
       <ChatWidget />
+      <InstallBanner />
     </>
   );
 };
 
 function App() {
   return (
-    <AuthProvider>
-      <QueryClientProvider client={queryClientInstance}>
-        <Router>
-          <AuthenticatedApp />
-        </Router>
-        <Toaster />
-      </QueryClientProvider>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <QueryClientProvider client={queryClientInstance}>
+          <Router>
+            <AuthenticatedApp />
+          </Router>
+          <Toaster />
+        </QueryClientProvider>
+      </AuthProvider>
+    </ThemeProvider>
   )
 }
 
