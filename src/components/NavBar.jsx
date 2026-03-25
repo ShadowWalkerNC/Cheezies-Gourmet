@@ -14,7 +14,6 @@ export default function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 60);
@@ -82,14 +81,7 @@ export default function NavBar() {
               </button>
             );
           })}
-          <button
-            onClick={toggleTheme}
-            className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-105 select-none"
-            style={{ background: "rgba(201,148,10,0.1)" }}
-            aria-label="Toggle dark mode"
-          >
-            {theme === "dark" ? <Sun size={15} style={{ color: "#c9940a" }} /> : <Moon size={15} style={{ color: "#c9940a" }} />}
-          </button>
+
           <a
             href="tel:3305108875"
             className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-bold text-sm transition-all duration-200 hover:scale-105 select-none"
