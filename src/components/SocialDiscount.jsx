@@ -9,12 +9,12 @@ const steps = [
   {
     step: "02",
     label: "Post It",
-    desc: "Share it publicly on Facebook or Instagram.",
+    desc: "Share it publicly on Facebook, Instagram, or X.",
   },
   {
     step: "03",
     label: "Tag Us",
-    desc: "Tag @CheeziesGourmet and include #CheeziesGourmet in your post.",
+    desc: "Tag us and use #cheeziesohio in your post.",
   },
   {
     step: "04",
@@ -92,7 +92,7 @@ export default function SocialDiscount() {
           >
             <div className="text-left">
               <p className="font-black text-base mb-1" style={{ color: "#e8b800" }}>Ready to share?</p>
-              <p className="text-sm" style={{ color: "rgba(255,248,224,0.5)" }}>Follow our social pages and tag us after your next visit.</p>
+              <p className="text-sm" style={{ color: "rgba(255,248,224,0.5)" }}>Follow our social pages and tag <strong style={{color:"#e8b800"}}>#cheeziesohio</strong> after your next visit.</p>
             </div>
             <div className="flex gap-3 flex-shrink-0">
               <a
@@ -105,7 +105,7 @@ export default function SocialDiscount() {
                 Facebook
               </a>
               <a
-                href="https://www.instagram.com/cheeziesgourmet"
+                href="https://instagram.com/cheeziesohio"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-5 py-2.5 rounded-lg font-bold text-sm transition-all duration-200 hover:scale-105 select-none"

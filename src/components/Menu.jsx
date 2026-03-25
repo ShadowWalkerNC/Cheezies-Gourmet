@@ -186,7 +186,7 @@ function MenuItemCard({ item, index }) {
               <div className="px-4 py-4">
                 <p className="text-sm leading-relaxed mb-3" style={{ color: "rgba(61,34,0,0.7)" }}>{item.desc}</p>
                 <a
-                  href="https://cheeziesgourmetohio.square.site/?location_id=LXWMCZH8PDQSN&fulfillment=PICKUP"
+                  href="https://cheeziesgourmetohio.square.site/"
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={e => e.stopPropagation()}
@@ -275,7 +275,7 @@ export default function Menu() {
                 <div className="flex-1 h-px" style={{ background: "rgba(180,120,0,0.15)" }} />
               </div>
               {section.note && (
-                <p className="text-xs italic mb-5" style={{ color: "rgba(61,34,0,0.45)" }}>{section.note}</p>
+                <p className="text-xs font-semibold italic mb-5" style={{ color: "rgba(61,34,0,0.75)" }}>{section.note}</p>
               )}
               <div className={section.items.some(i => i.img) ? "grid sm:grid-cols-2 md:grid-cols-3 gap-4" : "space-y-3"}>
                 {section.items.map((item, i) => (
