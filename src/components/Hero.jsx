@@ -85,7 +85,7 @@ export default function Hero() {
             className="flex flex-wrap gap-4"
           >
             <a
-              href="https://cheeziesgourmetohio.square.site/?location_id=LXWMCZH8PDQSN&fulfillment=PICKUP"
+              href="https://cheeziesgourmetohio.square.site/"
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-4 rounded-lg font-black text-base transition-all duration-300 hover:scale-105 select-none"
