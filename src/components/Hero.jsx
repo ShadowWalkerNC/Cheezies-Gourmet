@@ -8,7 +8,7 @@ export default function Hero() {
     <section className="relative flex items-end overflow-hidden" style={{ minHeight: "100svh", background: "#1a0800" }}>
       {/* Full-bleed food photo — using the uploaded Cheezies image */}
       <img
-        src="https://media.base44.com/images/public/69b410ceece31b13c728497b/abd246c6b_cheezies_gourmet_grilled_cheese_home1.png"
+        src="https://media.base44.com/images/public/69b410ceece31b13c728497b/5e68b0a48_generated_image.png"
         alt="Cheezies Gourmet artisan grilled cheese sandwich"
         className="absolute inset-0 w-full h-full object-cover"
         style={{ opacity: 0.85 }}

@@ -275,7 +275,10 @@ export default function Menu() {
                 <div className="flex-1 h-px" style={{ background: "rgba(180,120,0,0.15)" }} />
               </div>
               {section.note && (
-                <p className="text-xs font-semibold italic mb-5" style={{ color: "rgba(61,34,0,0.75)" }}>{section.note}</p>
+                <div className="inline-flex items-center gap-2 mb-5 px-4 py-2 rounded-lg" style={{ background: "rgba(201,148,10,0.13)", border: "1.5px solid rgba(201,148,10,0.35)" }}>
+                  <span style={{ fontSize: "16px" }}>🧀</span>
+                  <p className="text-sm font-black uppercase tracking-wide" style={{ color: "#8a5a00" }}>{section.note}</p>
+                </div>
               )}
               <div className={section.items.some(i => i.img) ? "grid sm:grid-cols-2 md:grid-cols-3 gap-4" : "space-y-3"}>
                 {section.items.map((item, i) => (
