@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Sun, Moon } from "lucide-react";
-import { useTheme } from "@/lib/ThemeContext";
+
 
 const tabs = [
   { label: "About",    path: "/Home" },
