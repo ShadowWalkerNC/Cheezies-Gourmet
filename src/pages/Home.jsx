@@ -1,10 +1,10 @@
 import Hero from "../components/Hero";
-import About from "../components/About";
 import FeaturedMenu from "../components/FeaturedMenu";
+import About from "../components/About";
 import Newsletter from "../components/Newsletter";
 import SocialDiscount from "../components/SocialDiscount";
-import CateringPreview from "../components/CateringPreview";
-import ContactPreview from "../components/ContactPreview";
+import CateringTeaser from "../components/CateringTeaser";
+import Contact from "../components/Contact";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import PageTransition from "../components/PageTransition";
@@ -26,8 +26,8 @@ export default function Home() {
           <FeaturedMenu />
           <Newsletter />
           <SocialDiscount />
-          <CateringPreview />
-          <ContactPreview />
+          <CateringTeaser />
+          <Contact />
           <Footer />
           <div className="md:hidden" style={{ height: "var(--tab-bar-h)" }} />
         </PullToRefresh>

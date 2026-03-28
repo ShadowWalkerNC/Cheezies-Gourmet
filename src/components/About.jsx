@@ -37,13 +37,31 @@ export default function About() {
             <p className="text-base leading-relaxed mb-7" style={{ color: "rgba(61,34,0,0.65)" }}>
               Cheezies started with one idea — take the most comforting food in the world and make it extraordinary. We blend bold flavors, premium ingredients, and a whole lot of heart into every sandwich. Born and raised in Akron, Ohio, proud to serve our community fresh to order.
             </p>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 mb-7">
               {[["Made Fresh", "Crafted to order."], ["Premium Cheese", "Melted perfectly."], ["Akron Proud", "Community first."]].map(([title, desc]) => (
                 <div key={title} className="rounded-lg px-4 py-3 text-sm" style={{ background: "rgba(201,148,10,0.08)", border: "1px solid rgba(180,120,0,0.18)" }}>
                   <p className="font-black mb-0.5" style={{ color: "#2a1200" }}>{title}</p>
                   <p className="text-xs" style={{ color: "rgba(61,34,0,0.55)" }}>{desc}</p>
                 </div>
               ))}
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="https://cheeziesgourmetohio.square.site/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 hover:scale-105 select-none"
+                style={{ background: "#c9940a", color: "#fff8e8", textDecoration: "none", boxShadow: "0 4px 16px rgba(180,120,0,0.25)" }}
+              >
+                Order Online
+              </a>
+              <a
+                href="tel:3305108875"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 hover:scale-105 select-none"
+                style={{ background: "rgba(201,148,10,0.08)", border: "1.5px solid rgba(180,120,0,0.2)", color: "#2a1200", textDecoration: "none" }}
+              >
+                330-510-8875
+              </a>
             </div>
           </div>
         </motion.div>
