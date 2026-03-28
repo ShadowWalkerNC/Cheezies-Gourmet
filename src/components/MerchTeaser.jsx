@@ -20,11 +20,7 @@ export default function MerchTeaser() {
   const handleNotify = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-    await base44.integrations.Core.SendEmail({
-      to: "cheeziesgourmet@gmail.com",
-      subject: "Merch Drop Notification Request",
-      body: `Notify on merch launch: ${email}`,
-    });
+    await base44.functions.invoke("sendNotification", { type: "merch_notify", data: { email } });
     setSubmitting(false);
     setDone(true);
     toast({ title: "🛍️ We'll notify you!", description: "Be the first to grab Cheezies merch." });

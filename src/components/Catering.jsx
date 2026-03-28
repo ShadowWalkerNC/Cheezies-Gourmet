@@ -126,10 +126,9 @@ export default function Catering() {
     setForm({ name: "", email: "", phone: "", event_type: "", date: "", guests: "", message: "" });
     toast({ title: "Inquiry Sent! 🎉", description: "We'll be in touch within 24 hours." });
     // Fire-and-forget background send
-    base44.integrations.Core.SendEmail({
-      to: "cheeziesgourmet@gmail.com",
-      subject: `Catering Inquiry from ${form.name}`,
-      body: `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nEvent Type: ${form.event_type}\nDate: ${form.date}\nGuests: ${form.guests}\n\nMessage:\n${form.message}`,
+    base44.functions.invoke("sendNotification", {
+      type: "catering_inquiry",
+      data: { name: form.name, email: form.email, phone: form.phone, eventType: form.event_type, guestCount: form.guests, date: form.date, message: form.message },
     }).finally(() => setSubmitting(false));
   };
 

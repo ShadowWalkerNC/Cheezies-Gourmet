@@ -31,11 +31,7 @@ export default function NewsletterPopup() {
     toast({ title: "🧀 You're in!", description: "We'll let you know where we're rolling next." });
     setTimeout(() => dismiss(), 2200);
     // Background send
-    base44.integrations.Core.SendEmail({
-      to: "cheeziesgourmet@gmail.com",
-      subject: "New Newsletter Subscriber",
-      body: `New subscriber: ${email}`,
-    });
+    base44.functions.invoke("sendNotification", { type: "newsletter_signup", data: { email } });
   };
 
   return (

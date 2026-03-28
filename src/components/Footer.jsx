@@ -13,11 +13,7 @@ export default function Footer() {
     const captured = email;
     setEmail("");
     toast({ title: "You're subscribed!", description: "We'll keep you in the loop." });
-    base44.integrations.Core.SendEmail({
-      to: "cheeziesgourmet@gmail.com",
-      subject: "New Newsletter Subscriber",
-      body: `New subscriber: ${captured}`,
-    });
+    base44.functions.invoke("sendNotification", { type: "newsletter_signup", data: { email: captured } });
   };
 
   return (

@@ -21,11 +21,7 @@ export default function Newsletter() {
     const captured = email;
     setEmail("");
     toast({ title: "You're on the list!", description: "We'll let you know when we're rolling your way." });
-    base44.integrations.Core.SendEmail({
-      to: "cheeziesgourmet@gmail.com",
-      subject: "New Newsletter Subscriber",
-      body: `New subscriber: ${captured}`,
-    });
+    base44.functions.invoke("sendNotification", { type: "newsletter_signup", data: { email: captured } });
   };
 
   return (

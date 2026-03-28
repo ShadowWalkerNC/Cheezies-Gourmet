@@ -23,11 +23,7 @@ export default function ProfilePage() {
   const handleDeleteAccount = async () => {
     setDeleting(true);
     // Send notification email then logout — actual deletion handled server-side by platform
-    await base44.integrations.Core.SendEmail({
-      to: "cheeziesgourmet@gmail.com",
-      subject: "Account Deletion Request",
-      body: `User ${user?.email} (${user?.full_name}) has requested account deletion.`,
-    });
+    await base44.functions.invoke("sendNotification", { type: "account_deletion", data: {} });
     toast({ title: "Request submitted", description: "Your account deletion has been requested. You will be logged out." });
     setTimeout(() => base44.auth.logout("/"), 1800);
   };
