@@ -1,16 +1,15 @@
 import Hero from "../components/Hero";
-import Menu from "../components/Menu";
 import About from "../components/About";
-import Catering from "../components/Catering";
+import FeaturedMenu from "../components/FeaturedMenu";
 import Newsletter from "../components/Newsletter";
-import Contact from "../components/Contact";
+import SocialDiscount from "../components/SocialDiscount";
+import CateringPreview from "../components/CateringPreview";
+import ContactPreview from "../components/ContactPreview";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import PageTransition from "../components/PageTransition";
 import PullToRefresh from "../components/PullToRefresh";
 import NewsletterPopup from "../components/NewsletterPopup";
-import SocialDiscount from "../components/SocialDiscount";
-
 
 export default function Home() {
   const handleRefresh = () =>
@@ -24,11 +23,11 @@ export default function Home() {
         <PullToRefresh onRefresh={handleRefresh}>
           <Hero />
           <About />
-          <Menu />
+          <FeaturedMenu />
           <Newsletter />
           <SocialDiscount />
-          <Catering />
-          <Contact />
+          <CateringPreview />
+          <ContactPreview />
           <Footer />
           <div className="md:hidden" style={{ height: "var(--tab-bar-h)" }} />
         </PullToRefresh>
