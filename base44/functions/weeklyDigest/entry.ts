@@ -7,7 +7,7 @@ Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
 
-    // Get total registered users
+    // Get all users
     const users = await base44.asServiceRole.entities.User.list();
     const totalUsers = users.length;
 
@@ -17,6 +17,12 @@ Deno.serve(async (req) => {
     const newUsers = users.filter(u => new Date(u.created_date) >= oneWeekAgo).length;
 
     const weekOf = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "America/New_York" });
+
+    // Find owner in registered users and send email
+    const owner = users.find(u => u.email === OWNER_EMAIL);
+    if (!owner) {
+      return Response.json({ success: false, message: `Owner (${OWNER_EMAIL}) must be a registered app user to receive emails. Please invite them via the dashboard.` });
+    }
 
     await base44.asServiceRole.integrations.Core.SendEmail({
       to: OWNER_EMAIL,

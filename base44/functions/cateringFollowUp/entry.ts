@@ -10,7 +10,13 @@ Deno.serve(async (req) => {
 
     const now = new Date();
     const date = now.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", timeZone: "America/New_York" });
-    const time = now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", timeZone: "America/New_York" });
+
+    // Verify owner is a registered user
+    const users = await base44.asServiceRole.entities.User.list();
+    const owner = users.find(u => u.email === OWNER_EMAIL);
+    if (!owner) {
+      return Response.json({ success: false, message: `Owner (${OWNER_EMAIL}) must be a registered app user to receive emails.` });
+    }
 
     await base44.asServiceRole.integrations.Core.SendEmail({
       to: OWNER_EMAIL,
