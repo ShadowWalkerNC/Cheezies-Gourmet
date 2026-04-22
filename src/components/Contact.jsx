@@ -33,8 +33,8 @@ const socials = [
 ];
 
 const hours = [
-  { day: "April: Sat – Sun", time: "Noon – 7:00 PM" },
-  { day: "May+: Wed – Sun", time: "Noon – 7:00 PM" },
+  { day: "Tue – Sun", time: "Noon – 6:00 PM" },
+  { day: "Monday", time: "Closed" },
 ];
 
 export default function Contact() {

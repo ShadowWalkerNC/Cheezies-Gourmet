@@ -46,8 +46,7 @@ export default function About() {
               ))}
             </div>
             <p className="text-xs mb-4" style={{ color: "rgba(61,34,0,0.45)" }}>
-              <strong>April:</strong> Sat–Sun Noon–7 PM (Closed Mon–Fri)<br />
-              <strong>May onward:</strong> Wed–Sun Noon–7 PM (Closed Mon–Tue)<br />
+              <strong>Tue – Sun:</strong> Noon – 6:00 PM &nbsp;|&nbsp; <strong>Closed Monday</strong><br />
               Hours may vary based on event schedule. Follow us on Facebook for daily updates.
             </p>
           <div className="flex flex-wrap gap-3">
