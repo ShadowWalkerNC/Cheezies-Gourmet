@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
+import AdminMenuManager from "@/components/admin/AdminMenuManager";
 
 const PASSWORD = "Cheezies0h!026";
 
@@ -377,6 +378,9 @@ export default function AdminPage() {
         >
           {saving ? "Saving…" : saveSuccess ? "✓ Saved & Published!" : "Save & Publish"}
         </button>
+
+        {/* Menu Manager */}
+        <AdminMenuManager />
       </div>
     </div>
   );
