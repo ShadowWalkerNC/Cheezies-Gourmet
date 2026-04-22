@@ -3,7 +3,7 @@ import { useState } from "react";
 
 const socials = [
   {
-    href: "https://www.facebook.com/profile.php?id=61572987417963",
+    href: "https://www.facebook.com/cheeziesohio",
     label: "Facebook",
     sub: "Daily location updates",
     color: "#1877F2",
@@ -33,8 +33,8 @@ const socials = [
 ];
 
 const hours = [
-  { day: "Monday – Friday", time: "11:00 AM – 7:00 PM" },
-  { day: "Saturday – Sunday", time: "11:00 AM – 5:00 PM" },
+  { day: "Monday – Friday", time: "11:30 AM – 7:00 PM" },
+  { day: "Saturday – Sunday", time: "11:30 AM – 8:00 PM" },
 ];
 
 export default function Contact() {
@@ -105,12 +105,12 @@ export default function Contact() {
                 We move daily — follow our social pages for today's exact spot.
               </p>
               <a
-                href="https://www.facebook.com/profile.php?id=61572987417963"
+                href="https://www.facebook.com/cheeziesohio/posts"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full text-center py-2.5 rounded-lg font-bold text-sm transition-all duration-200 hover:scale-105"
                 style={{ background: "#1877F2", color: "#fff", textDecoration: "none" }}
-              >
+                >
                 Today's Location on Facebook
               </a>
             </div>
@@ -129,7 +129,7 @@ export default function Contact() {
                   </div>
                 ))}
               </div>
-              <p className="text-xs mt-4" style={{ color: "rgba(61,34,0,0.35)" }}>Hours vary by event. Check social for details.</p>
+              <p className="text-xs mt-4" style={{ color: "rgba(61,34,0,0.35)" }}>Hours may vary based on event schedule. Follow us on Facebook for daily updates.</p>
             </div>
 
             {/* Phone */}

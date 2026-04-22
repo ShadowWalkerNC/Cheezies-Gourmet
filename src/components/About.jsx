@@ -45,7 +45,11 @@ export default function About() {
                 </div>
               ))}
             </div>
-            <div className="flex flex-wrap gap-3">
+            <p className="text-xs mb-4" style={{ color: "rgba(61,34,0,0.45)" }}>
+              Mon–Fri: 11:30 AM – 7:00 PM &nbsp;|&nbsp; Sat–Sun: 11:30 AM – 8:00 PM<br />
+              Hours may vary based on event schedule. Follow us on Facebook for daily updates.
+            </p>
+          <div className="flex flex-wrap gap-3">
               <a
                 href="https://cheeziesgourmetohio.square.site/"
                 target="_blank"

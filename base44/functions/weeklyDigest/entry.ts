@@ -1,6 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.23';
 
-const OWNER_EMAIL = Deno.env.get("OWNER_EMAIL") || "cheeziesgourmet@gmail.com";
+const OWNER_EMAIL = Deno.env.get("OWNER_EMAIL") || "oglmf@hotmail.com";
 
 // Runs every Monday to send a weekly activity summary
 Deno.serve(async (req) => {
