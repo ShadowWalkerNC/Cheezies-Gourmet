@@ -209,7 +209,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: "#fffbf0" }}>
+    <div style={{ minHeight: "100vh", background: "#fffbf0", paddingBottom: "6rem" }}>
       {/* Header */}
       <div
         className="px-6 py-4 flex items-center justify-between"
@@ -289,6 +289,7 @@ export default function AdminPage() {
               center={mapCenter}
               zoom={13}
               style={{ height: "100%", width: "100%" }}
+              scrollWheelZoom={false}
             >
               <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
               <MapClickHandler onMapClick={handleMapClick} />
