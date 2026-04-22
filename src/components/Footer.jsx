@@ -22,9 +22,16 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
         {/* Brand */}
         <div>
-          <p className="font-black text-3xl mb-2" style={{ fontFamily: "Georgia, serif", color: "#e8b800" }}>
-            Chee<span style={{ color: "#fff8e8" }}>zies</span>
-          </p>
+          <div className="flex items-center gap-2 mb-2">
+            <img
+              src="https://media.base44.com/images/public/69b410ceece31b13c728497b/06fccc93b_att9-YFCNw5rB2_I85h94Rbhld2X747QJF1tj_FXZUUa5c.jpg"
+              alt="Cheezies logo"
+              className="h-10 w-10 object-contain rounded"
+            />
+            <p className="font-black text-3xl" style={{ fontFamily: "Georgia, serif", color: "#e8b800" }}>
+              Chee<span style={{ color: "#fff8e8" }}>zies</span>
+            </p>
+          </div>
           <p className="text-sm mb-4 leading-relaxed" style={{ color: "rgba(255,248,232,0.5)" }}>
             Gourmet Grilled Creations<br />Akron, Ohio
           </p>

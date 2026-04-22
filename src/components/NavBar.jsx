@@ -49,11 +49,16 @@ export default function NavBar() {
         {/* Logo — Georgia serif, warm brown, consistent everywhere */}
         <button
           onClick={() => handleLink("/Home")}
-          className="select-none"
+          className="select-none flex items-center gap-2"
           style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
         >
+          <img
+            src="https://media.base44.com/images/public/69b410ceece31b13c728497b/06fccc93b_att9-YFCNw5rB2_I85h94Rbhld2X747QJF1tj_FXZUUa5c.jpg"
+            alt="Cheezies logo"
+            className="h-10 w-10 object-contain rounded"
+          />
           <span
-            className="font-black text-3xl"
+            className="font-black text-2xl"
             style={{ color: "#3d2200", fontFamily: "Georgia, serif", letterSpacing: "-0.03em" }}
           >
             Chee<span style={{ color: "#c9940a" }}>zies</span>
