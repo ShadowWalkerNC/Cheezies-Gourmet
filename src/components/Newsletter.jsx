@@ -158,7 +158,7 @@ export default function Newsletter() {
             </p>
             <div className="flex flex-col gap-2">
               <a
-                href="https://www.facebook.com/profile.php?id=61572987417963"
+                href="https://www.facebook.com/cheeziesohio"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 py-2.5 rounded-lg font-bold text-sm transition-all duration-200 hover:scale-105 select-none"

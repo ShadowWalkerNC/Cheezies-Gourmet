@@ -33,8 +33,8 @@ const socials = [
 ];
 
 const hours = [
-  { day: "Monday – Friday", time: "11:30 AM – 7:00 PM" },
-  { day: "Saturday – Sunday", time: "11:30 AM – 8:00 PM" },
+  { day: "April: Sat – Sun", time: "Noon – 7:00 PM" },
+  { day: "May+: Wed – Sun", time: "Noon – 7:00 PM" },
 ];
 
 export default function Contact() {
@@ -105,7 +105,7 @@ export default function Contact() {
                 We move daily — follow our social pages for today's exact spot.
               </p>
               <a
-                href="https://www.facebook.com/cheeziesohio/posts"
+                href="https://www.facebook.com/cheeziesohio"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full text-center py-2.5 rounded-lg font-bold text-sm transition-all duration-200 hover:scale-105"

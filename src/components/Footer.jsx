@@ -49,8 +49,12 @@ export default function Footer() {
         <div>
           <p className="font-bold text-sm tracking-widest uppercase mb-4" style={{ color: "rgba(255,248,232,0.4)" }}>Hours of Operation</p>
           <div className="space-y-1.5 text-sm" style={{ color: "rgba(255,248,232,0.65)" }}>
-            <p>Mon – Fri &nbsp;&nbsp; 11:30 AM – 7:00 PM</p>
-            <p>Sat – Sun &nbsp;&nbsp; 11:30 AM – 8:00 PM</p>
+            <p className="font-bold text-xs uppercase mb-1" style={{ color: "rgba(255,248,232,0.4)" }}>April</p>
+            <p>Sat – Sun &nbsp;&nbsp;&nbsp; Noon – 7:00 PM</p>
+            <p className="text-xs italic" style={{ color: "rgba(255,248,232,0.3)" }}>Closed Mon – Fri</p>
+            <p className="font-bold text-xs uppercase mt-3 mb-1" style={{ color: "rgba(255,248,232,0.4)" }}>May onward</p>
+            <p>Wed – Sun &nbsp; Noon – 7:00 PM</p>
+            <p className="text-xs italic" style={{ color: "rgba(255,248,232,0.3)" }}>Closed Mon – Tue</p>
             <p className="mt-3 text-xs" style={{ color: "rgba(255,248,232,0.35)" }}>
               * Hours may vary based on event schedule.<br />Follow us on Facebook for daily updates.
             </p>
