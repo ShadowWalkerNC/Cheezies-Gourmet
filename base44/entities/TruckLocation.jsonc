@@ -26,12 +26,39 @@
     },
     "note": {
       "type": "string",
-      "description": "Optional message to display to customers (e.g. special today, event info)"
+      "description": "Optional message to display to customers"
     },
     "is_active": {
       "type": "boolean",
       "default": true,
       "description": "Whether this is the current active location record"
+    },
+    "home_latitude": {
+      "type": "number",
+      "description": "Default/home base latitude (shown when closed)"
+    },
+    "home_longitude": {
+      "type": "number",
+      "description": "Default/home base longitude (shown when closed)"
+    },
+    "home_address": {
+      "type": "string",
+      "description": "Default/home base address (shown when closed)"
+    },
+    "hours_open": {
+      "type": "string",
+      "description": "Opening time, e.g. 12:00 PM"
+    },
+    "hours_close": {
+      "type": "string",
+      "description": "Closing time, e.g. 6:00 PM"
+    },
+    "open_days": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Days of week the truck is open, e.g. ['Tue','Wed','Thu','Fri','Sat','Sun']"
     }
   },
   "required": []
