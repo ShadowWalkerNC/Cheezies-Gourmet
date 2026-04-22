@@ -1,5 +1,5 @@
 import NavBar from "../components/NavBar";
-import Menu from "../components/Menu";
+import Menu from "../components/Menu.jsx";
 import Footer from "../components/Footer";
 import PageTransition from "../components/PageTransition";
 import PullToRefresh from "../components/PullToRefresh";

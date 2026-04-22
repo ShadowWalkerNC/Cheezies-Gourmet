@@ -1,5 +1,5 @@
 import Hero from "../components/Hero";
-import FeaturedMenu from "../components/FeaturedMenu";
+import FeaturedMenu from "../components/FeaturedMenu.jsx";
 import About from "../components/About";
 import Newsletter from "../components/Newsletter";
 import SocialDiscount from "../components/SocialDiscount";

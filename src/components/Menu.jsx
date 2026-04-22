@@ -11,7 +11,6 @@ const SECTION_NOTES = {
   "Add-Ons & Extras": "Make it your own with our curated selection of premium add-ons.",
 };
 
-// Fallback hardcoded data if DB is empty
 const FALLBACK_SECTIONS = [
   {
     title: "Signature Creations",
@@ -37,7 +36,7 @@ const FALLBACK_SECTIONS = [
   {
     title: "Sides & Refreshments",
     items: [
-      { name: "Five Star Bacon Mac & Cheese", badge: "Legendary", badge_color: "#c9940a", desc: "Our legendary, decadent masterpiece. We fold tender macaroni into a silky, triple-cheese blend of velvety Velveeta, sharp aged white cheddar, and smoky gouda. Made rich with heavy cream and butter, infused with savory bacon grease, and loaded with bacon bits. Finished with our \"Cheezies Secret Seasoning.\" Sub for chips in a meal for +$2.", price: "$6 / $10", price_note: "Regular 16oz / Large 32oz" },
+      { name: "Five Star Bacon Mac & Cheese", badge: "Legendary", badge_color: "#c9940a", desc: 'Our legendary, decadent masterpiece. We fold tender macaroni into a silky, triple-cheese blend of velvety Velveeta, sharp aged white cheddar, and smoky gouda. Made rich with heavy cream and butter, infused with savory bacon grease, and loaded with bacon bits. Finished with our "Cheezies Secret Seasoning." Sub for chips in a meal for +$2.', price: "$6 / $10", price_note: "Regular 16oz / Large 32oz" },
       { name: "Beverages", desc: "Canned Soda or Bottled Water", price: "$2" },
     ],
   },
@@ -128,7 +127,7 @@ function MenuItemCard({ item, index }) {
 }
 
 export default function Menu() {
-  const [dbItems, setDbItems] = useState(null); // null = loading
+  const [dbItems, setDbItems] = useState(null);
 
   useEffect(() => {
     base44.entities.MenuItem.filter({ is_active: true }, "sort_order", 200).then(data => {
@@ -136,7 +135,6 @@ export default function Menu() {
     });
   }, []);
 
-  // Build sections from DB or fallback
   const sections = dbItems && dbItems.length > 0
     ? SECTIONS.map(title => ({
         title,
