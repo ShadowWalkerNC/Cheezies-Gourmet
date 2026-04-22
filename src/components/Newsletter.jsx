@@ -36,7 +36,7 @@ export default function Newsletter() {
             Know Where We Are
           </h2>
           <p className="text-base max-w-lg mx-auto" style={{ color: "rgba(61,34,0,0.55)" }}>
-            Never miss the truck — get daily location drops your way.
+            Follow us on Facebook or sign up for email updates — we'll keep you in the loop.
           </p>
         </motion.div>
 
