@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -6,6 +6,24 @@ export default function Footer() {
   const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(false);
+  const [truckData, setTruckData] = useState(null);
+
+  useEffect(() => {
+    base44.entities.TruckLocation.list("-updated_date", 1).then(records => {
+      if (records.length > 0) setTruckData(records[0]);
+    });
+    const unsub = base44.entities.TruckLocation.subscribe(event => {
+      if (event.type === "create" || event.type === "update") setTruckData(event.data);
+    });
+    return unsub;
+  }, []);
+
+  const hoursText = truckData?.hours_open && truckData?.hours_close
+    ? `${truckData.hours_open} – ${truckData.hours_close}`
+    : "Noon – 6:00 PM";
+  const openDays = truckData?.open_days;
+  const daysLabel = openDays && openDays.length > 0 ? openDays.join(", ") : "Tue – Sun";
+  const closedDays = openDays && !openDays.includes("Mon") ? "Closed Monday" : null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -56,8 +74,8 @@ export default function Footer() {
         <div>
           <p className="font-bold text-sm tracking-widest uppercase mb-4" style={{ color: "rgba(255,248,232,0.4)" }}>Hours of Operation</p>
           <div className="space-y-1.5 text-sm" style={{ color: "rgba(255,248,232,0.65)" }}>
-            <p>Tue – Sun &nbsp;&nbsp;&nbsp; Noon – 6:00 PM</p>
-            <p className="text-xs italic" style={{ color: "rgba(255,248,232,0.3)" }}>Closed Monday</p>
+            <p>{daysLabel} &nbsp;&nbsp;&nbsp; {hoursText}</p>
+            {closedDays && <p className="text-xs italic" style={{ color: "rgba(255,248,232,0.3)" }}>{closedDays}</p>}
             <p className="mt-3 text-xs" style={{ color: "rgba(255,248,232,0.35)" }}>
               * Hours may vary based on event schedule.<br />Follow us on Facebook for daily updates.
             </p>
