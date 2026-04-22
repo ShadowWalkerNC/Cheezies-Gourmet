@@ -10,6 +10,7 @@ const featured = [
     desc: "Smash-seared Prime Rib patty, caramelized onions, Swiss & American, sweet & tangy sauce on sourdough.",
     price: "$13",
     img: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b410ceece31b13c728497b/dc51ccc91_generated_image.png",
+    alt: "The Patty Meltdown — gourmet grilled cheese with smash-seared prime rib patty and caramelized onions on sourdough, Cheezies Gourmet Akron Ohio",
   },
   {
     name: "The Mac Attack",
@@ -18,6 +19,7 @@ const featured = [
     desc: "Bacon Mac & Cheese stuffed between thick Texas Toast. The ultimate indulgence.",
     price: "$12",
     img: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b410ceece31b13c728497b/1b08b210d_generated_image.png",
+    alt: "The Mac Attack — bacon mac and cheese grilled cheese sandwich on Texas Toast, Cheezies Gourmet food truck Akron Ohio",
   },
   {
     name: "The Truffle Melt",
@@ -26,6 +28,7 @@ const featured = [
     desc: "Gruyere, sautéed mushrooms, fresh thyme & truffle oil drizzle on golden sourdough.",
     price: "$15",
     img: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b410ceece31b13c728497b/ca1d3d7f8_generated_image.png",
+    alt: "The Truffle Melt — Gruyere cheese, sautéed mushrooms and truffle oil on sourdough, premium gourmet grilled cheese Cheezies Akron",
   },
 ];
 
@@ -71,7 +74,7 @@ export default function FeaturedMenu() {
               style={{ background: "#fff", border: "1px solid rgba(180,120,0,0.14)", boxShadow: "0 2px 12px rgba(180,120,0,0.07)" }}
             >
               <div className="relative h-40 overflow-hidden">
-                <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
+                <img src={item.img} alt={item.alt} className="w-full h-full object-cover" />
                 <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(30,12,0,0.65) 0%, transparent 55%)" }} />
                 {item.badge && (
                   <span
