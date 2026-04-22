@@ -23,19 +23,34 @@ import AdminPage from "./pages/AdminPage";
 function AnimatedRoutes() {
   const location = useLocation();
   return (
-    <AnimatePresence mode="wait" initial={false}>
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Navigate to="/Home" replace />} />
-        <Route path="/Home" element={<Home />} />
-        <Route path="/Menu" element={<MenuPage />} />
-        <Route path="/Catering" element={<CateringPage />} />
-        <Route path="/Contact" element={<ContactPage />} />
-        <Route path="/Profile" element={<ProfilePage />} />
-        <Route path="/FindUs" element={<FindUs />} />
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-    </AnimatePresence>
+    <Routes>
+      {/* Admin page — completely isolated, no animations, no overlays */}
+      <Route path="/admin" element={<AdminPage />} />
+
+      {/* All other pages — animated with tab bar + chat */}
+      <Route
+        path="*"
+        element={
+          <>
+            <AnimatePresence mode="wait" initial={false}>
+              <Routes location={location} key={location.pathname}>
+                <Route path="/" element={<Navigate to="/Home" replace />} />
+                <Route path="/Home" element={<Home />} />
+                <Route path="/Menu" element={<MenuPage />} />
+                <Route path="/Catering" element={<CateringPage />} />
+                <Route path="/Contact" element={<ContactPage />} />
+                <Route path="/Profile" element={<ProfilePage />} />
+                <Route path="/FindUs" element={<FindUs />} />
+                <Route path="*" element={<PageNotFound />} />
+              </Routes>
+            </AnimatePresence>
+            <BottomTabBar />
+            <ChatWidget />
+            <InstallBanner />
+          </>
+        }
+      />
+    </Routes>
   );
 }
 
@@ -59,14 +74,7 @@ const AuthenticatedApp = () => {
     }
   }
 
-  return (
-    <>
-      <AnimatedRoutes />
-      <BottomTabBar />
-      <ChatWidget />
-      <InstallBanner />
-    </>
-  );
+  return <AnimatedRoutes />;
 };
 
 function App() {
