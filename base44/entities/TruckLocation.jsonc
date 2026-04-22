@@ -1,0 +1,38 @@
+{
+  "name": "TruckLocation",
+  "type": "object",
+  "properties": {
+    "latitude": {
+      "type": "number",
+      "description": "Current latitude of the truck"
+    },
+    "longitude": {
+      "type": "number",
+      "description": "Current longitude of the truck"
+    },
+    "address": {
+      "type": "string",
+      "description": "Human-readable address of the truck's current location"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "closed",
+        "en_route"
+      ],
+      "default": "closed",
+      "description": "Current operational status of the truck"
+    },
+    "note": {
+      "type": "string",
+      "description": "Optional message to display to customers (e.g. special today, event info)"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this is the current active location record"
+    }
+  },
+  "required": []
+}
