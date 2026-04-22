@@ -18,7 +18,7 @@ export default function About() {
           {/* Image */}
           <div className="flex-shrink-0 w-full md:w-80 h-60 md:h-80 rounded-xl overflow-hidden shadow-lg flex items-center justify-center" style={{ background: "#fffbf0" }}>
             <img
-              src="https://media.base44.com/images/public/69b410ceece31b13c728497b/06fccc93b_att9-YFCNw5rB2_I85h94Rbhld2X747QJF1tj_FXZUUa5c.jpg"
+              src="https://media.base44.com/images/public/69b410ceece31b13c728497b/03ee6d0a3_generated_image.png"
               alt="Cheezies gourmet grilled cheese mascot"
               className="w-full h-full object-contain"
             />

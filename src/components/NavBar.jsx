@@ -53,7 +53,7 @@ export default function NavBar() {
           style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
         >
           <img
-            src="https://media.base44.com/images/public/69b410ceece31b13c728497b/06fccc93b_att9-YFCNw5rB2_I85h94Rbhld2X747QJF1tj_FXZUUa5c.jpg"
+            src="https://media.base44.com/images/public/69b410ceece31b13c728497b/03ee6d0a3_generated_image.png"
             alt="Cheezies logo"
             className="h-10 w-10 object-contain rounded"
           />
