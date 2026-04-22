@@ -1,16 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import L from "leaflet";
-
-// Fix default leaflet marker icons
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-});
 
 const PASSWORD = "Cheezies0h!026";
 
@@ -20,14 +9,6 @@ const statusLabels = {
   en_route: { label: "En Route", color: "#f59e0b" },
 };
 
-function MapClickHandler({ onMapClick }) {
-  useMapEvents({
-    click(e) {
-      onMapClick(e.latlng);
-    },
-  });
-  return null;
-}
 
 export default function AdminPage() {
   const [authed, setAuthed] = useState(false);
@@ -41,7 +22,8 @@ export default function AdminPage() {
   const [saving, setSaving] = useState(false);
   const [gpsLoading, setGpsLoading] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
-  const [mapCenter, setMapCenter] = useState([41.0814, -81.5190]); // Akron, OH default
+  const [mapCenter, setMapCenter] = useState([41.0814, -81.5190]);
+  const [mapKey, setMapKey] = useState(0);
 
   useEffect(() => {
     const saved = sessionStorage.getItem("cheezies_admin_authed");
@@ -94,6 +76,7 @@ export default function AdminPage() {
         const lng = pos.coords.longitude;
         setLocation({ lat, lng });
         setMapCenter([lat, lng]);
+        setMapKey(k => k + 1);
 
         // Reverse geocode
         try {
@@ -113,19 +96,6 @@ export default function AdminPage() {
       },
       { enableHighAccuracy: true }
     );
-  };
-
-  const handleMapClick = async ({ lat, lng }) => {
-    setLocation({ lat, lng });
-    try {
-      const res = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`
-      );
-      const data = await res.json();
-      setAddress(data.display_name || `${lat.toFixed(5)}, ${lng.toFixed(5)}`);
-    } catch {
-      setAddress(`${lat.toFixed(5)}, ${lng.toFixed(5)}`);
-    }
   };
 
   const handleSave = async () => {
@@ -279,27 +249,24 @@ export default function AdminPage() {
             {gpsLoading ? "Getting GPS..." : "📍 Use My Current Location"}
           </button>
 
-          <p className="text-xs text-center mb-4" style={{ color: "rgba(61,34,0,0.4)" }}>
-            — or tap anywhere on the map to set location —
-          </p>
-
-          {/* Map */}
-          <div className="rounded-xl overflow-hidden mb-4" style={{ height: 300 }}>
-            <MapContainer
-              center={mapCenter}
-              zoom={13}
-              style={{ height: "100%", width: "100%" }}
-              scrollWheelZoom={false}
-            >
-              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              <MapClickHandler onMapClick={handleMapClick} />
-              {location && (
-                <Marker position={[location.lat, location.lng]}>
-                  <Popup>Cheezies is here!</Popup>
-                </Marker>
-              )}
-            </MapContainer>
-          </div>
+          {/* Map preview */}
+          {location && (
+            <div className="rounded-xl overflow-hidden mb-4" style={{ height: 220 }}>
+              <iframe
+                key={mapKey}
+                title="Truck Location"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                src={`https://www.openstreetmap.org/export/embed.html?bbox=${location.lng - 0.01},${location.lat - 0.01},${location.lng + 0.01},${location.lat + 0.01}&layer=mapnik&marker=${location.lat},${location.lng}`}
+              />
+            </div>
+          )}
+          {!location && (
+            <div className="rounded-xl mb-4 flex items-center justify-center text-sm" style={{ height: 120, background: "rgba(201,148,10,0.05)", border: "1.5px dashed rgba(180,120,0,0.2)", color: "rgba(61,34,0,0.4)" }}>
+              Use GPS or type an address to set location
+            </div>
+          )}
 
           {/* Address */}
           <input
