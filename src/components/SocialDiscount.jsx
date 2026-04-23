@@ -1,121 +1,102 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 
 const steps = [
-  {
-    step: "01",
-    label: "Snap It",
-    desc: "Take a photo of your Cheezies order — the cheesier the better.",
-  },
-  {
-    step: "02",
-    label: "Post It",
-    desc: "Share it publicly on Facebook, Instagram, or X.",
-  },
-  {
-    step: "03",
-    label: "Tag Us",
-    desc: "Tag us and use #cheeziesohio in your post.",
-  },
-  {
-    step: "04",
-    label: "Collect",
-    desc: "Show us your post at the truck and get 10% off your next order.",
-  },
+  { step: "01", emoji: "📸", label: "Snap It", desc: "Take a photo of your Cheezies order — the cheesier the better." },
+  { step: "02", emoji: "📲", label: "Post It", desc: "Share it publicly on Facebook, Instagram, or X." },
+  { step: "03", emoji: "#️⃣", label: "Tag Us", desc: "Tag us and use #cheeziesohio in your post." },
+  { step: "04", emoji: "🎉", label: "Collect", desc: "Show us your post at the truck and get 10% off your next order." },
 ];
 
 export default function SocialDiscount() {
-  return (
-    <section
-      className="py-20 px-6"
-      style={{ background: "#2a1200", borderTop: "1px solid rgba(255,248,232,0.06)" }}
-    >
-      <div className="max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-14"
-        >
-          <p className="text-xs font-bold tracking-[0.3em] uppercase mb-5" style={{ color: "rgba(232,184,0,0.7)" }}>
-            Share the Love
-          </p>
-          <h2
-            className="font-black leading-none mb-3"
-            style={{
-              fontFamily: "Georgia, serif",
-              color: "#fff8e8",
-              fontSize: "clamp(3.5rem, 10vw, 6rem)",
-            }}
-          >
-            <span style={{ color: "#e8b800" }}>10%</span> Off
-          </h2>
-          <p className="text-lg max-w-lg mx-auto leading-relaxed" style={{ color: "rgba(255,248,224,0.7)", lineHeight: "1.7" }}>
-            Post about your visit, tag us, and we'll reward you at the truck.
-          </p>
-        </motion.div>
+  const [active, setActive] = useState(0);
 
-        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
-          {steps.map((step, i) => (
-            <motion.div
-              key={step.step}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="rounded-2xl p-6 flex flex-col"
-              style={{
-                background: "rgba(255,248,224,0.06)",
-                border: "1px solid rgba(255,248,224,0.12)",
-              }}
-            >
-              <p
-                className="font-black mb-3"
-                style={{ fontSize: "2.5rem", lineHeight: 1, color: "rgba(232,184,0,0.25)", fontFamily: "Georgia, serif" }}
-              >
-                {step.step}
-              </p>
-              <h4 className="font-black text-base mb-2" style={{ color: "#e8b800" }}>{step.label}</h4>
-              <p className="text-sm leading-relaxed" style={{ color: "rgba(255,248,224,0.55)" }}>{step.desc}</p>
-            </motion.div>
-          ))}
+  useEffect(() => {
+    const t = setInterval(() => setActive(a => (a + 1) % steps.length), 3200);
+    return () => clearInterval(t);
+  }, []);
+
+  return (
+    <section className="py-12 px-6" style={{ background: "#2a1200" }}>
+      <div className="max-w-3xl mx-auto">
+        {/* Header row */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-8">
+          <div>
+            <p className="text-xs font-bold tracking-[0.3em] uppercase mb-1" style={{ color: "rgba(232,184,0,0.6)" }}>Share the Love</p>
+            <h2 className="font-black leading-none" style={{ fontFamily: "Georgia, serif", color: "#fff8e8", fontSize: "clamp(2rem, 6vw, 3rem)" }}>
+              Get <span style={{ color: "#e8b800" }}>10% Off</span>
+            </h2>
+            <p className="text-sm mt-1" style={{ color: "rgba(255,248,224,0.55)" }}>
+              Post · Tag · Collect at the truck.
+            </p>
+          </div>
+
+          {/* Social buttons */}
+          <div className="flex gap-3 flex-shrink-0">
+            <a href="https://www.facebook.com/profile.php?id=61572987417963" target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-full font-bold text-sm transition-opacity duration-200 hover:opacity-85 select-none"
+              style={{ background: "#1877F2", color: "#fff", textDecoration: "none", minHeight: "44px" }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              Facebook
+            </a>
+            <a href="https://instagram.com/cheeziesohio" target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-full font-bold text-sm transition-opacity duration-200 hover:opacity-85 select-none"
+              style={{ background: "linear-gradient(135deg, #f09433, #dc2743, #bc1888)", color: "#fff", textDecoration: "none", minHeight: "44px" }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              Instagram
+            </a>
+          </div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="mt-10 text-center"
-        >
-          <div
-            className="inline-flex flex-col sm:flex-row items-center gap-6 rounded-xl px-8 py-6"
-            style={{ background: "rgba(201,148,10,0.12)", border: "1px solid rgba(201,148,10,0.25)" }}
-          >
-            <div className="text-left">
-              <p className="font-black text-base mb-1" style={{ color: "#e8b800" }}>Ready to share?</p>
-              <p className="text-sm" style={{ color: "rgba(255,248,224,0.5)" }}>Follow our social pages and tag <strong style={{color:"#e8b800"}}>#cheeziesohio</strong> after your next visit.</p>
-            </div>
-            <div className="flex gap-3 flex-shrink-0">
-              <a
-                href="https://www.facebook.com/profile.php?id=61572987417963"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2.5 rounded-full font-bold text-sm transition-opacity duration-200 hover:opacity-85 select-none"
-                style={{ background: "#1877F2", color: "#fff", textDecoration: "none", minHeight: "44px", display: "inline-flex", alignItems: "center" }}
+        {/* Slideshow card */}
+        <div className="relative rounded-2xl overflow-hidden" style={{ background: "rgba(255,248,224,0.05)", border: "1px solid rgba(255,248,224,0.1)" }}>
+          <div className="p-6 min-h-[96px] flex items-center gap-5">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, x: 24 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -24 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                className="flex items-center gap-5 w-full"
               >
-                Facebook
-              </a>
-              <a
-                href="https://instagram.com/cheeziesohio"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2.5 rounded-full font-bold text-sm transition-opacity duration-200 hover:opacity-85 select-none"
-                style={{ background: "linear-gradient(135deg, #f09433, #dc2743, #bc1888)", color: "#fff", textDecoration: "none", minHeight: "44px", display: "inline-flex", alignItems: "center" }}
-              >
-                Instagram
-              </a>
-            </div>
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0"
+                  style={{ background: "rgba(232,184,0,0.12)", border: "1px solid rgba(232,184,0,0.2)" }}>
+                  {steps[active].emoji}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xs font-black" style={{ color: "rgba(232,184,0,0.4)", fontFamily: "Georgia, serif" }}>{steps[active].step}</span>
+                    <h4 className="font-black text-base" style={{ color: "#e8b800" }}>{steps[active].label}</h4>
+                  </div>
+                  <p className="text-sm leading-relaxed" style={{ color: "rgba(255,248,224,0.65)" }}>{steps[active].desc}</p>
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
-        </motion.div>
+
+          {/* Dot indicators */}
+          <div className="flex items-center justify-between px-6 pb-4">
+            <div className="flex gap-2">
+              {steps.map((_, i) => (
+                <button key={i} onClick={() => setActive(i)} aria-label={`Step ${i + 1}`}
+                  className="transition-all duration-300"
+                  style={{
+                    width: i === active ? "24px" : "8px",
+                    height: "8px",
+                    borderRadius: "4px",
+                    background: i === active ? "#e8b800" : "rgba(255,248,224,0.2)",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: 0,
+                  }} />
+              ))}
+            </div>
+            <span className="text-xs font-bold" style={{ color: "rgba(255,248,224,0.3)" }}>
+              {active + 1} / {steps.length}
+            </span>
+          </div>
+        </div>
       </div>
     </section>
   );
