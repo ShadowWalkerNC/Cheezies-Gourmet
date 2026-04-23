@@ -35,29 +35,31 @@ export default function FeaturedMenu() {
         <div className="grid sm:grid-cols-3 gap-5 mb-8">
           {display.map((item, i) => (
             <motion.div key={item.id || item.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-              className="rounded-xl overflow-hidden"
-              style={{ background: "#fff", border: "1px solid rgba(180,120,0,0.14)", boxShadow: "0 2px 12px rgba(180,120,0,0.07)" }}>
-              <div className="relative h-40 overflow-hidden">
-                <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
-                <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(30,12,0,0.65) 0%, transparent 55%)" }} />
+              className="rounded-2xl overflow-hidden group"
+              style={{ background: "#fff", border: "1px solid rgba(180,120,0,0.14)", boxShadow: "0 4px 20px rgba(180,120,0,0.08)", transition: "box-shadow 0.2s ease, border-color 0.2s ease" }}
+              onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 8px 32px rgba(180,120,0,0.18)"; e.currentTarget.style.borderColor = "rgba(201,148,10,0.35)"; }}
+              onMouseLeave={e => { e.currentTarget.style.boxShadow = "0 4px 20px rgba(180,120,0,0.08)"; e.currentTarget.style.borderColor = "rgba(180,120,0,0.14)"; }}>
+              <div className="relative h-48 overflow-hidden">
+                <img src={item.img} alt={item.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(30,12,0,0.75) 0%, transparent 55%)" }} />
                 {item.badge && (
-                  <span className="absolute top-2.5 left-2.5 text-xs font-black px-2.5 py-1 rounded"
-                    style={{ background: item.badge_color || "#c9940a", color: "#fff8e8" }}>
+                  <span className="absolute top-3 left-3 text-xs font-black px-2.5 py-1 rounded-full"
+                    style={{ background: item.badge_color || "#c9940a", color: "#fff8e8", letterSpacing: "0.03em" }}>
                     {item.badge}
                   </span>
                 )}
-                <span className="absolute top-2.5 right-2.5 font-black text-sm px-2.5 py-1 rounded"
-                  style={{ background: "rgba(42,18,0,0.75)", color: "#e8b800" }}>
+                <span className="absolute top-3 right-3 font-black text-sm px-2.5 py-1 rounded-full"
+                  style={{ background: "rgba(42,18,0,0.8)", color: "#e8b800" }}>
                   {item.price}
                 </span>
-                <h4 className="absolute bottom-2.5 left-3 font-black text-sm text-white">{item.name}</h4>
+                <h4 className="absolute bottom-3 left-4 font-black text-base text-white leading-tight" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>{item.name}</h4>
               </div>
-              <div className="px-4 py-3">
-                <p className="text-xs leading-relaxed mb-3" style={{ color: "rgba(61,34,0,0.65)" }}>{item.desc}</p>
+              <div className="px-4 py-4">
+                <p className="text-sm leading-relaxed mb-4" style={{ color: "rgba(61,34,0,0.65)", lineHeight: "1.6", minHeight: "40px" }}>{item.desc}</p>
                 <a href="https://cheeziesgourmetohio.square.site/" target="_blank" rel="noopener noreferrer"
-                  className="inline-block px-4 py-1.5 rounded-lg font-bold text-xs transition-all duration-200 hover:scale-105"
-                  style={{ background: "#c9940a", color: "#fff8e8", textDecoration: "none" }}>
-                  Order This
+                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full font-bold text-sm transition-opacity duration-200 hover:opacity-85"
+                  style={{ background: "#c9940a", color: "#fff8e8", textDecoration: "none", minHeight: "44px" }}>
+                  Order This →
                 </a>
               </div>
             </motion.div>
@@ -66,8 +68,8 @@ export default function FeaturedMenu() {
 
         <div className="text-center">
           <button onClick={() => { navigate("/Menu"); window.scrollTo({ top: 0, behavior: "instant" }); }}
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-sm transition-all duration-300 hover:scale-105 select-none"
-            style={{ background: "#2a1200", color: "#fff8e8", boxShadow: "0 4px 20px rgba(42,18,0,0.2)" }}>
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-sm transition-opacity duration-200 hover:opacity-85 select-none"
+            style={{ background: "#2a1200", color: "#fff8e8", boxShadow: "0 4px 24px rgba(42,18,0,0.25)", minHeight: "48px" }}>
             View Full Menu <ArrowRight size={16} />
           </button>
         </div>

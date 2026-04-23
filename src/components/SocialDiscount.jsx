@@ -49,7 +49,7 @@ export default function SocialDiscount() {
           >
             <span style={{ color: "#e8b800" }}>10%</span> Off
           </h2>
-          <p className="text-lg max-w-lg mx-auto leading-relaxed" style={{ color: "rgba(255,248,224,0.55)" }}>
+          <p className="text-lg max-w-lg mx-auto leading-relaxed" style={{ color: "rgba(255,248,224,0.7)", lineHeight: "1.7" }}>
             Post about your visit, tag us, and we'll reward you at the truck.
           </p>
         </motion.div>
@@ -62,10 +62,10 @@ export default function SocialDiscount() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="rounded-xl p-6 flex flex-col"
+              className="rounded-2xl p-6 flex flex-col"
               style={{
-                background: "rgba(255,248,224,0.05)",
-                border: "1px solid rgba(255,248,224,0.1)",
+                background: "rgba(255,248,224,0.06)",
+                border: "1px solid rgba(255,248,224,0.12)",
               }}
             >
               <p
@@ -99,8 +99,8 @@ export default function SocialDiscount() {
                 href="https://www.facebook.com/profile.php?id=61572987417963"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-5 py-2.5 rounded-lg font-bold text-sm transition-all duration-200 hover:scale-105 select-none"
-                style={{ background: "#1877F2", color: "#fff", textDecoration: "none" }}
+                className="px-5 py-2.5 rounded-full font-bold text-sm transition-opacity duration-200 hover:opacity-85 select-none"
+                style={{ background: "#1877F2", color: "#fff", textDecoration: "none", minHeight: "44px", display: "inline-flex", alignItems: "center" }}
               >
                 Facebook
               </a>
@@ -108,8 +108,8 @@ export default function SocialDiscount() {
                 href="https://instagram.com/cheeziesohio"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-5 py-2.5 rounded-lg font-bold text-sm transition-all duration-200 hover:scale-105 select-none"
-                style={{ background: "linear-gradient(135deg, #f09433, #dc2743, #bc1888)", color: "#fff", textDecoration: "none" }}
+                className="px-5 py-2.5 rounded-full font-bold text-sm transition-opacity duration-200 hover:opacity-85 select-none"
+                style={{ background: "linear-gradient(135deg, #f09433, #dc2743, #bc1888)", color: "#fff", textDecoration: "none", minHeight: "44px", display: "inline-flex", alignItems: "center" }}
               >
                 Instagram
               </a>

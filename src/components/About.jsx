@@ -67,7 +67,7 @@ export default function About() {
               More Than Just a<br />
               <span style={{ color: "#c9940a" }}>Grilled Cheese</span>
             </h2>
-            <p className="text-base leading-relaxed mb-7" style={{ color: "rgba(61,34,0,0.65)" }}>
+            <p className="text-base leading-relaxed mb-7" style={{ color: "rgba(61,34,0,0.72)", lineHeight: "1.75" }}>
               Cheezies started with one idea — take the most comforting food in the world and make it extraordinary. We blend bold flavors, premium ingredients, and a whole lot of heart into every sandwich. Born and raised in Akron, Ohio, proud to serve our community fresh to order.
             </p>
             <div className="flex flex-wrap gap-3 mb-6">
@@ -101,8 +101,8 @@ export default function About() {
             <div className="flex flex-wrap gap-3">
               <button
                 onClick={() => { navigate("/FindUs"); window.scrollTo({ top: 0, behavior: "instant" }); }}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 hover:scale-105 select-none"
-                style={{ background: "#c9940a", color: "#fff8e8", border: "none", cursor: "pointer", boxShadow: "0 4px 16px rgba(180,120,0,0.25)" }}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-opacity duration-200 hover:opacity-85 select-none"
+                style={{ background: "#c9940a", color: "#fff8e8", border: "none", cursor: "pointer", boxShadow: "0 4px 16px rgba(180,120,0,0.25)", minHeight: "44px" }}
               >
                 Find the Truck →
               </button>
@@ -110,8 +110,8 @@ export default function About() {
                 href="https://cheeziesgourmetohio.square.site/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 hover:scale-105 select-none"
-                style={{ background: "rgba(201,148,10,0.08)", border: "1.5px solid rgba(180,120,0,0.2)", color: "#2a1200", textDecoration: "none" }}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-colors duration-200 hover:bg-amber-50 select-none"
+                style={{ background: "rgba(201,148,10,0.08)", border: "1.5px solid rgba(180,120,0,0.2)", color: "#2a1200", textDecoration: "none", minHeight: "44px" }}
               >
                 Order Online
               </a>

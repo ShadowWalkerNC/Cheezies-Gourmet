@@ -30,21 +30,21 @@ export default function CateringTeaser() {
               Catering &<br />
               <span style={{ color: "#e8b800" }}>Private Events</span>
             </h2>
-            <p className="text-sm leading-relaxed mb-7" style={{ color: "rgba(255,248,232,0.6)", maxWidth: "380px" }}>
+            <p className="text-sm leading-relaxed mb-7" style={{ color: "rgba(255,248,232,0.72)", maxWidth: "380px", lineHeight: "1.75" }}>
               Birthday parties · Corporate lunches · Weddings · Festivals. We scale up and show up, from 25 guests to 300+.
             </p>
             <div className="flex flex-wrap gap-3">
               <button
                 onClick={() => { navigate("/Catering"); window.scrollTo({ top: 0, behavior: "instant" }); }}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 hover:scale-105 select-none"
-                style={{ background: "#c9940a", color: "#fff8e8", boxShadow: "0 4px 20px rgba(201,148,10,0.35)" }}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-opacity duration-200 hover:opacity-85 select-none"
+                style={{ background: "#c9940a", color: "#fff8e8", boxShadow: "0 4px 20px rgba(201,148,10,0.35)", minHeight: "44px" }}
               >
                 Request a Quote <ArrowRight size={15} />
               </button>
               <a
                 href="tel:3305108875"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 hover:scale-105 select-none"
-                style={{ background: "rgba(255,248,232,0.1)", border: "1.5px solid rgba(255,248,232,0.2)", color: "#fff8e8", textDecoration: "none" }}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-colors duration-200 hover:bg-white/20 select-none"
+                style={{ background: "rgba(255,248,232,0.1)", border: "1.5px solid rgba(255,248,232,0.2)", color: "#fff8e8", textDecoration: "none", minHeight: "44px" }}
               >
                 Call Us
               </a>

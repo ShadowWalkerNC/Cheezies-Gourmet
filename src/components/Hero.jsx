@@ -72,7 +72,7 @@ export default function Hero() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.55, duration: 0.7 }}
             className="text-lg mb-10 leading-relaxed"
-            style={{ color: "rgba(255,248,232,0.65)", maxWidth: "480px" }}
+            style={{ color: "rgba(255,248,232,0.75)", maxWidth: "480px", lineHeight: "1.7" }}
           >
             Akron, Ohio's gourmet food truck — serving melts that stop you in your tracks.
           </motion.p>
@@ -88,7 +88,7 @@ export default function Hero() {
               href="https://cheeziesgourmetohio.square.site/"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-4 rounded-lg font-black text-base transition-all duration-300 hover:scale-105 select-none"
+              className="px-8 py-4 rounded-full font-black text-base transition-opacity duration-200 hover:opacity-90 select-none"
               style={{
                 background: "#c9940a",
                 color: "#fff8e8",
@@ -102,7 +102,7 @@ export default function Hero() {
             </a>
             <button
               onClick={() => { navigate("/Menu"); window.scrollTo({ top: 0, behavior: "instant" }); }}
-              className="px-8 py-4 rounded-lg font-bold text-base transition-all duration-300 hover:scale-105 select-none"
+              className="px-8 py-4 rounded-full font-bold text-base transition-colors duration-200 hover:bg-white/20 select-none"
               style={{
                 background: "rgba(255,248,232,0.1)",
                 border: "1.5px solid rgba(255,248,232,0.35)",

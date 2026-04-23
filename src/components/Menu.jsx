@@ -60,8 +60,8 @@ function MenuItemCard({ item, index }) {
       <motion.div
         initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.06 }}
         onClick={() => setOpen(!open)}
-        className="rounded-xl overflow-hidden cursor-pointer select-none"
-        style={{ background: "#fff", border: open ? "1.5px solid rgba(201,148,10,0.45)" : "1px solid rgba(180,120,0,0.14)", boxShadow: open ? "0 12px 40px rgba(180,120,0,0.15)" : "0 2px 10px rgba(180,120,0,0.06)", transition: "all 0.3s ease" }}
+        className="rounded-2xl overflow-hidden cursor-pointer select-none"
+        style={{ background: "#fff", border: open ? "1.5px solid rgba(201,148,10,0.45)" : "1px solid rgba(180,120,0,0.14)", boxShadow: open ? "0 12px 40px rgba(180,120,0,0.18)" : "0 2px 12px rgba(180,120,0,0.07)", transition: "box-shadow 0.25s ease, border-color 0.25s ease" }}
       >
         <div className="relative h-44 overflow-hidden">
           <img src={item.img} alt={item.name} className="w-full h-full object-cover transition-transform duration-700" style={{ transform: open ? "scale(1.07)" : "scale(1)" }} />
@@ -91,8 +91,8 @@ function MenuItemCard({ item, index }) {
                 <p className="text-sm leading-relaxed mb-3" style={{ color: "rgba(61,34,0,0.7)" }}>{item.desc}</p>
                 <a href="https://cheeziesgourmetohio.square.site/" target="_blank" rel="noopener noreferrer"
                   onClick={e => e.stopPropagation()}
-                  className="inline-block px-5 py-2 rounded-lg font-bold text-sm transition-all duration-200 hover:scale-105"
-                  style={{ background: "#c9940a", color: "#fff8e8", textDecoration: "none" }}>
+                  className="inline-flex items-center px-5 py-2.5 rounded-full font-bold text-sm transition-opacity duration-200 hover:opacity-85"
+                  style={{ background: "#c9940a", color: "#fff8e8", textDecoration: "none", minHeight: "44px" }}>
                   Order This
                 </a>
               </div>
@@ -107,8 +107,8 @@ function MenuItemCard({ item, index }) {
     <motion.div
       initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.06 }}
       onClick={() => setOpen(!open)}
-      className="flex items-start justify-between gap-4 p-4 rounded-xl cursor-pointer select-none transition-all duration-200"
-      style={{ background: open ? "#fffbf0" : "#fff", border: open ? "1.5px solid rgba(201,148,10,0.35)" : "1px solid rgba(180,120,0,0.13)", boxShadow: "0 1px 8px rgba(180,120,0,0.05)" }}
+      className="flex items-start justify-between gap-4 p-4 rounded-2xl cursor-pointer select-none"
+      style={{ background: open ? "#fffbf0" : "#fff", border: open ? "1.5px solid rgba(201,148,10,0.35)" : "1px solid rgba(180,120,0,0.13)", boxShadow: "0 1px 8px rgba(180,120,0,0.05)", transition: "background 0.2s ease, border-color 0.2s ease" }}
     >
       <div className="flex-1">
         <div className="flex flex-wrap items-center gap-2 mb-1">
