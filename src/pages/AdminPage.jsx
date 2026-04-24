@@ -3,6 +3,7 @@ import { base44 } from "@/api/base44Client";
 import AdminMenuManager from "@/components/admin/AdminMenuManager";
 
 const ALL_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const ADMIN_PASSCODE = "cheezies2024";
 
 const statusLabels = {
   open:     { label: "Open Now",  color: "#22c55e" },
@@ -11,7 +12,9 @@ const statusLabels = {
 };
 
 export default function AdminPage() {
-  const [authed, setAuthed] = useState(null); // null = loading, true/false = resolved
+  const [authed, setAuthed] = useState(false);
+  const [passcode, setPasscode] = useState("");
+  const [passcodeError, setPasscodeError] = useState(false);
   const [recordId, setRecordId] = useState(null);
 
   // Live location
@@ -37,18 +40,17 @@ export default function AdminPage() {
   const [saveSuccess, setSaveSuccess] = useState(false);
 
   useEffect(() => {
-    base44.auth.me().then(user => {
-      if (user?.role === "admin") {
-        setAuthed(true);
-      } else {
-        setAuthed(false);
-      }
-    }).catch(() => setAuthed(false));
-  }, []);
-
-  useEffect(() => {
     if (authed) load();
   }, [authed]);
+
+  const handlePasscode = () => {
+    if (passcode === ADMIN_PASSCODE) {
+      setAuthed(true);
+      setPasscodeError(false);
+    } else {
+      setPasscodeError(true);
+    }
+  };
 
   const load = async () => {
     const records = await base44.entities.TruckLocation.list("-updated_date", 1);
@@ -65,10 +67,6 @@ export default function AdminPage() {
       setHoursClose(r.hours_close || "6:00 PM");
       setOpenDays(r.open_days || ["Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]);
     }
-  };
-
-  const handleLogout = () => {
-    base44.auth.logout("/admin");
   };
 
   const doGPS = (isHome) => {
@@ -139,14 +137,6 @@ export default function AdminPage() {
     setTimeout(() => setSaveSuccess(false), 3000);
   };
 
-  if (authed === null) {
-    return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "#fffbf0" }}>
-        <div className="w-8 h-8 border-4 border-amber-200 border-t-amber-600 rounded-full animate-spin" />
-      </div>
-    );
-  }
-
   if (!authed) {
     return (
       <div className="min-h-screen flex items-center justify-center px-6" style={{ background: "#fffbf0" }}>
@@ -155,13 +145,23 @@ export default function AdminPage() {
           <h1 className="text-3xl font-black mb-2" style={{ fontFamily: "Georgia, serif", color: "#2a1200" }}>
             Chee<span style={{ color: "#c9940a" }}>zies</span> Admin
           </h1>
-          <p className="text-sm mb-6" style={{ color: "rgba(61,34,0,0.5)" }}>Admin access required.</p>
+          <p className="text-sm mb-6" style={{ color: "rgba(61,34,0,0.5)" }}>Enter your passcode to continue.</p>
+          <input
+            type="password"
+            placeholder="Passcode"
+            value={passcode}
+            onChange={e => setPasscode(e.target.value)}
+            onKeyDown={e => e.key === "Enter" && handlePasscode()}
+            className="w-full px-4 py-3 rounded-xl text-sm outline-none mb-3"
+            style={{ background: "#fff", border: `1.5px solid ${passcodeError ? "#ef4444" : "rgba(180,120,0,0.2)"}`, color: "#2a1200" }}
+          />
+          {passcodeError && <p className="text-sm text-red-500 mb-3">Incorrect passcode. Try again.</p>}
           <button
-            onClick={() => base44.auth.redirectToLogin("/admin")}
+            onClick={handlePasscode}
             className="w-full py-3 rounded-xl font-bold text-base"
             style={{ background: "#c9940a", color: "#fff8e8" }}
           >
-            Sign In
+            Enter
           </button>
         </div>
       </div>
@@ -180,7 +180,7 @@ export default function AdminPage() {
             Chee<span style={{ color: "#c9940a" }}>zies</span> Admin
           </span>
         </div>
-        <button onClick={handleLogout} className="text-sm px-4 py-2 rounded-lg font-semibold" style={{ background: "rgba(255,248,232,0.1)", color: "rgba(255,248,232,0.6)" }}>
+        <button onClick={() => setAuthed(false)} className="text-sm px-4 py-2 rounded-lg font-semibold" style={{ background: "rgba(255,248,232,0.1)", color: "rgba(255,248,232,0.6)" }}>
           Logout
         </button>
       </div>
