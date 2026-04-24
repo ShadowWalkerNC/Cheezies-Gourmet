@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import AdminMenuManager from "@/components/admin/AdminMenuManager";
 
-const PASSWORD = "Cheezies0h!026";
-
 const ALL_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 const statusLabels = {
@@ -13,10 +11,7 @@ const statusLabels = {
 };
 
 export default function AdminPage() {
-  const [authed, setAuthed] = useState(false);
-  const [passwordInput, setPasswordInput] = useState("");
-  const [passwordError, setPasswordError] = useState(false);
-
+  const [authed, setAuthed] = useState(null); // null = loading, true/false = resolved
   const [recordId, setRecordId] = useState(null);
 
   // Live location
@@ -42,7 +37,13 @@ export default function AdminPage() {
   const [saveSuccess, setSaveSuccess] = useState(false);
 
   useEffect(() => {
-    if (sessionStorage.getItem("cheezies_admin_authed") === "true") setAuthed(true);
+    base44.auth.me().then(user => {
+      if (user?.role === "admin") {
+        setAuthed(true);
+      } else {
+        setAuthed(false);
+      }
+    }).catch(() => setAuthed(false));
   }, []);
 
   useEffect(() => {
@@ -66,20 +67,8 @@ export default function AdminPage() {
     }
   };
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if (passwordInput === PASSWORD) {
-      setAuthed(true);
-      sessionStorage.setItem("cheezies_admin_authed", "true");
-    } else {
-      setPasswordError(true);
-      setTimeout(() => setPasswordError(false), 2000);
-    }
-  };
-
   const handleLogout = () => {
-    setAuthed(false);
-    sessionStorage.removeItem("cheezies_admin_authed");
+    base44.auth.logout("/admin");
   };
 
   const doGPS = (isHome) => {
@@ -150,32 +139,30 @@ export default function AdminPage() {
     setTimeout(() => setSaveSuccess(false), 3000);
   };
 
+  if (authed === null) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#fffbf0" }}>
+        <div className="w-8 h-8 border-4 border-amber-200 border-t-amber-600 rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   if (!authed) {
     return (
       <div className="min-h-screen flex items-center justify-center px-6" style={{ background: "#fffbf0" }}>
-        <div className="w-full max-w-sm">
-          <div className="text-center mb-8">
-            <img src="https://media.base44.com/images/public/69b410ceece31b13c728497b/03ee6d0a3_generated_image.png" alt="Cheezies logo" className="w-20 h-20 object-contain mx-auto mb-4" />
-            <h1 className="text-3xl font-black" style={{ fontFamily: "Georgia, serif", color: "#2a1200" }}>
-              Chee<span style={{ color: "#c9940a" }}>zies</span> Admin
-            </h1>
-            <p className="text-sm mt-1" style={{ color: "rgba(61,34,0,0.5)" }}>Enter your password to continue</p>
-          </div>
-          <form onSubmit={handleLogin} className="flex flex-col gap-4">
-            <input
-              type="password"
-              placeholder="Password"
-              value={passwordInput}
-              onChange={e => setPasswordInput(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl text-base outline-none"
-              style={{ background: "#fff", border: `2px solid ${passwordError ? "#ef4444" : "rgba(180,120,0,0.2)"}`, color: "#2a1200" }}
-              autoFocus
-            />
-            {passwordError && <p className="text-sm text-center" style={{ color: "#ef4444" }}>Incorrect password. Try again.</p>}
-            <button type="submit" className="w-full py-3 rounded-xl font-bold text-base transition-all hover:scale-105" style={{ background: "#c9940a", color: "#fff8e8" }}>
-              Login
-            </button>
-          </form>
+        <div className="w-full max-w-sm text-center">
+          <img src="https://media.base44.com/images/public/69b410ceece31b13c728497b/03ee6d0a3_generated_image.png" alt="Cheezies logo" className="w-20 h-20 object-contain mx-auto mb-4" />
+          <h1 className="text-3xl font-black mb-2" style={{ fontFamily: "Georgia, serif", color: "#2a1200" }}>
+            Chee<span style={{ color: "#c9940a" }}>zies</span> Admin
+          </h1>
+          <p className="text-sm mb-6" style={{ color: "rgba(61,34,0,0.5)" }}>Admin access required.</p>
+          <button
+            onClick={() => base44.auth.redirectToLogin("/admin")}
+            className="w-full py-3 rounded-xl font-bold text-base"
+            style={{ background: "#c9940a", color: "#fff8e8" }}
+          >
+            Sign In
+          </button>
         </div>
       </div>
     );
