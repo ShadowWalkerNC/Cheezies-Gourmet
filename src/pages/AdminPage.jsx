@@ -125,11 +125,14 @@ export default function AdminPage() {
       open_days: openDays,
     };
 
-    if (recordId) {
-      await base44.entities.TruckLocation.update(recordId, payload);
-    } else {
-      const created = await base44.entities.TruckLocation.create(payload);
-      setRecordId(created.id);
+    const res = await base44.functions.invoke("saveTruckLocation", {
+      passcode: ADMIN_PASSCODE,
+      recordId,
+      payload,
+    });
+
+    if (!recordId && res.data?.data?.id) {
+      setRecordId(res.data.data.id);
     }
 
     setSaving(false);
