@@ -49,12 +49,15 @@ export default function AdminMenuManager() {
     setUploading(false);
   };
 
+  const invokeMenuItem = (action, itemId, payload) =>
+    base44.functions.invoke("saveMenuItem", { passcode: "cheezies2024", action, itemId, payload });
+
   const handleSave = async () => {
     setSaving(true);
     if (editing === "new") {
-      await base44.entities.MenuItem.create(form);
+      await invokeMenuItem("create", null, form);
     } else {
-      await base44.entities.MenuItem.update(editing, form);
+      await invokeMenuItem("update", editing, form);
     }
     await load();
     setSaving(false);
@@ -64,13 +67,13 @@ export default function AdminMenuManager() {
   const handleDelete = async (id) => {
     if (!confirm("Delete this menu item?")) return;
     setDeleting(id);
-    await base44.entities.MenuItem.delete(id);
+    await invokeMenuItem("delete", id, null);
     await load();
     setDeleting(null);
   };
 
   const toggleActive = async (item) => {
-    await base44.entities.MenuItem.update(item.id, { is_active: !item.is_active });
+    await invokeMenuItem("update", item.id, { is_active: !item.is_active });
     await load();
   };
 
