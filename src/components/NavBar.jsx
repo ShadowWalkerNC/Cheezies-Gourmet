@@ -3,11 +3,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 
 const tabs = [
-  { label: "About",    path: "/Home" },
+  { label: "About",    path: "/About" },
   { label: "Menu",     path: "/Menu" },
   { label: "Catering", path: "/Catering" },
   { label: "Find Us",  path: "/FindUs" },
-  { label: "Contact",  path: "/Contact" },
+  { label: "Contact",  path: "/ContactUs" },
 ];
 
 export default function NavBar() {

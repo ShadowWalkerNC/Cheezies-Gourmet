@@ -119,8 +119,8 @@ export default function Footer() {
       >
         <p>© {new Date().getFullYear()} Cheezies Gourmet Food Truck. All rights reserved.</p>
         <div className="flex gap-4">
-          <span>Privacy</span>
-          <span>Terms</span>
+          <a href="/About" style={{ color: "rgba(255,248,232,0.4)", textDecoration: "none" }} onMouseEnter={e => e.currentTarget.style.color="#e8b800"} onMouseLeave={e => e.currentTarget.style.color="rgba(255,248,232,0.4)"}>About</a>
+          <a href="/ContactUs" style={{ color: "rgba(255,248,232,0.4)", textDecoration: "none" }} onMouseEnter={e => e.currentTarget.style.color="#e8b800"} onMouseLeave={e => e.currentTarget.style.color="rgba(255,248,232,0.4)"}>Contact</a>
         </div>
       </div>
     </footer>
