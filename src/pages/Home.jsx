@@ -1,10 +1,9 @@
 import Hero from "../components/Hero";
 import FeaturedMenu from "../components/FeaturedMenu.jsx";
 import About from "../components/About";
-import Newsletter from "../components/Newsletter";
-import SocialDiscount from "../components/SocialDiscount.jsx";
 import CateringTeaser from "../components/CateringTeaser";
 import Contact from "../components/Contact";
+import TruckRequest from "../components/TruckRequest";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import PageTransition from "../components/PageTransition";
@@ -24,8 +23,7 @@ export default function Home() {
           <Hero />
           <About />
           <FeaturedMenu />
-          <Newsletter />
-          <SocialDiscount />
+          <TruckRequest />
           <CateringTeaser />
           <Contact />
           <Footer />

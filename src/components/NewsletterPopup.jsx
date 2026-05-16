@@ -12,15 +12,16 @@ export default function NewsletterPopup() {
   const { toast } = useToast();
 
   useEffect(() => {
-    const dismissed = localStorage.getItem("cheezies_popup_dismissed");
-    if (!dismissed) {
+    const hasCookie = document.cookie.split(";").some(c => c.trim().startsWith("cheezies_popup="));
+    if (!hasCookie) {
       const t = setTimeout(() => setOpen(true), 3500);
       return () => clearTimeout(t);
     }
   }, []);
 
   const dismiss = () => {
-    localStorage.setItem("cheezies_popup_dismissed", "1");
+    const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toUTCString();
+    document.cookie = `cheezies_popup=1; expires=${expires}; path=/`;
     setOpen(false);
   };
 
