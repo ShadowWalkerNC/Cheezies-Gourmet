@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import AdminMenuManager from "@/components/admin/AdminMenuManager";
+import AdminAnalytics from "@/components/admin/AdminAnalytics";
 
 const ALL_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const ADMIN_PASSCODE = "cheezies2024";
@@ -368,6 +369,9 @@ export default function AdminPage() {
         >
           {saving ? "Saving…" : saveSuccess ? "✓ Saved & Published!" : "Save & Publish"}
         </button>
+
+        {/* Analytics */}
+        <AdminAnalytics />
 
         {/* Menu Manager */}
         <AdminMenuManager />
