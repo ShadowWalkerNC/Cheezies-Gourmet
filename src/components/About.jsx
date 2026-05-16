@@ -35,74 +35,62 @@ export default function About() {
   const liveAddress = hasLiveLocation ? truckData.address : (truckData?.home_address || "Akron, Ohio");
 
   return (
-    <section
-      id="about"
-      className="py-16 px-6"
-      style={{ background: "#fffbf0", borderBottom: "1px solid rgba(180,120,0,0.1)" }}
-    >
-      <div className="max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="flex flex-col md:flex-row items-center gap-12"
-        >
-          {/* Image */}
-          <div className="flex-shrink-0 w-full md:w-80 h-60 md:h-80 rounded-xl overflow-hidden shadow-lg flex items-center justify-center" style={{ background: "#fffbf0" }}>
-            <img
-              src="https://media.base44.com/images/public/69b410ceece31b13c728497b/03ee6d0a3_generated_image.png"
-              alt="Cheezies gourmet grilled cheese mascot"
-              className="w-full h-full object-contain"
-            />
-          </div>
-
-          {/* Text */}
-          <div className="flex-1">
-            <p className="text-xs font-bold tracking-[0.3em] uppercase mb-3" style={{ color: "#c9940a" }}>Our Story</p>
+    <section id="about" className="py-16 px-6" style={{ background: "#fff", borderTop: "1.5px solid #e8e0d0" }}>
+      <div className="max-w-6xl mx-auto">
+        <div className="flex flex-col md:flex-row gap-12 items-start">
+          {/* Left text */}
+          <motion.div
+            className="flex-1"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <p className="text-xs font-black tracking-[0.25em] uppercase mb-2" style={{ color: "#c9940a" }}>Our Story</p>
             <h2
-              className="text-4xl md:text-5xl font-black mb-5 leading-tight"
-              style={{ fontFamily: "Georgia, serif", color: "#2a1200" }}
+              className="font-black leading-tight mb-5"
+              style={{ fontFamily: "Georgia, serif", color: "#1a0800", fontSize: "clamp(2rem, 4vw, 2.8rem)" }}
             >
-              More Than Just a<br />
-              <span style={{ color: "#c9940a" }}>Grilled Cheese</span>
+              More Than Just a Grilled Cheese
             </h2>
-            <p className="text-base leading-relaxed mb-7" style={{ color: "rgba(61,34,0,0.72)", lineHeight: "1.75" }}>
+            <p className="text-sm leading-relaxed mb-7" style={{ color: "rgba(61,34,0,0.7)", lineHeight: "1.8" }}>
               Cheezies started with one idea — take the most comforting food in the world and make it extraordinary. We blend bold flavors, premium ingredients, and a whole lot of heart into every sandwich. Born and raised in Akron, Ohio, proud to serve our community fresh to order.
             </p>
-            <div className="flex flex-wrap gap-3 mb-6">
+
+            <div className="grid grid-cols-3 gap-3 mb-7">
               {[["Made Fresh", "Crafted to order."], ["Premium Cheese", "Melted perfectly."], ["Akron Proud", "Community first."]].map(([title, desc]) => (
-                <div key={title} className="rounded-lg px-4 py-3 text-sm" style={{ background: "rgba(201,148,10,0.08)", border: "1px solid rgba(180,120,0,0.18)" }}>
-                  <p className="font-black mb-0.5" style={{ color: "#2a1200" }}>{title}</p>
+                <div key={title} className="p-4 text-sm" style={{ background: "#f9f4ea", border: "1.5px solid #e8e0d0" }}>
+                  <p className="font-black text-xs mb-1" style={{ color: "#1a0800" }}>{title}</p>
                   <p className="text-xs" style={{ color: "rgba(61,34,0,0.55)" }}>{desc}</p>
                 </div>
               ))}
             </div>
 
-            {/* Live hours + location from DB */}
-            <div className="rounded-xl px-4 py-3 mb-5 text-sm" style={{ background: "rgba(201,148,10,0.06)", border: "1px solid rgba(180,120,0,0.15)" }}>
-              <p className="font-black mb-1" style={{ color: "#2a1200" }}>
-                📍 {liveAddress}
+            {/* Live location */}
+            <div className="flex items-start gap-2 mb-5 text-sm" style={{ color: "#1a0800" }}>
+              <span style={{ color: "#c9940a" }}>📍</span>
+              <div>
+                <span className="font-black">{liveAddress}</span>
                 {status && (
-                  <span className="ml-2 text-xs font-bold px-2 py-0.5 rounded-full" style={{
+                  <span className="ml-2 text-xs font-bold px-2 py-0.5" style={{
                     background: status === "open" ? "#dcfce7" : status === "en_route" ? "#fef9c3" : "#fee2e2",
                     color: status === "open" ? "#15803d" : status === "en_route" ? "#a16207" : "#b91c1c",
                   }}>
                     {status === "open" ? "Open Now" : status === "en_route" ? "En Route" : "Closed"}
                   </span>
                 )}
-              </p>
-              <p className="text-xs" style={{ color: "rgba(61,34,0,0.55)" }}>
-                <strong>{daysText}:</strong> {hoursText}
-                {closedDay && <>&nbsp;|&nbsp;<strong>{closedDay}</strong></>}
-              </p>
+                <p className="text-xs mt-0.5" style={{ color: "rgba(61,34,0,0.55)" }}>
+                  {daysText}: {hoursText}
+                  {closedDay && <> | {closedDay}</>}
+                </p>
+              </div>
             </div>
 
             <div className="flex flex-wrap gap-3">
               <button
                 onClick={() => { navigate("/FindUs"); window.scrollTo({ top: 0, behavior: "instant" }); }}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-opacity duration-200 hover:opacity-85 select-none"
-                style={{ background: "#c9940a", color: "#fff8e8", border: "none", cursor: "pointer", boxShadow: "0 4px 16px rgba(180,120,0,0.25)", minHeight: "44px" }}
+                className="px-6 py-3 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
+                style={{ background: "#c9940a", color: "#fff", border: "2px solid #c9940a", cursor: "pointer" }}
               >
                 Find the Truck →
               </button>
@@ -110,14 +98,44 @@ export default function About() {
                 href="https://cheeziesgourmetohio.square.site/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-colors duration-200 hover:bg-amber-50 select-none"
-                style={{ background: "rgba(201,148,10,0.08)", border: "1.5px solid rgba(180,120,0,0.2)", color: "#2a1200", textDecoration: "none", minHeight: "44px" }}
+                className="px-6 py-3 font-black text-xs tracking-widest uppercase transition-all hover:bg-amber-50"
+                style={{ background: "transparent", border: "2px solid #1a0800", color: "#1a0800", textDecoration: "none" }}
               >
                 Order Online
               </a>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+
+          {/* Right — mascot image */}
+          <motion.div
+            className="w-full md:w-80 flex-shrink-0"
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="w-full aspect-square flex items-center justify-center" style={{ background: "#fffbf0", border: "1.5px solid #e8e0d0" }}>
+              <img
+                src="https://media.base44.com/images/public/69b410ceece31b13c728497b/03ee6d0a3_generated_image.png"
+                alt="Cheezies mascot"
+                className="w-full h-full object-contain p-6"
+              />
+            </div>
+            <div className="mt-4 p-5" style={{ background: "#1a0800" }}>
+              <p className="text-xs font-black tracking-[0.2em] uppercase mb-1" style={{ color: "#c9940a" }}>Our Story</p>
+              <p className="text-sm leading-relaxed" style={{ color: "rgba(255,248,232,0.75)" }}>
+                Cheezies's gourmet food truck making every sandwich an experience that stops you in your tracks.
+              </p>
+              <button
+                onClick={() => { navigate("/Menu"); window.scrollTo({ top: 0, behavior: "instant" }); }}
+                className="mt-4 w-full py-3 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
+                style={{ background: "#c9940a", color: "#fff", border: "none", cursor: "pointer" }}
+              >
+                View Full Menu →
+              </button>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

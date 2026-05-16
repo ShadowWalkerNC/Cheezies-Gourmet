@@ -19,7 +19,6 @@ export default function BottomTabBar() {
     if (location.pathname === path) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
-      // Use replace to prevent tab-switching from polluting back-stack
       navigate(path, { replace: true });
       window.scrollTo({ top: 0, behavior: "instant" });
     }
@@ -29,10 +28,8 @@ export default function BottomTabBar() {
     <nav
       className="fixed bottom-0 left-0 right-0 z-50 md:hidden flex items-stretch"
       style={{
-        background: "rgba(255,248,220,0.97)",
-        backdropFilter: "blur(16px)",
-        WebkitBackdropFilter: "blur(16px)",
-        borderTop: "1px solid rgba(180,120,0,0.12)",
+        background: "#fff",
+        borderTop: "1.5px solid #e8e0d0",
         paddingBottom: "var(--safe-bottom)",
       }}
     >
@@ -45,10 +42,10 @@ export default function BottomTabBar() {
             onTouchStart={() => setPressed(path)}
             onTouchEnd={() => { setPressed(null); handleTab(path); }}
             onTouchCancel={() => setPressed(null)}
-            onClick={() => handleTab(path)}   // desktop fallback
+            onClick={() => handleTab(path)}
             className="flex-1 flex flex-col items-center justify-center gap-1 py-3 relative select-none"
             style={{
-              color: active ? "#c9940a" : "rgba(80,45,0,0.45)",
+              color: active ? "#c9940a" : "rgba(26,8,0,0.35)",
               background: "none",
               border: "none",
               outline: "none",
@@ -59,12 +56,9 @@ export default function BottomTabBar() {
               opacity: isPressed ? 0.7 : 1,
             }}
           >
-            <Icon
-              size={active ? 22 : 20}
-              strokeWidth={active ? 2.2 : 1.8}
-            />
+            <Icon size={active ? 22 : 20} strokeWidth={active ? 2.5 : 1.8} />
             <span
-              className="text-[10px] font-bold tracking-wider uppercase"
+              className="text-[9px] font-black tracking-[0.1em] uppercase"
               style={{ fontFamily: "system-ui, sans-serif" }}
             >
               {label}
@@ -73,13 +67,12 @@ export default function BottomTabBar() {
               <span
                 style={{
                   position: "absolute",
-                  bottom: 0,
+                  top: 0,
                   left: "50%",
                   transform: "translateX(-50%)",
-                  width: 28,
-                  height: 3,
+                  width: 24,
+                  height: 2,
                   background: "#c9940a",
-                  borderRadius: "3px 3px 0 0",
                 }}
               />
             )}

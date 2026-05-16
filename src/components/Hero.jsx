@@ -5,128 +5,74 @@ export default function Hero() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative flex items-end overflow-hidden" style={{ minHeight: "100svh", background: "#1a0800" }}>
-      {/* Full-bleed food photo — using the uploaded Cheezies image */}
-      <img
-        src="https://media.base44.com/images/public/69b410ceece31b13c728497b/5e68b0a48_generated_image.png"
-        alt="Cheezies Gourmet artisan grilled cheese sandwich"
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ opacity: 0.85 }}
-      />
-
-      {/* Dark gradient — heavier bottom-left for text, fades right */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: "linear-gradient(120deg, rgba(16,5,0,0.88) 0%, rgba(16,5,0,0.6) 45%, rgba(16,5,0,0.18) 100%)",
-        }}
-      />
-
-      {/* Bottom vignette to ground content */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-48"
-        style={{ background: "linear-gradient(to top, rgba(16,5,0,0.6), transparent)" }}
-      />
-
-      {/* Content */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 pb-24 pt-36">
+    <section className="relative flex flex-col md:flex-row min-h-screen" style={{ background: "#fff", paddingTop: "72px" }}>
+      {/* Left — text content */}
+      <div className="flex-1 flex flex-col justify-center px-8 md:px-16 py-16 md:py-0 order-2 md:order-1">
         <motion.div
-          initial={{ opacity: 0, y: 48 }}
+          initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-2xl"
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
-          {/* Eyebrow */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.7 }}
-            className="text-xs font-bold tracking-[0.35em] uppercase mb-6"
-            style={{ color: "#e8b800" }}
-          >
-            Handcrafted Melts &nbsp;·&nbsp; Premium Ingredients &nbsp;·&nbsp; Culinary Excellence
-          </motion.p>
-
-          {/* Headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.35, duration: 0.8 }}
-            className="font-black leading-none mb-8"
+          <h1
+            className="font-black uppercase leading-none mb-6"
             style={{
-              fontFamily: "Georgia, serif",
-              color: "#fff8e8",
-              fontSize: "clamp(3.2rem, 8vw, 6rem)",
+              fontSize: "clamp(2.8rem, 7vw, 5.5rem)",
+              color: "#1a0800",
               letterSpacing: "-0.02em",
-              textShadow: "0 2px 40px rgba(0,0,0,0.5)",
+              lineHeight: 0.95,
             }}
           >
-            Artisan<br />
-            Grilled Cheese<br />
-            <span style={{ color: "#e8b800" }}>Reimagined</span>
-          </motion.h1>
-
-          {/* Subline */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.55, duration: 0.7 }}
-            className="text-lg mb-10 leading-relaxed"
-            style={{ color: "rgba(255,248,232,0.75)", maxWidth: "480px", lineHeight: "1.7" }}
-          >
-            Akron, Ohio's gourmet food truck — serving melts that stop you in your tracks.
-          </motion.p>
-
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.6 }}
-            className="flex flex-wrap gap-4"
-          >
+            ARTISAN<br />GRILLED<br />CHEESE.<br />
+            <span style={{ color: "#c9940a" }}>REIMAGINED.</span>
+          </h1>
+          <p className="text-base mb-8 leading-relaxed" style={{ color: "rgba(61,34,0,0.65)", maxWidth: "420px" }}>
+            Akron, Ohio's gourmet food truck making every sandwich an experience that stops you in your tracks.
+          </p>
+          <div className="flex flex-wrap gap-3">
             <a
               href="https://cheeziesgourmetohio.square.site/"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-4 rounded-full font-black text-base transition-opacity duration-200 hover:opacity-90 select-none"
+              className="px-7 py-3.5 font-black text-sm tracking-widest uppercase transition-opacity hover:opacity-85"
               style={{
                 background: "#c9940a",
-                color: "#fff8e8",
+                color: "#fff",
                 textDecoration: "none",
-                boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
-                letterSpacing: "0.01em",
-                WebkitTapHighlightColor: "transparent",
+                border: "2px solid #c9940a",
               }}
             >
               Order Online
             </a>
             <button
               onClick={() => { navigate("/Menu"); window.scrollTo({ top: 0, behavior: "instant" }); }}
-              className="px-8 py-4 rounded-full font-bold text-base transition-colors duration-200 hover:bg-white/20 select-none"
+              className="px-7 py-3.5 font-black text-sm tracking-widest uppercase transition-all hover:bg-amber-50"
               style={{
-                background: "rgba(255,248,232,0.1)",
-                border: "1.5px solid rgba(255,248,232,0.35)",
-                color: "#fff8e8",
+                background: "transparent",
+                border: "2px solid #c9940a",
+                color: "#c9940a",
                 cursor: "pointer",
-                backdropFilter: "blur(8px)",
-                WebkitBackdropFilter: "blur(8px)",
-                WebkitTapHighlightColor: "transparent",
               }}
             >
-              View Our Menu
+              View the Menu
             </button>
-          </motion.div>
+          </div>
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Right — food image */}
       <motion.div
-        className="absolute bottom-8 right-8 z-10 hidden md:flex flex-col items-center gap-2"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ repeat: Infinity, duration: 2.8, ease: "easeInOut" }}
+        className="flex-1 order-1 md:order-2 flex items-center justify-center px-8 py-12 md:py-0"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 0.2 }}
+        style={{ background: "#fffbf0", minHeight: "40vw" }}
       >
-        <p className="text-[10px] font-bold tracking-[0.3em] uppercase" style={{ color: "rgba(255,248,232,0.35)" }}>Scroll</p>
-        <div className="w-px h-10" style={{ background: "linear-gradient(to bottom, rgba(255,248,232,0.3), transparent)" }} />
+        <img
+          src="https://media.base44.com/images/public/69b410ceece31b13c728497b/5e68b0a48_generated_image.png"
+          alt="Cheezies gourmet grilled cheese"
+          className="w-full max-w-lg object-contain"
+          style={{ maxHeight: "60vh" }}
+        />
       </motion.div>
     </section>
   );

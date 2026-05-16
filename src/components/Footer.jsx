@@ -35,22 +35,22 @@ export default function Footer() {
   };
 
   return (
-    <footer style={{ background: "#2a1200" }}>
+    <footer style={{ background: "#1a0800" }}>
       {/* Main footer row */}
       <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
         {/* Brand */}
         <div>
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-2.5 mb-3">
             <img
               src="https://media.base44.com/images/public/69b410ceece31b13c728497b/03ee6d0a3_generated_image.png"
               alt="Cheezies logo"
-              className="h-10 w-10 object-contain rounded"
+              className="h-9 w-9 object-contain"
             />
-            <p className="font-black text-3xl" style={{ fontFamily: "Georgia, serif", color: "#e8b800" }}>
-              Chee<span style={{ color: "#fff8e8" }}>zies</span>
+            <p className="font-black text-xl tracking-tight" style={{ fontFamily: "Georgia, serif", color: "#fff8e8" }}>
+              Cheezies
             </p>
           </div>
-          <p className="text-sm mb-4 leading-relaxed" style={{ color: "rgba(255,248,232,0.5)" }}>
+          <p className="text-sm mb-5 leading-relaxed" style={{ color: "rgba(255,248,232,0.45)" }}>
             Gourmet Grilled Creations<br />Akron, Ohio
           </p>
           <div className="flex gap-3">
@@ -62,8 +62,8 @@ export default function Footer() {
               { href: "https://maps.app.goo.gl/dUyof854YsHaKcNE9", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg> },
             ].map(({ href, icon }) => (
               <a key={href} href={href} target="_blank" rel="noopener noreferrer"
-                className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
-                style={{ background: "rgba(255,248,232,0.08)", color: "rgba(255,248,232,0.6)" }}
+                className="w-8 h-8 flex items-center justify-center transition-all duration-200 hover:scale-110"
+                style={{ background: "rgba(255,248,232,0.08)", color: "rgba(255,248,232,0.55)", border: "1px solid rgba(255,248,232,0.1)" }}
               >
                 {icon}
               </a>
@@ -73,7 +73,7 @@ export default function Footer() {
 
         {/* Hours */}
         <div>
-          <p className="font-bold text-sm tracking-widest uppercase mb-4" style={{ color: "rgba(255,248,232,0.4)" }}>Hours of Operation</p>
+          <p className="font-black text-xs tracking-[0.2em] uppercase mb-4" style={{ color: "rgba(255,248,232,0.4)" }}>Hours of Operation</p>
           <div className="space-y-1.5 text-sm" style={{ color: "rgba(255,248,232,0.65)" }}>
             <p>{daysLabel} &nbsp;&nbsp;&nbsp; {hoursText}</p>
             {closedDays && <p className="text-xs italic" style={{ color: "rgba(255,248,232,0.3)" }}>{closedDays}</p>}
@@ -85,7 +85,7 @@ export default function Footer() {
 
         {/* Newsletter */}
         <div>
-          <p className="font-bold text-sm tracking-widest uppercase mb-4" style={{ color: "rgba(255,248,232,0.4)" }}>Sign up newsletter</p>
+          <p className="font-black text-xs tracking-[0.2em] uppercase mb-4" style={{ color: "rgba(255,248,232,0.4)" }}>Sign Up Newsletter</p>
           {done ? (
             <p className="text-sm" style={{ color: "#e8b800" }}>You're subscribed! See you at the truck.</p>
           ) : (
@@ -96,13 +96,13 @@ export default function Footer() {
                 placeholder="Email address"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                className="flex-1 text-sm px-4 py-2.5 rounded-lg outline-none"
-                style={{ background: "rgba(255,248,232,0.08)", border: "1px solid rgba(255,248,232,0.12)", color: "#fff8e8" }}
+                className="flex-1 text-sm px-4 py-2.5 outline-none"
+                style={{ background: "rgba(255,248,232,0.06)", border: "1px solid rgba(255,248,232,0.12)", color: "#fff8e8" }}
               />
               <button
                 type="submit"
-                className="px-4 py-2.5 rounded-lg font-bold text-sm transition-all duration-200 hover:scale-105 whitespace-nowrap"
-                style={{ background: "#c9940a", color: "#fff8e8" }}
+                className="px-4 py-2.5 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85 whitespace-nowrap"
+                style={{ background: "#c9940a", color: "#fff", border: "none", cursor: "pointer" }}
               >
                 Join
               </button>
@@ -115,12 +115,12 @@ export default function Footer() {
       {/* Bottom bar */}
       <div
         className="max-w-6xl mx-auto px-6 py-4 flex flex-wrap items-center justify-between gap-3 text-xs"
-        style={{ borderTop: "1px solid rgba(255,248,232,0.08)", color: "rgba(255,248,232,0.3)" }}
+        style={{ borderTop: "1px solid rgba(255,248,232,0.07)", color: "rgba(255,248,232,0.28)" }}
       >
         <p>© {new Date().getFullYear()} Cheezies Gourmet Food Truck. All rights reserved.</p>
-        <div className="flex gap-4">
-          <a href="/About" style={{ color: "rgba(255,248,232,0.4)", textDecoration: "none" }} onMouseEnter={e => e.currentTarget.style.color="#e8b800"} onMouseLeave={e => e.currentTarget.style.color="rgba(255,248,232,0.4)"}>About</a>
-          <a href="/ContactUs" style={{ color: "rgba(255,248,232,0.4)", textDecoration: "none" }} onMouseEnter={e => e.currentTarget.style.color="#e8b800"} onMouseLeave={e => e.currentTarget.style.color="rgba(255,248,232,0.4)"}>Contact</a>
+        <div className="flex gap-5">
+          <a href="/About" className="font-bold uppercase tracking-wider" style={{ color: "rgba(255,248,232,0.4)", textDecoration: "none" }} onMouseEnter={e => e.currentTarget.style.color="#c9940a"} onMouseLeave={e => e.currentTarget.style.color="rgba(255,248,232,0.4)"}>About</a>
+          <a href="/ContactUs" className="font-bold uppercase tracking-wider" style={{ color: "rgba(255,248,232,0.4)", textDecoration: "none" }} onMouseEnter={e => e.currentTarget.style.color="#c9940a"} onMouseLeave={e => e.currentTarget.style.color="rgba(255,248,232,0.4)"}>Contact</a>
         </div>
       </div>
     </footer>

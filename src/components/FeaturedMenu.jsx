@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 
 const FALLBACK = [
@@ -21,44 +20,56 @@ export default function FeaturedMenu() {
   }, []);
 
   return (
-    <section className="py-16 px-6" style={{ background: "#fdf6e3", borderTop: "1px solid rgba(180,120,0,0.1)" }}>
-      <div className="max-w-5xl mx-auto">
+    <section className="py-16 px-6" style={{ background: "#fff", borderTop: "1.5px solid #e8e0d0" }}>
+      <div className="max-w-6xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
-          <p className="text-xs font-bold tracking-[0.3em] uppercase mb-2" style={{ color: "#c9940a" }}>Fan Favorites</p>
-          <h2 className="text-4xl md:text-5xl font-black mb-3" style={{ fontFamily: "Georgia, serif", color: "#2a1200" }}>Featured Items</h2>
-          <div className="inline-flex items-center gap-2 mt-3 px-4 py-2 rounded-lg" style={{ background: "rgba(201,148,10,0.13)", border: "1.5px solid rgba(201,148,10,0.35)" }}>
+          <p className="text-xs font-black tracking-[0.25em] uppercase mb-2" style={{ color: "#c9940a" }}>Fan Favorites</p>
+          <h2 className="font-black uppercase" style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", color: "#1a0800", letterSpacing: "-0.01em" }}>Featured Items</h2>
+          <div className="inline-flex items-center gap-2 mt-4 px-4 py-2" style={{ background: "#fff8e8", border: "1.5px solid #c9940a" }}>
             <span>🧀</span>
-            <p className="text-sm font-black uppercase tracking-wide" style={{ color: "#8a5a00" }}>All sandwiches include Chips and a Drink</p>
+            <p className="text-xs font-black uppercase tracking-widest" style={{ color: "#7a4f00" }}>All sandwiches include Chips and a Drink</p>
           </div>
         </motion.div>
 
-        <div className="grid sm:grid-cols-3 gap-5 mb-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
           {display.map((item, i) => (
-            <motion.div key={item.id || item.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-              className="rounded-2xl overflow-hidden group"
-              style={{ background: "#fff", border: "1px solid rgba(180,120,0,0.14)", boxShadow: "0 4px 20px rgba(180,120,0,0.08)", transition: "box-shadow 0.2s ease, border-color 0.2s ease" }}
-              onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 8px 32px rgba(180,120,0,0.18)"; e.currentTarget.style.borderColor = "rgba(201,148,10,0.35)"; }}
-              onMouseLeave={e => { e.currentTarget.style.boxShadow = "0 4px 20px rgba(180,120,0,0.08)"; e.currentTarget.style.borderColor = "rgba(180,120,0,0.14)"; }}>
+            <motion.div
+              key={item.id || item.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08 }}
+              className="overflow-hidden group"
+              style={{ background: "#fff", border: "1.5px solid #e8e0d0" }}
+            >
               <div className="relative h-48 overflow-hidden">
                 <img src={item.img} alt={item.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-                <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(30,12,0,0.75) 0%, transparent 55%)" }} />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(26,8,0,0.8) 0%, transparent 55%)" }} />
                 {item.badge && (
-                  <span className="absolute top-3 left-3 text-xs font-black px-2.5 py-1 rounded-full"
-                    style={{ background: item.badge_color || "#c9940a", color: "#fff8e8", letterSpacing: "0.03em" }}>
+                  <span
+                    className="absolute top-3 left-3 text-xs font-black px-2.5 py-1"
+                    style={{ background: item.badge_color || "#c9940a", color: "#fff", letterSpacing: "0.05em" }}
+                  >
                     {item.badge}
                   </span>
                 )}
-                <span className="absolute top-3 right-3 font-black text-sm px-2.5 py-1 rounded-full"
-                  style={{ background: "rgba(42,18,0,0.8)", color: "#e8b800" }}>
+                <span
+                  className="absolute top-3 right-3 font-black text-sm px-2.5 py-1"
+                  style={{ background: "#1a0800", color: "#e8b800" }}
+                >
                   {item.price}
                 </span>
-                <h4 className="absolute bottom-3 left-4 font-black text-base text-white leading-tight" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>{item.name}</h4>
+                <h4 className="absolute bottom-3 left-4 font-black text-base text-white uppercase tracking-tight">{item.name}</h4>
               </div>
-              <div className="px-4 py-4">
+              <div className="px-4 py-4" style={{ borderTop: "1.5px solid #e8e0d0" }}>
                 <p className="text-sm leading-relaxed mb-4" style={{ color: "rgba(61,34,0,0.65)", lineHeight: "1.6", minHeight: "40px" }}>{item.desc}</p>
-                <a href="https://cheeziesgourmetohio.square.site/" target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full font-bold text-sm transition-opacity duration-200 hover:opacity-85"
-                  style={{ background: "#c9940a", color: "#fff8e8", textDecoration: "none", minHeight: "44px" }}>
+                <a
+                  href="https://cheeziesgourmetohio.square.site/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 px-5 py-2.5 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
+                  style={{ background: "#c9940a", color: "#fff", textDecoration: "none" }}
+                >
                   Order This →
                 </a>
               </div>
@@ -67,10 +78,12 @@ export default function FeaturedMenu() {
         </div>
 
         <div className="text-center">
-          <button onClick={() => { navigate("/Menu"); window.scrollTo({ top: 0, behavior: "instant" }); }}
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-sm transition-opacity duration-200 hover:opacity-85 select-none"
-            style={{ background: "#2a1200", color: "#fff8e8", boxShadow: "0 4px 24px rgba(42,18,0,0.25)", minHeight: "48px" }}>
-            View Full Menu <ArrowRight size={16} />
+          <button
+            onClick={() => { navigate("/Menu"); window.scrollTo({ top: 0, behavior: "instant" }); }}
+            className="inline-flex items-center gap-2 px-8 py-4 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
+            style={{ background: "#1a0800", color: "#fff" }}
+          >
+            View Full Menu →
           </button>
         </div>
       </div>

@@ -6,7 +6,7 @@ import { base44 } from "@/api/base44Client";
 const socials = [
   {
     href: "https://www.facebook.com/cheeziesohio",
-    label: "Facebook",
+    label: "FaceBook",
     sub: "Daily location updates",
     color: "#1877F2",
     icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>,
@@ -31,13 +31,6 @@ const socials = [
     sub: "Truck life videos",
     color: "#010101",
     icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.27 8.27 0 004.84 1.54V6.84a4.85 4.85 0 01-1.07-.15z"/></svg>,
-  },
-  {
-    href: "https://maps.app.goo.gl/dUyof854YsHaKcNE9",
-    label: "Google",
-    sub: "Reviews & directions",
-    color: "#4285F4",
-    icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>,
   },
 ];
 
@@ -76,7 +69,6 @@ export default function Contact() {
 
   const status = truckData?.status || "closed";
   const sc = statusConfig[status] || statusConfig.closed;
-
   const isClosed = status === "closed";
   const showLive = !isClosed && truckData?.latitude && truckData?.longitude;
   const mapLat = showLive ? truckData.latitude : (truckData?.home_latitude || null);
@@ -94,79 +86,78 @@ export default function Contact() {
   const daysText = formatDays(truckData?.open_days);
 
   return (
-    <section id="contact" className="py-20 px-6" style={{ background: "#fdf6e3", borderTop: "1px solid rgba(180,120,0,0.1)" }}>
+    <section id="contact" className="py-16 px-6" style={{ background: "#fff", borderTop: "1.5px solid #e8e0d0" }}>
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-14"
+          className="text-center mb-12"
         >
-          <p className="text-xs font-bold tracking-[0.3em] uppercase mb-3" style={{ color: "#c9940a" }}>Get In Touch</p>
-          <h2 className="text-4xl md:text-5xl font-black" style={{ fontFamily: "Georgia, serif", color: "#2a1200" }}>Find Us</h2>
-          <div className="mt-3 w-12 h-1 mx-auto rounded-full" style={{ background: "#c9940a" }} />
+          <p className="text-xs font-black tracking-[0.25em] uppercase mb-2" style={{ color: "#c9940a" }}>Get in Touch</p>
+          <h2 className="font-black uppercase" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: "#1a0800" }}>Find Us</h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-5 gap-6">
+        <div className="grid lg:grid-cols-5 gap-6 mb-8">
           {/* Map */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-3 rounded-2xl overflow-hidden"
-            style={{ minHeight: "400px", border: "1px solid rgba(180,120,0,0.15)", boxShadow: "0 4px 24px rgba(180,120,0,0.1)" }}
+            className="lg:col-span-3 overflow-hidden"
+            style={{ minHeight: "380px", border: "1.5px solid #e8e0d0" }}
           >
             <iframe
               title="Cheezies location"
               src={mapSrc}
               width="100%"
               height="100%"
-              style={{ border: 0, minHeight: "400px", display: "block" }}
+              style={{ border: 0, minHeight: "380px", display: "block" }}
               allowFullScreen
               loading="lazy"
             />
           </motion.div>
 
-          {/* Right column */}
+          {/* Right info column */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-2 flex flex-col gap-5"
+            className="lg:col-span-2 flex flex-col gap-4"
           >
-            {/* Location info */}
-            <div className="rounded-2xl p-6" style={{ background: "#ffffff", border: "1px solid rgba(180,120,0,0.15)", boxShadow: "0 2px 16px rgba(180,120,0,0.06)" }}>
+            {/* Location */}
+            <div className="p-5" style={{ background: "#fff", border: "1.5px solid #e8e0d0" }}>
               <div className="flex items-center justify-between mb-2">
-                <p className="text-xs font-bold tracking-widest uppercase" style={{ color: "rgba(80,45,0,0.4)" }}>Location</p>
-                <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: `${sc.color}18`, color: sc.color }}>
+                <p className="text-xs font-black tracking-widest uppercase" style={{ color: "rgba(80,45,0,0.4)" }}>Location</p>
+                <span className="text-xs font-black px-2 py-0.5" style={{ background: `${sc.color}18`, color: sc.color }}>
                   {sc.label}
                 </span>
               </div>
-              <p className="font-black text-xl mb-1" style={{ color: "#2a1200" }}>{displayAddress || "Akron, Ohio"}</p>
-              <p className="text-sm mb-4 leading-relaxed" style={{ color: "rgba(61,34,0,0.55)" }}>
+              <p className="font-black text-base mb-1" style={{ color: "#1a0800" }}>{displayAddress || "Akron, Ohio"}</p>
+              <p className="text-xs mb-4" style={{ color: "rgba(61,34,0,0.55)" }}>
                 {isClosed ? "We're currently closed. See our home base above." : "We move daily — follow our social pages for updates."}
               </p>
               <button
                 onClick={() => { navigate("/FindUs"); window.scrollTo({ top: 0, behavior: "instant" }); }}
-                className="block w-full text-center py-2.5 rounded-lg font-bold text-sm transition-all duration-200 hover:scale-105"
-                style={{ background: "#c9940a", color: "#fff8e8", border: "none", cursor: "pointer" }}
+                className="w-full text-center py-2.5 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
+                style={{ background: "#c9940a", color: "#fff", border: "none", cursor: "pointer" }}
               >
                 View Live Tracker →
               </button>
             </div>
 
             {/* Hours */}
-            <div className="rounded-2xl p-6" style={{ background: "#ffffff", border: "1px solid rgba(180,120,0,0.15)", boxShadow: "0 2px 16px rgba(180,120,0,0.06)" }}>
-              <p className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: "rgba(80,45,0,0.4)" }}>Hours</p>
-              <div className="space-y-2">
-                <div className="flex justify-between items-center text-sm gap-4">
+            <div className="p-5" style={{ background: "#fff", border: "1.5px solid #e8e0d0" }}>
+              <p className="text-xs font-black tracking-widest uppercase mb-3" style={{ color: "rgba(80,45,0,0.4)" }}>Hours</p>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between gap-4">
                   <span style={{ color: "rgba(61,34,0,0.65)" }}>{daysText}</span>
-                  <span className="font-bold whitespace-nowrap" style={{ color: "#2a1200" }}>{hoursText}</span>
+                  <span className="font-black whitespace-nowrap" style={{ color: "#1a0800" }}>{hoursText}</span>
                 </div>
                 {truckData?.open_days && !truckData.open_days.includes("Mon") && (
-                  <div className="flex justify-between items-center text-sm gap-4">
+                  <div className="flex justify-between gap-4">
                     <span style={{ color: "rgba(61,34,0,0.65)" }}>Monday</span>
-                    <span className="font-bold" style={{ color: "#2a1200" }}>Closed</span>
+                    <span className="font-black" style={{ color: "#1a0800" }}>Closed</span>
                   </div>
                 )}
               </div>
@@ -175,19 +166,19 @@ export default function Contact() {
 
             {/* Phone */}
             <div
-              className="rounded-2xl p-6 flex items-center justify-between gap-4 cursor-pointer transition-all duration-200 hover:scale-[1.02]"
-              style={{ background: "#c9940a", boxShadow: "0 4px 20px rgba(180,120,0,0.3)" }}
+              className="p-5 flex items-center justify-between gap-4 cursor-pointer"
+              style={{ background: "#f9f4ea", border: "1.5px solid #e8e0d0" }}
               onClick={copyPhone}
             >
               <div>
-                <p className="text-xs font-bold tracking-widest uppercase mb-1" style={{ color: "rgba(255,248,232,0.6)" }}>Call Us</p>
-                <p className="font-black text-xl" style={{ color: "#fff8e8" }}>330-510-8875</p>
+                <p className="text-xs font-black tracking-widest uppercase mb-1" style={{ color: "rgba(61,34,0,0.4)" }}>Call Us</p>
+                <p className="font-black text-lg" style={{ color: "#1a0800" }}>330-510-8875</p>
               </div>
               <a
                 href="tel:3305108875"
                 onClick={e => e.stopPropagation()}
-                className="px-5 py-2.5 rounded-lg font-bold text-sm transition-all hover:scale-105 whitespace-nowrap"
-                style={{ background: "rgba(255,248,232,0.2)", color: "#fff8e8", textDecoration: "none" }}
+                className="px-4 py-2 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
+                style={{ background: "#c9940a", color: "#fff", textDecoration: "none" }}
               >
                 {copied ? "Copied!" : "Call Now"}
               </a>
@@ -195,12 +186,12 @@ export default function Contact() {
           </motion.div>
         </div>
 
-        {/* Social cards */}
+        {/* Social row */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4"
+          className="grid grid-cols-2 md:grid-cols-4 gap-4"
         >
           {socials.map(({ href, label, sub, color, icon }) => (
             <a
@@ -208,14 +199,14 @@ export default function Contact() {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-3 py-6 px-4 rounded-xl text-center transition-all duration-200 hover:scale-105 select-none"
-              style={{ background: "#fff", border: `1.5px solid ${color}20`, boxShadow: "0 2px 12px rgba(0,0,0,0.05)", textDecoration: "none" }}
-              onMouseEnter={e => { e.currentTarget.style.background = `${color}08`; e.currentTarget.style.borderColor = `${color}40`; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.borderColor = `${color}20`; }}
+              className="flex flex-col items-center gap-3 py-5 px-4 text-center transition-all duration-150 hover:scale-105"
+              style={{ background: "#fff", border: "1.5px solid #e8e0d0", textDecoration: "none" }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = color; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "#e8e0d0"; }}
             >
               <span style={{ color }}>{icon}</span>
               <div>
-                <p className="font-black text-sm" style={{ color: "#2a1200" }}>{label}</p>
+                <p className="font-black text-sm" style={{ color: "#1a0800" }}>{label}</p>
                 <p className="text-xs mt-0.5" style={{ color: "rgba(61,34,0,0.45)" }}>{sub}</p>
               </div>
             </a>

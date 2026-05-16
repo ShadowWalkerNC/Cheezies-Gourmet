@@ -14,7 +14,7 @@ body {
 
 /* ─── CSS Design Tokens ──────────────────────────────────── */
 :root {
-  --color-bg:        #fffbf0;
+  --color-bg:        #ffffff;
   --color-bg-deep:   #fff8e8;
   --color-bg-mid:    #fdf3d8;
   --color-bg-warm:   #faecc4;
