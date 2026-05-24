@@ -102,7 +102,7 @@ export default function NewsletterPopup() {
               </div>
 
               {/* Body */}
-              <div className="px-8 py-7" style={{ background: "#fff" }}>
+              <div className="px-8 py-7" style={{ background: "linear-gradient(135deg, #fff 0%, #fdf3d8 100%)" }}>
                 {done ? (
                   <div className="text-center py-4">
                     <div className="text-4xl mb-3">🎉</div>
