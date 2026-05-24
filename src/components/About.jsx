@@ -87,13 +87,6 @@ export default function About() {
             </div>
 
             <div className="flex flex-wrap gap-3">
-              <button
-                onClick={() => { navigate("/FindUs"); window.scrollTo({ top: 0, behavior: "instant" }); }}
-                className="px-6 py-3 rounded-full font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
-                style={{ background: "#c9940a", color: "#fff", border: "2px solid #c9940a", cursor: "pointer" }}
-              >
-                Find the Truck →
-              </button>
               <a
                 href="https://cheeziesgourmetohio.square.site/"
                 target="_blank"
