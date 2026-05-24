@@ -103,11 +103,14 @@ export default function TruckRequest() {
         <div className="hidden lg:flex flex-col justify-center w-80 flex-shrink-0">
           <h3
             className="font-black uppercase leading-none"
-            style={{ fontSize: "4rem", color: "#1a0800", letterSpacing: "-0.02em", lineHeight: 0.9 }}
+            style={{ fontSize: "3.8rem", color: "#1a0800", letterSpacing: "-0.02em", lineHeight: 0.9 }}
           >
-            ARTISAN<br />GRILLED<br />CHEESE.<br />
-            <span style={{ color: "#c9940a" }}>MAKING<br />EVERY<br />AKRON<br />RESPONSE</span>
+            WE GO<br />WHERE<br />YOU ARE.<br />
+            <span style={{ color: "#c9940a" }}>BRING<br />THE<br />TRUCK<br />TO YOU.</span>
           </h3>
+          <p className="mt-6 text-sm leading-relaxed" style={{ color: "rgba(61,34,0,0.55)", maxWidth: "260px" }}>
+            Office lunches, birthday parties, block parties — we scale up for any crowd, any occasion.
+          </p>
         </div>
       </div>
     </section>

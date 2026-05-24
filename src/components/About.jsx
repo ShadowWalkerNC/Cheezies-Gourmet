@@ -54,7 +54,7 @@ export default function About() {
               More Than Just a Grilled Cheese
             </h2>
             <p className="text-sm leading-relaxed mb-7" style={{ color: "rgba(61,34,0,0.7)", lineHeight: "1.8" }}>
-              Cheezies started with one idea — take the most comforting food in the world and make it extraordinary. We blend bold flavors, premium ingredients, and a whole lot of heart into every sandwich. Born and raised in Akron, Ohio, proud to serve our community fresh to order.
+              Cheezies' started with one idea — take the most comforting food in the world and make it extraordinary. We blend bold flavors, premium ingredients, and a whole lot of heart into every sandwich. Born and raised in Akron, Ohio, proud to serve our community fresh to order.
             </p>
 
             <div className="grid grid-cols-3 gap-3 mb-7">
@@ -122,9 +122,9 @@ export default function About() {
               />
             </div>
             <div className="mt-4 p-5" style={{ background: "#1a0800" }}>
-              <p className="text-xs font-black tracking-[0.2em] uppercase mb-1" style={{ color: "#c9940a" }}>Our Story</p>
+              <p className="text-xs font-black tracking-[0.2em] uppercase mb-1" style={{ color: "#c9940a" }}>Fan Favorites</p>
               <p className="text-sm leading-relaxed" style={{ color: "rgba(255,248,232,0.75)" }}>
-                Cheezies's gourmet food truck making every sandwich an experience that stops you in your tracks.
+                From The Patty Meltdown to The Mac Attack — every sandwich is a showstopper. Come hungry.
               </p>
               <button
                 onClick={() => { navigate("/Menu"); window.scrollTo({ top: 0, behavior: "instant" }); }}

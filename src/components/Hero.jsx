@@ -28,6 +28,29 @@ export default function Hero() {
           <p className="text-base mb-8 leading-relaxed" style={{ color: "rgba(61,34,0,0.65)", maxWidth: "420px" }}>
             Akron, Ohio's gourmet food truck making every sandwich an experience that stops you in your tracks.
           </p>
+          {/* Trust bar */}
+          <div className="flex flex-wrap items-center gap-4 mb-8">
+            <div className="flex items-center gap-1.5">
+              <div className="flex">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill="#c9940a"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+                ))}
+              </div>
+              <span className="text-xs font-black" style={{ color: "#1a0800" }}>5.0</span>
+              <span className="text-xs" style={{ color: "rgba(61,34,0,0.5)" }}>on Google</span>
+            </div>
+            <div className="w-px h-4" style={{ background: "#e8e0d0" }} />
+            <a
+              href="https://maps.app.goo.gl/dUyof854YsHaKcNE9"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-bold underline-offset-2 hover:underline"
+              style={{ color: "#c9940a" }}
+            >
+              Leave a Review ↗
+            </a>
+          </div>
+
           <div className="flex flex-wrap gap-3">
             <a
               href="https://cheeziesgourmetohio.square.site/"

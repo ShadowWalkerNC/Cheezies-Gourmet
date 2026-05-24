@@ -183,6 +183,21 @@ export default function Contact() {
                 {copied ? "Copied!" : "Call Now"}
               </a>
             </div>
+
+            {/* Email */}
+            <div className="p-5 flex items-center justify-between gap-4" style={{ background: "#fff", border: "1.5px solid #e8e0d0" }}>
+              <div>
+                <p className="text-xs font-black tracking-widest uppercase mb-1" style={{ color: "rgba(61,34,0,0.4)" }}>Email Us</p>
+                <p className="font-black text-sm" style={{ color: "#1a0800" }}>cheeziesohio@gmail.com</p>
+              </div>
+              <a
+                href="mailto:cheeziesohio@gmail.com"
+                className="px-4 py-2 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
+                style={{ background: "#1a0800", color: "#fff8e8", textDecoration: "none" }}
+              >
+                Email
+              </a>
+            </div>
           </motion.div>
         </div>
 

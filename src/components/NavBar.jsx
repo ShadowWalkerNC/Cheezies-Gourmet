@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const tabs = [
-  { label: "About",    path: "/About" },
+  { label: "Home",     path: "/Home" },
   { label: "Menu",     path: "/Menu" },
   { label: "Catering", path: "/Catering" },
   { label: "Find Us",  path: "/FindUs" },
