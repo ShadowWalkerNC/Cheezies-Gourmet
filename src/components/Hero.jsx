@@ -5,38 +5,14 @@ export default function Hero() {
   const navigate = useNavigate();
 
   return (
-    <section
-      className="relative flex flex-col md:flex-row min-h-screen overflow-hidden"
-      style={{ background: "var(--color-bg-deep)", paddingTop: "72px" }}
-    >
-      {/* Warm blob background */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: "radial-gradient(ellipse 80% 60% at 70% 40%, #faecc4 0%, transparent 70%)",
-        }}
-      />
-
+    <section className="relative flex flex-col md:flex-row min-h-screen" style={{ background: "#fff", paddingTop: "72px" }}>
       {/* Left — text content */}
-      <div className="relative flex-1 flex flex-col justify-center px-8 md:px-16 py-16 md:py-0 order-2 md:order-1">
+      <div className="flex-1 flex flex-col justify-center px-8 md:px-16 py-16 md:py-0 order-2 md:order-1">
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
-          {/* Pill label */}
-          <span
-            className="inline-block text-xs font-black tracking-widest uppercase mb-5 px-4 py-1.5"
-            style={{
-              background: "#fff8e8",
-              color: "#c9940a",
-              borderRadius: "999px",
-              border: "1.5px solid rgba(201,148,10,0.3)",
-            }}
-          >
-            🧀 Akron, Ohio's Favorite Food Truck
-          </span>
-
           <h1
             className="font-black uppercase leading-none mb-6"
             style={{
@@ -49,16 +25,11 @@ export default function Hero() {
             ARTISAN<br />GRILLED<br />CHEESE.<br />
             <span style={{ color: "#c9940a" }}>REIMAGINED.</span>
           </h1>
-
           <p className="text-base mb-8 leading-relaxed" style={{ color: "rgba(61,34,0,0.65)", maxWidth: "420px" }}>
-            Making every sandwich an experience that stops you in your tracks — fresh, bold, and melted to perfection.
+            Akron, Ohio's gourmet food truck making every sandwich an experience that stops you in your tracks.
           </p>
-
           {/* Trust bar */}
-          <div
-            className="inline-flex flex-wrap items-center gap-4 mb-8 px-5 py-3"
-            style={{ background: "#fff", borderRadius: "16px", boxShadow: "0 2px 16px rgba(201,148,10,0.12)", border: "1px solid rgba(201,148,10,0.15)" }}
-          >
+          <div className="flex flex-wrap items-center gap-4 mb-8">
             <div className="flex items-center gap-1.5">
               <div className="flex">
                 {[...Array(5)].map((_, i) => (
@@ -73,7 +44,7 @@ export default function Hero() {
               href="https://maps.app.goo.gl/dUyof854YsHaKcNE9"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs font-bold hover:underline underline-offset-2"
+              className="text-xs font-bold underline-offset-2 hover:underline"
               style={{ color: "#c9940a" }}
             >
               Leave a Review ↗
@@ -85,13 +56,12 @@ export default function Hero() {
               href="https://cheeziesgourmetohio.square.site/"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-7 py-3.5 font-black text-sm tracking-widest uppercase transition-all hover:opacity-90 hover:scale-105"
+              className="px-7 py-3.5 font-black text-sm tracking-widest uppercase transition-opacity hover:opacity-85"
               style={{
                 background: "#c9940a",
                 color: "#fff",
                 textDecoration: "none",
-                borderRadius: "14px",
-                boxShadow: "0 4px 20px rgba(201,148,10,0.35)",
+                border: "2px solid #c9940a",
               }}
             >
               Order Online
@@ -101,10 +71,9 @@ export default function Hero() {
               className="px-7 py-3.5 font-black text-sm tracking-widest uppercase transition-all hover:bg-amber-50"
               style={{
                 background: "transparent",
-                border: "2px solid rgba(201,148,10,0.5)",
+                border: "2px solid #c9940a",
                 color: "#c9940a",
                 cursor: "pointer",
-                borderRadius: "14px",
               }}
             >
               View the Menu
@@ -115,21 +84,16 @@ export default function Hero() {
 
       {/* Right — food image */}
       <motion.div
-        className="relative flex-1 order-1 md:order-2 flex items-center justify-center px-8 py-12 md:py-0"
-        initial={{ opacity: 0, scale: 0.97 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-        style={{ minHeight: "40vw" }}
+        className="flex-1 order-1 md:order-2 flex items-center justify-center px-8 py-12 md:py-0"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 0.2 }}
+        style={{ background: "#fffbf0", minHeight: "40vw" }}
       >
-        {/* Decorative warm circle */}
-        <div
-          className="absolute inset-8 pointer-events-none"
-          style={{ background: "radial-gradient(circle, #faecc4 0%, transparent 70%)", borderRadius: "50%" }}
-        />
         <img
           src="https://media.base44.com/images/public/69b410ceece31b13c728497b/5e68b0a48_generated_image.png"
           alt="Cheezies gourmet grilled cheese"
-          className="relative w-full max-w-lg object-contain drop-shadow-xl"
+          className="w-full max-w-lg object-contain"
           style={{ maxHeight: "60vh" }}
         />
       </motion.div>

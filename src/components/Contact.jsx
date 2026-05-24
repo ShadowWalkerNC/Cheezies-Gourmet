@@ -86,7 +86,7 @@ export default function Contact() {
   const daysText = formatDays(truckData?.open_days);
 
   return (
-    <section id="contact" className="py-20 px-6" style={{ background: "#fff" }}>
+    <section id="contact" className="py-16 px-6" style={{ background: "#fff", borderTop: "1.5px solid #e8e0d0" }}>
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -94,8 +94,8 @@ export default function Contact() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <span className="inline-block text-xs font-black tracking-widest uppercase mb-3 px-4 py-1.5" style={{ background: "#fff8e8", color: "#c9940a", borderRadius: "999px", border: "1.5px solid rgba(201,148,10,0.25)" }}>Get in Touch</span>
-          <h2 className="font-black uppercase block" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: "#1a0800" }}>Find Us</h2>
+          <p className="text-xs font-black tracking-[0.25em] uppercase mb-2" style={{ color: "#c9940a" }}>Get in Touch</p>
+          <h2 className="font-black uppercase" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: "#1a0800" }}>Find Us</h2>
         </motion.div>
 
         <div className="grid lg:grid-cols-5 gap-6 mb-8">
@@ -105,7 +105,7 @@ export default function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="lg:col-span-3 overflow-hidden"
-            style={{ minHeight: "380px", borderRadius: "20px", overflow: "hidden", boxShadow: "0 4px 24px rgba(61,34,0,0.08)" }}
+            style={{ minHeight: "380px", border: "1.5px solid #e8e0d0" }}
           >
             <iframe
               title="Cheezies location"
@@ -126,7 +126,7 @@ export default function Contact() {
             className="lg:col-span-2 flex flex-col gap-4"
           >
             {/* Location */}
-            <div className="p-5" style={{ background: "#fff", borderRadius: "16px", border: "1px solid rgba(201,148,10,0.15)", boxShadow: "0 2px 12px rgba(61,34,0,0.05)" }}>
+            <div className="p-5" style={{ background: "#fff", border: "1.5px solid #e8e0d0" }}>
               <div className="flex items-center justify-between mb-2">
                 <p className="text-xs font-black tracking-widest uppercase" style={{ color: "rgba(80,45,0,0.4)" }}>Location</p>
                 <span className="text-xs font-black px-2 py-0.5" style={{ background: `${sc.color}18`, color: sc.color }}>
@@ -139,15 +139,15 @@ export default function Contact() {
               </p>
               <button
                 onClick={() => { navigate("/FindUs"); window.scrollTo({ top: 0, behavior: "instant" }); }}
-                className="w-full text-center py-2.5 font-black text-xs tracking-widest uppercase transition-all hover:opacity-85"
-                style={{ background: "#c9940a", color: "#fff", border: "none", cursor: "pointer", borderRadius: "10px" }}
+                className="w-full text-center py-2.5 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
+                style={{ background: "#c9940a", color: "#fff", border: "none", cursor: "pointer" }}
               >
                 View Live Tracker →
               </button>
             </div>
 
             {/* Hours */}
-            <div className="p-5" style={{ background: "#fffbf0", borderRadius: "16px", border: "1px solid rgba(201,148,10,0.15)" }}>
+            <div className="p-5" style={{ background: "#fff", border: "1.5px solid #e8e0d0" }}>
               <p className="text-xs font-black tracking-widest uppercase mb-3" style={{ color: "rgba(80,45,0,0.4)" }}>Hours</p>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between gap-4">
@@ -167,7 +167,7 @@ export default function Contact() {
             {/* Phone */}
             <div
               className="p-5 flex items-center justify-between gap-4 cursor-pointer"
-              style={{ background: "#fff8e8", borderRadius: "16px", border: "1px solid rgba(201,148,10,0.2)" }}
+              style={{ background: "#f9f4ea", border: "1.5px solid #e8e0d0" }}
               onClick={copyPhone}
             >
               <div>
@@ -177,23 +177,23 @@ export default function Contact() {
               <a
                 href="tel:3305108875"
                 onClick={e => e.stopPropagation()}
-                className="px-4 py-2 font-black text-xs tracking-widest uppercase transition-all hover:opacity-85"
-                style={{ background: "#c9940a", color: "#fff", textDecoration: "none", borderRadius: "8px" }}
+                className="px-4 py-2 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
+                style={{ background: "#c9940a", color: "#fff", textDecoration: "none" }}
               >
                 {copied ? "Copied!" : "Call Now"}
               </a>
             </div>
 
             {/* Email */}
-            <div className="p-5 flex items-center justify-between gap-4" style={{ background: "#fff", borderRadius: "16px", border: "1px solid rgba(201,148,10,0.15)", boxShadow: "0 2px 8px rgba(61,34,0,0.04)" }}>
+            <div className="p-5 flex items-center justify-between gap-4" style={{ background: "#fff", border: "1.5px solid #e8e0d0" }}>
               <div>
                 <p className="text-xs font-black tracking-widest uppercase mb-1" style={{ color: "rgba(61,34,0,0.4)" }}>Email Us</p>
                 <p className="font-black text-sm" style={{ color: "#1a0800" }}>cheeziesohio@gmail.com</p>
               </div>
               <a
                 href="mailto:cheeziesohio@gmail.com"
-                className="px-4 py-2 font-black text-xs tracking-widest uppercase transition-all hover:opacity-85"
-                style={{ background: "#1a0800", color: "#fff8e8", textDecoration: "none", borderRadius: "8px" }}
+                className="px-4 py-2 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
+                style={{ background: "#1a0800", color: "#fff8e8", textDecoration: "none" }}
               >
                 Email
               </a>
@@ -215,7 +215,7 @@ export default function Contact() {
               target="_blank"
               rel="noopener noreferrer"
               className="flex flex-col items-center gap-3 py-5 px-4 text-center transition-all duration-150 hover:scale-105"
-              style={{ background: "#fff", borderRadius: "16px", border: "1px solid rgba(201,148,10,0.15)", textDecoration: "none", boxShadow: "0 2px 12px rgba(61,34,0,0.05)" }}
+              style={{ background: "#fff", border: "1.5px solid #e8e0d0", textDecoration: "none" }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = color; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = "#e8e0d0"; }}
             >

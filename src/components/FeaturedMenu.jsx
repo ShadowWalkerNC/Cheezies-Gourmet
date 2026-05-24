@@ -20,66 +20,55 @@ export default function FeaturedMenu() {
   }, []);
 
   return (
-    <section className="py-20 px-6" style={{ background: "var(--color-bg-deep)" }}>
+    <section className="py-16 px-6" style={{ background: "#fff", borderTop: "1.5px solid #e8e0d0" }}>
       <div className="max-w-6xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-          <span
-            className="inline-block text-xs font-black tracking-widest uppercase mb-3 px-4 py-1.5"
-            style={{ background: "#fff", color: "#c9940a", borderRadius: "999px", border: "1.5px solid rgba(201,148,10,0.25)" }}
-          >
-            Fan Favorites
-          </span>
-          <h2 className="font-black uppercase" style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", color: "#1a0800", letterSpacing: "-0.01em" }}>
-            Featured Items
-          </h2>
-          <div
-            className="inline-flex items-center gap-2 mt-4 px-5 py-2.5"
-            style={{ background: "#fff", borderRadius: "12px", boxShadow: "0 2px 12px rgba(201,148,10,0.1)", border: "1px solid rgba(201,148,10,0.2)" }}
-          >
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
+          <p className="text-xs font-black tracking-[0.25em] uppercase mb-2" style={{ color: "#c9940a" }}>Fan Favorites</p>
+          <h2 className="font-black uppercase" style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", color: "#1a0800", letterSpacing: "-0.01em" }}>Featured Items</h2>
+          <div className="inline-flex items-center gap-2 mt-4 px-4 py-2" style={{ background: "#fff8e8", border: "1.5px solid #c9940a" }}>
             <span>🧀</span>
             <p className="text-xs font-black uppercase tracking-widest" style={{ color: "#7a4f00" }}>All sandwiches include Chips and a Drink</p>
           </div>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
           {display.map((item, i) => (
             <motion.div
               key={item.id || item.name}
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="overflow-hidden group cursor-pointer"
-              style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 24px rgba(61,34,0,0.08)", border: "1px solid rgba(201,148,10,0.12)" }}
-              whileHover={{ y: -4, boxShadow: "0 12px 40px rgba(61,34,0,0.14)" }}
+              transition={{ delay: i * 0.08 }}
+              className="overflow-hidden group"
+              style={{ background: "#fff", border: "1.5px solid #e8e0d0" }}
             >
-              <div className="relative h-48 overflow-hidden" style={{ borderRadius: "20px 20px 0 0" }}>
+              <div className="relative h-48 overflow-hidden">
                 <img src={item.img} alt={item.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                 <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(26,8,0,0.8) 0%, transparent 55%)" }} />
                 {item.badge && (
                   <span
-                    className="absolute top-3 left-3 text-xs font-black px-3 py-1"
-                    style={{ background: item.badge_color || "#c9940a", color: "#fff", borderRadius: "8px", letterSpacing: "0.05em" }}
+                    className="absolute top-3 left-3 text-xs font-black px-2.5 py-1"
+                    style={{ background: item.badge_color || "#c9940a", color: "#fff", letterSpacing: "0.05em" }}
                   >
                     {item.badge}
                   </span>
                 )}
                 <span
                   className="absolute top-3 right-3 font-black text-sm px-2.5 py-1"
-                  style={{ background: "#1a0800", color: "#e8b800", borderRadius: "8px" }}
+                  style={{ background: "#1a0800", color: "#e8b800" }}
                 >
                   {item.price}
                 </span>
                 <h4 className="absolute bottom-3 left-4 font-black text-base text-white uppercase tracking-tight">{item.name}</h4>
               </div>
-              <div className="px-5 py-4">
+              <div className="px-4 py-4" style={{ borderTop: "1.5px solid #e8e0d0" }}>
                 <p className="text-sm leading-relaxed mb-4" style={{ color: "rgba(61,34,0,0.65)", lineHeight: "1.6", minHeight: "40px" }}>{item.desc}</p>
                 <a
                   href="https://cheeziesgourmetohio.square.site/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 px-5 py-2.5 font-black text-xs tracking-widest uppercase transition-all hover:opacity-90 hover:scale-105"
-                  style={{ background: "#c9940a", color: "#fff", textDecoration: "none", borderRadius: "10px" }}
+                  className="inline-flex items-center gap-1 px-5 py-2.5 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
+                  style={{ background: "#c9940a", color: "#fff", textDecoration: "none" }}
                 >
                   Order This →
                 </a>
@@ -91,8 +80,8 @@ export default function FeaturedMenu() {
         <div className="text-center">
           <button
             onClick={() => { navigate("/Menu"); window.scrollTo({ top: 0, behavior: "instant" }); }}
-            className="inline-flex items-center gap-2 px-8 py-4 font-black text-xs tracking-widest uppercase transition-all hover:opacity-90 hover:scale-105"
-            style={{ background: "#1a0800", color: "#fff", borderRadius: "14px", boxShadow: "0 4px 20px rgba(26,8,0,0.2)" }}
+            className="inline-flex items-center gap-2 px-8 py-4 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
+            style={{ background: "#1a0800", color: "#fff" }}
           >
             View Full Menu →
           </button>
