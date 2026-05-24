@@ -35,7 +35,7 @@ export default function NavBar() {
 
   return (
     <nav
-      className="hidden md:block fixed top-0 left-0 right-0 z-40 transition-all duration-200"
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-200"
       style={{
         paddingTop: "var(--safe-top)",
         background: "#fff",
