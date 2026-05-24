@@ -14,8 +14,8 @@ export default function FeaturedMenu() {
   const [display, setDisplay] = useState(FALLBACK);
 
   useEffect(() => {
-    base44.entities.MenuItem.filter({ is_featured: true, is_active: true }, "sort_order", 6).then(data => {
-      if (data.length > 0) setDisplay(data);
+    base44.entities.MenuItem.filter({ is_featured: true, is_active: true }, "sort_order", 1).then(data => {
+      if (data.length > 0) setDisplay([data[0]]);
     });
   }, []);
 
@@ -23,15 +23,15 @@ export default function FeaturedMenu() {
     <section className="py-16 px-6" style={{ background: "#fff", borderTop: "1.5px solid #e8e0d0" }}>
       <div className="max-w-6xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
-          <p className="text-xs font-black tracking-[0.25em] uppercase mb-2" style={{ color: "#c9940a" }}>Fan Favorites</p>
-          <h2 className="font-black uppercase" style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", color: "#1a0800", letterSpacing: "-0.01em" }}>Featured Items</h2>
+          <p className="text-xs font-black tracking-[0.25em] uppercase mb-2" style={{ color: "#c9940a" }}>Fan Favorite</p>
+          <h2 className="font-black uppercase" style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", color: "#1a0800", letterSpacing: "-0.01em" }}>Try This</h2>
           <div className="inline-flex items-center gap-2 mt-4 px-4 py-2" style={{ background: "#fff8e8", border: "1.5px solid #c9940a" }}>
             <span>🧀</span>
             <p className="text-xs font-black uppercase tracking-widest" style={{ color: "#7a4f00" }}>All sandwiches include Chips and a Drink</p>
           </div>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
+        <div className="max-w-xs mx-auto mb-10">
           {display.map((item, i) => (
             <motion.div
               key={item.id || item.name}

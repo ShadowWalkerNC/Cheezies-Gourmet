@@ -23,8 +23,8 @@ export default function Home() {
       <PageTransition>
         <PullToRefresh onRefresh={handleRefresh}>
           <Hero />
-          <About />
           <FeaturedMenu />
+          <About />
           <VideoShowcase />
           <TruckRequest />
           <CateringTeaser />
