@@ -34,7 +34,19 @@ body {
   --tab-bar-h: calc(60px + var(--safe-bottom));
 }
 
-/* Dark mode overrides (if system prefers) */
+/* Dark mode overrides — class-based (ThemeContext adds .dark to <html>) */
+html.dark {
+  --color-bg:         #1a0e00;
+  --color-bg-deep:    #221200;
+  --color-bg-mid:     #2a1800;
+  --color-bg-warm:    #331f00;
+  --color-bg-warmer:  #3d2500;
+  --color-cream:      #f5e6c8;
+  --color-text-muted: rgba(245,230,200,0.55);
+  --color-border:     rgba(201,148,10,0.18);
+}
+
+/* System dark mode fallback */
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;

@@ -19,7 +19,7 @@ export default function BottomTabBar() {
     if (location.pathname === path) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
-      navigate(path, { replace: true });
+      navigate(path);
       window.scrollTo({ top: 0, behavior: "instant" });
     }
   };

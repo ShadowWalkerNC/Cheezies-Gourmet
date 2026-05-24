@@ -10,6 +10,7 @@ import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import BottomTabBar from './components/BottomTabBar';
 import ChatWidget from './components/ChatWidget';
 import InstallBanner from './components/InstallBanner';
+import AppHeader from './components/AppHeader';
 
 // Page imports
 import Home from "./pages/Home";
@@ -21,6 +22,25 @@ import FindUs from "./pages/FindUs";
 import AdminPage from "./pages/AdminPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage2 from "./pages/ContactPage2";
+
+// Map of pathname → AppHeader title (root tab pages show brand name; sub-pages show page title)
+const ROUTE_TITLES = {
+  "/Home":     "Cheezies",
+  "/":         "Cheezies",
+  "/Menu":     "Menu",
+  "/Catering": "Catering",
+  "/Contact":  "Contact",
+  "/Profile":  "Profile",
+  "/FindUs":   "Find Us",
+  "/About":    "About",
+  "/ContactUs":"Contact Us",
+};
+
+function AppHeaderWrapper() {
+  const location = useLocation();
+  const title = ROUTE_TITLES[location.pathname] ?? "Cheezies";
+  return <AppHeader title={title} />;
+}
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -34,6 +54,10 @@ function AnimatedRoutes() {
         path="*"
         element={
           <>
+            {/* Mobile-only AppHeader */}
+            <div className="md:hidden">
+              <AppHeaderWrapper />
+            </div>
             <AnimatePresence mode="wait" initial={false}>
               <Routes location={location} key={location.pathname}>
                 <Route path="/" element={<Navigate to="/Home" replace />} />
