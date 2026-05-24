@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Home, UtensilsCrossed, CalendarHeart, Phone, UserCircle } from "lucide-react";
 
@@ -10,17 +10,37 @@ const tabs = [
   { label: "Profile",  path: "/Profile",    Icon: UserCircle },
 ];
 
+// Preserve scroll position per tab
+const scrollPositions = {};
+
 export default function BottomTabBar() {
   const location = useLocation();
   const navigate = useNavigate();
   const [pressed, setPressed] = useState(null);
+  const prevPath = useRef(location.pathname);
+
+  // Save scroll position when leaving a tab
+  useEffect(() => {
+    const prev = prevPath.current;
+    const curr = location.pathname;
+    if (prev !== curr) {
+      scrollPositions[prev] = window.scrollY;
+      prevPath.current = curr;
+      // Restore scroll for the new tab, or go to top
+      const saved = scrollPositions[curr];
+      window.scrollTo({ top: saved ?? 0, behavior: "instant" });
+    }
+  }, [location.pathname]);
 
   const handleTab = (path) => {
     if (location.pathname === path) {
+      // Tap active tab → scroll to top and clear saved position
+      scrollPositions[path] = 0;
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
+      // Save current before navigating
+      scrollPositions[location.pathname] = window.scrollY;
       navigate(path, { replace: true });
-      window.scrollTo({ top: 0, behavior: "instant" });
     }
   };
 
@@ -28,8 +48,8 @@ export default function BottomTabBar() {
     <nav
       className="fixed bottom-0 left-0 right-0 z-50 md:hidden flex items-stretch"
       style={{
-        background: "#fff",
-        borderTop: "1.5px solid #e8e0d0",
+        background: "var(--tab-bg)",
+        borderTop: "1.5px solid var(--tab-border)",
         paddingBottom: "var(--safe-bottom)",
       }}
     >
@@ -45,7 +65,7 @@ export default function BottomTabBar() {
             onClick={() => handleTab(path)}
             className="flex-1 flex flex-col items-center justify-center gap-1 py-3 relative select-none"
             style={{
-              color: active ? "#c9940a" : "rgba(26,8,0,0.35)",
+              color: active ? "#c9940a" : "var(--tab-inactive)",
               background: "none",
               border: "none",
               outline: "none",

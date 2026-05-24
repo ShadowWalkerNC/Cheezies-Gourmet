@@ -46,6 +46,8 @@ export default function InstallBanner() {
         WebkitBackdropFilter: "blur(16px)",
         borderTop: "1px solid rgba(180,120,0,0.2)",
         paddingBottom: "calc(var(--tab-bar-h) + 8px)",
+        paddingLeft: "var(--safe-left)",
+        paddingRight: "var(--safe-right)",
         boxShadow: "0 -4px 32px rgba(180,120,0,0.15)",
       }}
     >

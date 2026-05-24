@@ -25,13 +25,16 @@ export default function AppHeader({ title, backPath }) {
 
   return (
     <div
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 h-14"
+      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4"
       style={{
         paddingTop: "var(--safe-top)",
-        background: "rgba(255,248,220,0.97)",
+        minHeight: "calc(56px + var(--safe-top))",
+        paddingLeft: "max(16px, var(--safe-left))",
+        paddingRight: "max(16px, var(--safe-right))",
+        background: theme === "dark" ? "rgba(15,10,4,0.97)" : "rgba(255,248,220,0.97)",
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
-        borderBottom: "1px solid rgba(180,120,0,0.12)",
+        borderBottom: `1px solid ${theme === "dark" ? "rgba(224,171,32,0.12)" : "rgba(180,120,0,0.12)"}`,
       }}
     >
       <div className="flex items-center gap-3 min-w-[40px]">
@@ -50,7 +53,7 @@ export default function AppHeader({ title, backPath }) {
       {title && (
         <span
           className="absolute left-1/2 -translate-x-1/2 font-black text-base tracking-tight"
-          style={{ color: "#3d2200", fontFamily: "Georgia, serif" }}
+          style={{ color: theme === "dark" ? "#fdf0d5" : "#3d2200", fontFamily: "Georgia, serif" }}
         >
           {title}
         </span>

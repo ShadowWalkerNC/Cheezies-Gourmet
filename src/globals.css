@@ -36,11 +36,35 @@ body {
   --tab-bar-h: calc(60px + var(--safe-bottom));
 }
 
-/* Dark mode overrides (if system prefers) */
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-  }
+/* ─── Dark theme (class-based, set by ThemeProvider) ────── */
+.dark {
+  color-scheme: dark;
+
+  --color-bg:        #0f0a04;
+  --color-bg-deep:   #160e05;
+  --color-bg-mid:    #1d1108;
+  --color-bg-warm:   #261608;
+  --color-bg-warmer: #2e1b0a;
+  --color-gold:      #e0ab20;
+  --color-cream:     #fdf0d5;
+  --color-text-muted: rgba(253,240,213,0.55);
+  --color-border:    rgba(224,171,32,0.2);
+
+  /* Tab bar tokens */
+  --tab-bg:       #160e05;
+  --tab-border:   rgba(224,171,32,0.18);
+  --tab-inactive: rgba(253,240,213,0.35);
+}
+
+/* Light tab bar tokens */
+:root {
+  --tab-bg:       #ffffff;
+  --tab-border:   #e8e0d0;
+  --tab-inactive: rgba(26,8,0,0.35);
+}
+
+.dark body {
+  background: linear-gradient(135deg, #0f0a04 0%, #1d1108 100%);
 }
 
 /* ─── Scrollbar cosmetics ────────────────────────────────── */
