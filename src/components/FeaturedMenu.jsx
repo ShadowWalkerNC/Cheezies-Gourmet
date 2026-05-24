@@ -20,14 +20,14 @@ export default function FeaturedMenu() {
   }, []);
 
   return (
-    <section className="py-16 px-6" style={{ background: "#fff", borderTop: "1.5px solid #e8e0d0" }}>
+    <section className="py-20 px-6" style={{ background: "var(--color-bg-deep)", borderTop: "1.5px solid var(--color-border)" }}>
       <div className="max-w-6xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
           <p className="text-xs font-black tracking-[0.25em] uppercase mb-2" style={{ color: "#c9940a" }}>Fan Favorite</p>
-          <h2 className="font-black uppercase" style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", color: "#1a0800", letterSpacing: "-0.01em" }}>Try This</h2>
-          <div className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-full" style={{ background: "#fff8e8", border: "1.5px solid #c9940a" }}>
+          <h2 className="font-black uppercase" style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", color: "var(--color-cream)", letterSpacing: "-0.01em" }}>Try This</h2>
+          <div className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-full" style={{ background: "var(--color-bg)", border: "1.5px solid #c9940a" }}>
             <span>🧀</span>
-            <p className="text-xs font-black uppercase tracking-widest" style={{ color: "#7a4f00" }}>All sandwiches include Chips and a Drink</p>
+            <p className="text-xs font-black uppercase tracking-widest" style={{ color: "var(--color-cream)" }}>All sandwiches include Chips and a Drink</p>
           </div>
         </motion.div>
 

@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 export default function LoyaltyCTA() {
   return (
-    <section className="py-14 px-6" style={{ background: "#1a0800" }}>
+    <section className="py-20 px-6" style={{ background: "#1a0800", borderTop: "1.5px solid rgba(224,171,32,0.15)" }}>
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 24 }}

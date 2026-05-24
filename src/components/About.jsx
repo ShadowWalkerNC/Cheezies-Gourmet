@@ -35,7 +35,7 @@ export default function About() {
   const liveAddress = hasLiveLocation ? truckData.address : (truckData?.home_address || "Akron, Ohio");
 
   return (
-    <section id="about" className="py-16 px-6" style={{ background: "#fffbf0", borderTop: "1.5px solid #e8e0d0" }}>
+    <section id="about" className="py-20 px-6" style={{ background: "var(--color-bg-mid)", borderTop: "1.5px solid var(--color-border)" }}>
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row gap-12 items-start">
           {/* Left text */}
@@ -49,7 +49,7 @@ export default function About() {
             <p className="text-xs font-black tracking-[0.25em] uppercase mb-2" style={{ color: "#c9940a" }}>Our Story</p>
             <h2
               className="font-black leading-tight mb-5"
-              style={{ fontFamily: "Georgia, serif", color: "#1a0800", fontSize: "clamp(2rem, 4vw, 2.8rem)" }}
+              style={{ fontFamily: "Georgia, serif", color: "var(--color-cream)", fontSize: "clamp(2rem, 4vw, 2.8rem)" }}
             >
               More Than Just a Grilled Cheese
             </h2>
