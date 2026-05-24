@@ -10,6 +10,7 @@ import PageTransition from "../components/PageTransition";
 import PullToRefresh from "../components/PullToRefresh";
 import NewsletterPopup from "../components/NewsletterPopup";
 import LoyaltyCTA from "../components/LoyaltyCTA";
+import VideoShowcase from "../components/VideoShowcase";
 
 export default function Home() {
   const handleRefresh = () =>
@@ -24,6 +25,7 @@ export default function Home() {
           <Hero />
           <About />
           <FeaturedMenu />
+          <VideoShowcase />
           <TruckRequest />
           <CateringTeaser />
           <LoyaltyCTA />
