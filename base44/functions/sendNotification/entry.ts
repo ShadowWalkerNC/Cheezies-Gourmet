@@ -84,6 +84,14 @@ Message: ${data?.message || "N/A"}
         body: `Thanks for joining the Cheezies crew!\n\nUse code CHEEZIE26 on your next order for a special discount.\n\nOrder online: https://cheeziesgourmetohio.square.site/\n\nSee you at the truck! 🧀`,
       });
 
+    } else if (type === "loyalty_signup") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!data?.email || !emailRegex.test(data.email)) {
+        return Response.json({ error: "Invalid email" }, { status: 400 });
+      }
+      subject = "New Loyalty Program Signup";
+      body = `${data.email} wants to join the Square Loyalty program. Enroll them at the next visit.`;
+
     } else if (type === "merch_notify") {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!data?.email || !emailRegex.test(data.email)) {

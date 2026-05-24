@@ -1,6 +1,31 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { base44 } from "@/api/base44Client";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function LoyaltyCTA() {
+  const { toast } = useToast();
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await base44.functions.invoke("sendNotification", {
+        type: "loyalty_signup",
+        data: { email },
+      });
+      setSubmitted(true);
+      setEmail("");
+      toast({ title: "Welcome to the crew!", description: "We'll enroll you in Square Loyalty." });
+    } catch (err) {
+      toast({ title: "Something went wrong", description: "Please try again or DM us on Instagram." });
+    }
+    setLoading(false);
+  };
+
   return (
     <section className="py-14 px-6" style={{ background: "var(--color-bg)" }}>
       <div className="max-w-4xl mx-auto">
@@ -21,24 +46,50 @@ export default function LoyaltyCTA() {
             <p className="text-sm leading-relaxed mb-6" style={{ color: "rgba(61,34,0,0.55)" }}>
               Join the Cheezies loyalty program through Square — earn points on every order and redeem them for free menu items. The more you eat, the more you save.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
-              <a
-                href="https://squareup.com/loyalty/cheeziesohio"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-6 py-3 rounded-full font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
-                style={{ background: "#c9940a", color: "#fff", textDecoration: "none" }}
-              >
-                Join Loyalty Program →
-              </a>
+            {submitted ? (
+              <div className="p-4 rounded-2xl" style={{ background: "#dcfce7", border: "1.5px solid #86efac" }}>
+                <p className="font-black text-sm" style={{ color: "#15803d" }}>You're on the list! 🧀</p>
+                <p className="text-xs mt-1" style={{ color: "#166534" }}>We'll enroll you at the truck — points start earning on your next visit.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+                <input
+                  type="email"
+                  required
+                  placeholder="Your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="flex-1 px-4 py-3 rounded-full text-sm outline-none"
+                  style={{ background: "#fff", border: "1.5px solid #e8e0d0", color: "#1a0800" }}
+                />
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="px-6 py-3 rounded-full font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85 disabled:opacity-50"
+                  style={{ background: "#c9940a", color: "#fff", border: "none", cursor: loading ? "not-allowed" : "pointer" }}
+                >
+                  {loading ? "Joining..." : "Join Now →"}
+                </button>
+              </form>
+            )}
+            <div className="flex flex-wrap gap-3 mt-4">
               <a
                 href="https://www.facebook.com/cheeziesohio"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block px-6 py-3 rounded-full font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-75"
-                style={{ background: "transparent", color: "#1a0800", textDecoration: "none", border: "1.5px solid #e8e0d0" }}
+                className="text-xs font-bold underline-offset-2 hover:underline"
+                style={{ color: "rgba(61,34,0,0.5)" }}
               >
-                Follow on Facebook →
+                Follow on Facebook ↗
+              </a>
+              <a
+                href="https://instagram.com/cheeziesohio"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-bold underline-offset-2 hover:underline"
+                style={{ color: "rgba(61,34,0,0.5)" }}
+              >
+                DM on Instagram ↗
               </a>
             </div>
           </div>
