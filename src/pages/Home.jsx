@@ -17,7 +17,7 @@ export default function Home() {
     new Promise((resolve) => setTimeout(resolve, 900));
 
   return (
-    <div className="min-h-screen font-sans" style={{ background: "var(--color-surface)" }}>
+    <div className="min-h-screen font-sans" style={{ background: "var(--color-bg)" }}>
       <NavBar />
       <NewsletterPopup />
       {/* spacer for fixed navbar + truck banner */}
