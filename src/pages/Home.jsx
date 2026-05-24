@@ -24,8 +24,8 @@ export default function Home() {
         <PullToRefresh onRefresh={handleRefresh}>
           <Hero />
           <FeaturedMenu />
-          <About />
           <VideoShowcase />
+          <About />
           <TruckRequest />
           <CateringTeaser />
           <LoyaltyCTA />
