@@ -9,6 +9,7 @@ import Footer from "../components/Footer";
 import PageTransition from "../components/PageTransition";
 import PullToRefresh from "../components/PullToRefresh";
 import NewsletterPopup from "../components/NewsletterPopup";
+import LoyaltyCTA from "../components/LoyaltyCTA";
 
 export default function Home() {
   const handleRefresh = () =>
@@ -25,6 +26,7 @@ export default function Home() {
           <FeaturedMenu />
           <TruckRequest />
           <CateringTeaser />
+          <LoyaltyCTA />
           <Contact />
           <Footer />
           <div className="md:hidden" style={{ height: "var(--tab-bar-h)" }} />

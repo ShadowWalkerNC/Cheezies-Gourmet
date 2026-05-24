@@ -158,6 +158,27 @@ Deno.serve(async (req) => {
         daily_breakdown: dailyBreakdown
       });
 
+    } else if (action === "loyalty") {
+      // Fetch Square Loyalty accounts
+      const res = await fetch("https://connect.squareup.com/v2/loyalty/accounts/search", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+          "Square-Version": "2024-01-17"
+        },
+        body: JSON.stringify({ limit: 200 })
+      });
+      const data = await res.json();
+      const accounts = (data.loyalty_accounts || []).map(a => ({
+        id: a.id,
+        customer_id: a.customer_id,
+        balance: a.balance,
+        lifetime_points: a.lifetime_points,
+        created_at: a.created_at,
+      }));
+      return Response.json({ success: true, accounts, total: accounts.length });
+
     } else if (action === "sync_menu") {
       // Fetch categories first for mapping
       const catRes = await fetch("https://connect.squareup.com/v2/catalog/list?types=CATEGORY", {

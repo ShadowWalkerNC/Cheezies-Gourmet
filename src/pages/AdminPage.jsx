@@ -3,6 +3,8 @@ import { base44 } from "@/api/base44Client";
 import AdminMenuManager from "@/components/admin/AdminMenuManager";
 import AdminAnalytics from "@/components/admin/AdminAnalytics";
 import SquareDashboard from "@/components/admin/SquareDashboard";
+import SquareCustomers from "@/components/admin/SquareCustomers";
+import FollowerTracker from "@/components/admin/FollowerTracker";
 
 const ALL_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const ADMIN_PASSCODE = "cheezies2024";
@@ -373,6 +375,12 @@ export default function AdminPage() {
 
         {/* Square Dashboard */}
         <SquareDashboard />
+
+        {/* Square Customers + Loyalty */}
+        <SquareCustomers />
+
+        {/* Follower & Social Tracker */}
+        <FollowerTracker />
 
         {/* Analytics */}
         <AdminAnalytics />
