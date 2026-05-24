@@ -109,8 +109,8 @@ export default function NewsletterPopup() {
                     <p className="font-bold text-lg" style={{ color: "var(--color-cream)" }}>You're on the list!</p>
                     <p className="text-sm mt-1 mb-4" style={{ color: "var(--color-text-muted)" }}>Use this code on your next order:</p>
                     <div
-                      className="py-3 px-6 text-2xl font-black tracking-widest text-center rounded-xl"
-                      style={{ background: "#1a0800", color: "#e8b800", letterSpacing: "0.2em" }}
+                      className="py-4 px-6 text-3xl font-black tracking-widest text-center rounded-xl"
+                      style={{ background: "#1a0800", color: "#ffd700", letterSpacing: "0.2em", boxShadow: "0 4px 16px rgba(100,50,0,0.3)" }}
                     >
                       {PROMO_CODE}
                     </div>
