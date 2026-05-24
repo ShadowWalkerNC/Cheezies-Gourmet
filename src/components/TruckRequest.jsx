@@ -15,7 +15,7 @@ export default function TruckRequest() {
   };
 
   return (
-    <section className="py-16 px-6" style={{ background: "#f9f4ea", borderTop: "1.5px solid #e8e0d0" }}>
+    <section className="py-16 px-6" style={{ background: "var(--color-bg)", borderTop: "1.5px solid #e8e0d0" }}>
       <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-12 items-start">
         {/* Form */}
         <div className="flex-1 w-full">

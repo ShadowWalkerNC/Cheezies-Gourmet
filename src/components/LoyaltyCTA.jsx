@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 export default function LoyaltyCTA() {
   return (
-    <section className="py-14 px-6" style={{ background: "#1a0800" }}>
+    <section className="py-14 px-6" style={{ background: "var(--color-bg)" }}>
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -15,10 +15,10 @@ export default function LoyaltyCTA() {
             <p className="text-xs font-black tracking-[0.25em] uppercase mb-2" style={{ color: "#c9940a" }}>
               Rewards Program
             </p>
-            <h2 className="font-black uppercase mb-3" style={{ fontSize: "clamp(1.6rem,3.5vw,2.4rem)", color: "#fff8e8" }}>
+            <h2 className="font-black uppercase mb-3" style={{ fontSize: "clamp(1.6rem,3.5vw,2.4rem)", color: "#1a0800" }}>
               Earn Points.<br />Get Free Food.
             </h2>
-            <p className="text-sm leading-relaxed mb-6" style={{ color: "rgba(255,248,232,0.55)" }}>
+            <p className="text-sm leading-relaxed mb-6" style={{ color: "rgba(61,34,0,0.55)" }}>
               Join the Cheezies loyalty program through Square — earn points on every order and redeem them for free menu items. The more you eat, the more you save.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
@@ -36,7 +36,7 @@ export default function LoyaltyCTA() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block px-6 py-3 rounded-full font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-75"
-                style={{ background: "rgba(255,248,232,0.08)", color: "#fff8e8", textDecoration: "none", border: "1.5px solid rgba(255,248,232,0.2)" }}
+                style={{ background: "transparent", color: "#1a0800", textDecoration: "none", border: "1.5px solid #e8e0d0" }}
               >
                 Follow on Facebook →
               </a>
@@ -51,11 +51,11 @@ export default function LoyaltyCTA() {
               { icon: "🎂", title: "Birthday Loyalty Bonus", desc: "Add your birthday when you sign up for exclusive birthday deals." },
               { icon: "📣", title: "Exclusive Facebook Deals", desc: "Follow us for flash specials and loyalty bonus days." },
             ].map(({ icon, title, desc }) => (
-              <div key={title} className="flex items-start gap-4 px-5 py-4 rounded-2xl" style={{ background: "rgba(255,248,232,0.05)", border: "1px solid rgba(255,248,232,0.1)" }}>
+              <div key={title} className="flex items-start gap-4 px-5 py-4 rounded-2xl" style={{ background: "#f9f4ea", border: "1px solid #e8e0d0" }}>
                 <span className="text-2xl shrink-0">{icon}</span>
                 <div>
-                  <p className="font-black text-sm mb-0.5" style={{ color: "#fff8e8" }}>{title}</p>
-                  <p className="text-xs leading-relaxed" style={{ color: "rgba(255,248,232,0.45)" }}>{desc}</p>
+                  <p className="font-black text-sm mb-0.5" style={{ color: "#1a0800" }}>{title}</p>
+                  <p className="text-xs leading-relaxed" style={{ color: "rgba(61,34,0,0.55)" }}>{desc}</p>
                 </div>
               </div>
             ))}
