@@ -20,8 +20,10 @@ export default function Home() {
   return (
     <div className="min-h-screen font-sans" style={{ background: "var(--color-surface)" }}>
       <NavBar />
-      <TruckBanner />
       <NewsletterPopup />
+      {/* spacer for fixed navbar */}
+      <div style={{ height: "calc(57px + var(--safe-top))" }} />
+      <TruckBanner />
       <PageTransition>
         <PullToRefresh onRefresh={handleRefresh}>
           <Hero />

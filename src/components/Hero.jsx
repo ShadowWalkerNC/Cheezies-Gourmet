@@ -5,7 +5,7 @@ export default function Hero() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative flex flex-col md:flex-row min-h-screen" style={{ background: "#fff", paddingTop: "72px" }}>
+    <section className="relative flex flex-col md:flex-row min-h-screen" style={{ background: "var(--color-surface)" }}>
       {/* Left — text content */}
       <div className="flex-1 flex flex-col justify-center px-8 md:px-16 py-16 md:py-0 order-2 md:order-1">
         <motion.div

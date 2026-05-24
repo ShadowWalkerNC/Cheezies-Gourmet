@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import AdminMenuManager from "@/components/admin/AdminMenuManager";
 import AdminAnalytics from "@/components/admin/AdminAnalytics";
-import SquareDashboard from "@/components/admin/SquareDashboard";
-import SquareCustomers from "@/components/admin/SquareCustomers";
+import SquareSetup from "@/components/admin/SquareSetup";
 import FollowerTracker from "@/components/admin/FollowerTracker";
+import { Truck, UtensilsCrossed, BarChart2, Megaphone, CreditCard } from "lucide-react";
 
 const ALL_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const ADMIN_PASSCODE = "cheezies2024";
@@ -15,13 +15,25 @@ const statusLabels = {
   en_route: { label: "En Route",  color: "#f59e0b" },
 };
 
+const TABS = [
+  { id: "truck",     label: "Truck",     Icon: Truck },
+  { id: "menu",      label: "Menu",      Icon: UtensilsCrossed },
+  { id: "analytics", label: "Analytics", Icon: BarChart2 },
+  { id: "marketing", label: "Marketing", Icon: Megaphone },
+  { id: "square",    label: "Square",    Icon: CreditCard },
+];
+
+const sectionStyle = { background: "#fff", border: "1px solid rgba(180,120,0,0.15)", boxShadow: "0 2px 12px rgba(180,120,0,0.06)" };
+const inputStyle = { background: "#fffbf0", border: "1.5px solid rgba(180,120,0,0.2)", color: "#2a1200" };
+
 export default function AdminPage() {
   const [authed, setAuthed] = useState(false);
   const [passcode, setPasscode] = useState("");
   const [passcodeError, setPasscodeError] = useState(false);
+  const [activeTab, setActiveTab] = useState("truck");
   const [recordId, setRecordId] = useState(null);
 
-  // Live location
+  // Truck state
   const [location, setLocation] = useState(null);
   const [address, setAddress] = useState("");
   const [status, setStatus] = useState("open");
@@ -43,17 +55,11 @@ export default function AdminPage() {
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
 
-  useEffect(() => {
-    if (authed) load();
-  }, [authed]);
+  useEffect(() => { if (authed) load(); }, [authed]);
 
   const handlePasscode = () => {
-    if (passcode === ADMIN_PASSCODE) {
-      setAuthed(true);
-      setPasscodeError(false);
-    } else {
-      setPasscodeError(true);
-    }
+    if (passcode === ADMIN_PASSCODE) { setAuthed(true); setPasscodeError(false); }
+    else setPasscodeError(true);
   };
 
   const load = async () => {
@@ -106,44 +112,25 @@ export default function AdminPage() {
     );
   };
 
-  const toggleDay = (day) => {
-    setOpenDays(prev =>
-      prev.includes(day) ? prev.filter(d => d !== day) : [...prev, day]
-    );
-  };
+  const toggleDay = (day) =>
+    setOpenDays(prev => prev.includes(day) ? prev.filter(d => d !== day) : [...prev, day]);
 
   const handleSave = async () => {
     setSaving(true);
     const payload = {
-      latitude: location?.lat || null,
-      longitude: location?.lng || null,
-      address,
-      status,
-      note,
-      is_active: true,
-      home_latitude: homeLocation?.lat || null,
-      home_longitude: homeLocation?.lng || null,
-      home_address: homeAddress,
-      hours_open: hoursOpen,
-      hours_close: hoursClose,
-      open_days: openDays,
+      latitude: location?.lat || null, longitude: location?.lng || null,
+      address, status, note, is_active: true,
+      home_latitude: homeLocation?.lat || null, home_longitude: homeLocation?.lng || null,
+      home_address: homeAddress, hours_open: hoursOpen, hours_close: hoursClose, open_days: openDays,
     };
-
-    const res = await base44.functions.invoke("saveTruckLocation", {
-      passcode: ADMIN_PASSCODE,
-      recordId,
-      payload,
-    });
-
-    if (!recordId && res.data?.data?.id) {
-      setRecordId(res.data.data.id);
-    }
-
+    const res = await base44.functions.invoke("saveTruckLocation", { passcode: ADMIN_PASSCODE, recordId, payload });
+    if (!recordId && res.data?.data?.id) setRecordId(res.data.data.id);
     setSaving(false);
     setSaveSuccess(true);
     setTimeout(() => setSaveSuccess(false), 3000);
   };
 
+  // ── Login Screen ────────────────────────────────────────────────
   if (!authed) {
     return (
       <div className="min-h-screen flex items-center justify-center px-6" style={{ background: "#fffbf0" }}>
@@ -154,20 +141,14 @@ export default function AdminPage() {
           </h1>
           <p className="text-sm mb-6" style={{ color: "rgba(61,34,0,0.5)" }}>Enter your passcode to continue.</p>
           <input
-            type="password"
-            placeholder="Passcode"
-            value={passcode}
+            type="password" placeholder="Passcode" value={passcode}
             onChange={e => setPasscode(e.target.value)}
             onKeyDown={e => e.key === "Enter" && handlePasscode()}
             className="w-full px-4 py-3 rounded-xl text-sm outline-none mb-3"
             style={{ background: "#fff", border: `1.5px solid ${passcodeError ? "#ef4444" : "rgba(180,120,0,0.2)"}`, color: "#2a1200" }}
           />
           {passcodeError && <p className="text-sm text-red-500 mb-3">Incorrect passcode. Try again.</p>}
-          <button
-            onClick={handlePasscode}
-            className="w-full py-3 rounded-xl font-bold text-base"
-            style={{ background: "#c9940a", color: "#fff8e8" }}
-          >
+          <button onClick={handlePasscode} className="w-full py-3 rounded-xl font-bold text-base" style={{ background: "#c9940a", color: "#fff8e8" }}>
             Enter
           </button>
         </div>
@@ -175,12 +156,11 @@ export default function AdminPage() {
     );
   }
 
-  const sectionStyle = { background: "#fff", border: "1px solid rgba(180,120,0,0.15)", boxShadow: "0 2px 12px rgba(180,120,0,0.06)" };
-
+  // ── Main Admin Layout ───────────────────────────────────────────
   return (
-    <div style={{ minHeight: "100vh", background: "#fffbf0", paddingBottom: "6rem" }}>
+    <div style={{ minHeight: "100vh", background: "#fffbf0" }}>
       {/* Header */}
-      <div className="px-6 py-4 flex items-center justify-between" style={{ background: "#2a1200", borderBottom: "2px solid #c9940a" }}>
+      <div className="px-6 py-4 flex items-center justify-between sticky top-0 z-50" style={{ background: "#2a1200", borderBottom: "2px solid #c9940a" }}>
         <div className="flex items-center gap-3">
           <img src="https://media.base44.com/images/public/69b410ceece31b13c728497b/03ee6d0a3_generated_image.png" alt="Cheezies" className="w-9 h-9 object-contain" />
           <span className="font-black text-xl" style={{ fontFamily: "Georgia, serif", color: "#fff8e8" }}>
@@ -192,201 +172,158 @@ export default function AdminPage() {
         </button>
       </div>
 
-      <div className="max-w-3xl mx-auto px-6 py-8 flex flex-col gap-6">
+      {/* Tab Bar */}
+      <div className="flex overflow-x-auto scrollbar-hide" style={{ background: "#fff", borderBottom: "1.5px solid rgba(180,120,0,0.15)" }}>
+        {TABS.map(({ id, label, Icon }) => (
+          <button
+            key={id}
+            onClick={() => setActiveTab(id)}
+            className="flex items-center gap-2 px-5 py-3.5 text-xs font-black tracking-widest uppercase whitespace-nowrap transition-all flex-shrink-0"
+            style={{
+              background: "none", border: "none", cursor: "pointer",
+              color: activeTab === id ? "#c9940a" : "rgba(61,34,0,0.4)",
+              borderBottom: `2.5px solid ${activeTab === id ? "#c9940a" : "transparent"}`,
+            }}
+          >
+            <Icon size={14} />
+            {label}
+          </button>
+        ))}
+      </div>
 
-        {/* Truck Status */}
-        <section className="rounded-2xl p-6" style={sectionStyle}>
-          <h2 className="font-black text-lg mb-4" style={{ color: "#2a1200" }}>Truck Status</h2>
-          <div className="flex flex-wrap gap-3">
-            {Object.entries(statusLabels).map(([key, { label, color }]) => (
-              <button
-                key={key}
-                onClick={() => setStatus(key)}
-                className="px-5 py-2.5 rounded-full font-bold text-sm transition-all"
-                style={{
-                  background: status === key ? color : "rgba(0,0,0,0.05)",
-                  color: status === key ? "#fff" : "#555",
-                  border: `2px solid ${status === key ? color : "transparent"}`,
-                }}
-              >
-                {label}
+      {/* Tab Content */}
+      <div className="max-w-3xl mx-auto px-6 py-8 pb-24 flex flex-col gap-6">
+
+        {/* ── TRUCK TAB ─────────────────────────────── */}
+        {activeTab === "truck" && (
+          <>
+            {/* Status */}
+            <section className="rounded-2xl p-6" style={sectionStyle}>
+              <h2 className="font-black text-lg mb-4" style={{ color: "#2a1200" }}>Truck Status</h2>
+              <div className="flex flex-wrap gap-3">
+                {Object.entries(statusLabels).map(([key, { label, color }]) => (
+                  <button key={key} onClick={() => setStatus(key)}
+                    className="px-5 py-2.5 rounded-full font-bold text-sm transition-all"
+                    style={{
+                      background: status === key ? color : "rgba(0,0,0,0.05)",
+                      color: status === key ? "#fff" : "#555",
+                      border: `2px solid ${status === key ? color : "transparent"}`,
+                    }}>
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            {/* Live Location */}
+            <section className="rounded-2xl p-6" style={sectionStyle}>
+              <h2 className="font-black text-lg mb-1" style={{ color: "#2a1200" }}>Today's Location</h2>
+              <p className="text-xs mb-4" style={{ color: "rgba(61,34,0,0.45)" }}>Where the truck is right now. Updates the live tracker instantly.</p>
+              <button onClick={() => doGPS(false)} disabled={gpsLoading}
+                className="w-full py-3 rounded-xl font-bold text-base mb-4"
+                style={{ background: "#c9940a", color: "#fff8e8" }}>
+                {gpsLoading ? "Getting GPS…" : "📍 Use My Current Location"}
               </button>
-            ))}
-          </div>
-        </section>
+              {location ? (
+                <div className="rounded-xl overflow-hidden mb-4" style={{ height: 200 }}>
+                  <iframe key={mapKey} title="Live Location" width="100%" height="100%" style={{ border: 0 }}
+                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${location.lng - 0.01},${location.lat - 0.01},${location.lng + 0.01},${location.lat + 0.01}&layer=mapnik&marker=${location.lat},${location.lng}`} />
+                </div>
+              ) : (
+                <div className="rounded-xl mb-4 flex items-center justify-center text-sm" style={{ height: 100, background: "rgba(201,148,10,0.05)", border: "1.5px dashed rgba(180,120,0,0.2)", color: "rgba(61,34,0,0.4)" }}>
+                  Use GPS to set today's location
+                </div>
+              )}
+              <input type="text" placeholder="Address (auto-filled or type manually)" value={address}
+                onChange={e => setAddress(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl text-sm outline-none" style={inputStyle} />
+            </section>
 
-        {/* Today's Live Location */}
-        <section className="rounded-2xl p-6" style={sectionStyle}>
-          <h2 className="font-black text-lg mb-1" style={{ color: "#2a1200" }}>Today's Location</h2>
-          <p className="text-xs mb-4" style={{ color: "rgba(61,34,0,0.45)" }}>Where the truck is right now. Updates the live tracker instantly.</p>
+            {/* Home Base */}
+            <section className="rounded-2xl p-6" style={sectionStyle}>
+              <h2 className="font-black text-lg mb-1" style={{ color: "#2a1200" }}>Home Base Location</h2>
+              <p className="text-xs mb-4" style={{ color: "rgba(61,34,0,0.45)" }}>Shown on the map when the truck is closed. Set it once and forget it.</p>
+              <button onClick={() => doGPS(true)} disabled={homeGpsLoading}
+                className="w-full py-3 rounded-xl font-bold text-base mb-4"
+                style={{ background: "rgba(201,148,10,0.12)", color: "#7a4f00", border: "1.5px solid rgba(180,120,0,0.25)" }}>
+                {homeGpsLoading ? "Getting GPS…" : "🏠 Use Current Location as Home Base"}
+              </button>
+              {homeLocation ? (
+                <div className="rounded-xl overflow-hidden mb-4" style={{ height: 200 }}>
+                  <iframe key={homeMapKey} title="Home Base" width="100%" height="100%" style={{ border: 0 }}
+                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${homeLocation.lng - 0.01},${homeLocation.lat - 0.01},${homeLocation.lng + 0.01},${homeLocation.lat + 0.01}&layer=mapnik&marker=${homeLocation.lat},${homeLocation.lng}`} />
+                </div>
+              ) : (
+                <div className="rounded-xl mb-4 flex items-center justify-center text-sm" style={{ height: 100, background: "rgba(201,148,10,0.05)", border: "1.5px dashed rgba(180,120,0,0.2)", color: "rgba(61,34,0,0.4)" }}>
+                  No home base set yet
+                </div>
+              )}
+              <input type="text" placeholder="Home base address" value={homeAddress}
+                onChange={e => setHomeAddress(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl text-sm outline-none" style={inputStyle} />
+            </section>
 
-          <button
-            onClick={() => doGPS(false)}
-            disabled={gpsLoading}
-            className="w-full py-3 rounded-xl font-bold text-base mb-4 transition-all hover:scale-[1.02]"
-            style={{ background: "#c9940a", color: "#fff8e8" }}
-          >
-            {gpsLoading ? "Getting GPS…" : "📍 Use My Current Location"}
-          </button>
+            {/* Hours & Days */}
+            <section className="rounded-2xl p-6" style={sectionStyle}>
+              <h2 className="font-black text-lg mb-1" style={{ color: "#2a1200" }}>Hours & Days Open</h2>
+              <p className="text-xs mb-5" style={{ color: "rgba(61,34,0,0.45)" }}>These display across the website automatically.</p>
+              <div className="flex gap-4 mb-5">
+                <div className="flex-1">
+                  <label className="text-xs font-bold uppercase tracking-wider block mb-1" style={{ color: "rgba(61,34,0,0.5)" }}>Opens</label>
+                  <input type="text" placeholder="12:00 PM" value={hoursOpen} onChange={e => setHoursOpen(e.target.value)}
+                    className="w-full px-4 py-3 rounded-xl text-sm outline-none" style={inputStyle} />
+                </div>
+                <div className="flex-1">
+                  <label className="text-xs font-bold uppercase tracking-wider block mb-1" style={{ color: "rgba(61,34,0,0.5)" }}>Closes</label>
+                  <input type="text" placeholder="6:00 PM" value={hoursClose} onChange={e => setHoursClose(e.target.value)}
+                    className="w-full px-4 py-3 rounded-xl text-sm outline-none" style={inputStyle} />
+                </div>
+              </div>
+              <label className="text-xs font-bold uppercase tracking-wider block mb-3" style={{ color: "rgba(61,34,0,0.5)" }}>Open Days</label>
+              <div className="flex flex-wrap gap-2">
+                {ALL_DAYS.map(day => {
+                  const active = openDays.includes(day);
+                  return (
+                    <button key={day} onClick={() => toggleDay(day)}
+                      className="px-4 py-2 rounded-full text-sm font-bold transition-all"
+                      style={{ background: active ? "#c9940a" : "rgba(0,0,0,0.05)", color: active ? "#fff8e8" : "#555", border: `2px solid ${active ? "#c9940a" : "transparent"}` }}>
+                      {day}
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
 
-          {location && (
-            <div className="rounded-xl overflow-hidden mb-4" style={{ height: 200 }}>
-              <iframe
-                key={mapKey}
-                title="Live Location"
-                width="100%" height="100%"
-                style={{ border: 0 }}
-                src={`https://www.openstreetmap.org/export/embed.html?bbox=${location.lng - 0.01},${location.lat - 0.01},${location.lng + 0.01},${location.lat + 0.01}&layer=mapnik&marker=${location.lat},${location.lng}`}
-              />
-            </div>
-          )}
-          {!location && (
-            <div className="rounded-xl mb-4 flex items-center justify-center text-sm" style={{ height: 100, background: "rgba(201,148,10,0.05)", border: "1.5px dashed rgba(180,120,0,0.2)", color: "rgba(61,34,0,0.4)" }}>
-              Use GPS to set today's location
-            </div>
-          )}
+            {/* Customer Note */}
+            <section className="rounded-2xl p-6" style={sectionStyle}>
+              <h2 className="font-black text-lg mb-2" style={{ color: "#2a1200" }}>Customer Message</h2>
+              <p className="text-xs mb-3" style={{ color: "rgba(61,34,0,0.45)" }}>Optional — shown on the Find Us page (e.g. "Today's special: Lobster Grilled Cheese!")</p>
+              <textarea rows={3} placeholder="Leave a note for customers..." value={note}
+                onChange={e => setNote(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none" style={inputStyle} />
+            </section>
 
-          <input
-            type="text"
-            placeholder="Address (auto-filled or type manually)"
-            value={address}
-            onChange={e => setAddress(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-            style={{ background: "#fffbf0", border: "1.5px solid rgba(180,120,0,0.2)", color: "#2a1200" }}
-          />
-        </section>
+            {/* Save */}
+            <button onClick={handleSave} disabled={saving}
+              className="w-full py-4 rounded-2xl font-black text-lg transition-all"
+              style={{ background: saveSuccess ? "#22c55e" : "#c9940a", color: "#fff8e8", boxShadow: "0 4px 20px rgba(180,120,0,0.3)" }}>
+              {saving ? "Saving…" : saveSuccess ? "✓ Saved & Published!" : "Save & Publish"}
+            </button>
+          </>
+        )}
 
-        {/* Home Base Location */}
-        <section className="rounded-2xl p-6" style={sectionStyle}>
-          <h2 className="font-black text-lg mb-1" style={{ color: "#2a1200" }}>Home Base Location</h2>
-          <p className="text-xs mb-4" style={{ color: "rgba(61,34,0,0.45)" }}>Shown on the map when the truck is closed. Set it once and forget it.</p>
+        {/* ── MENU TAB ──────────────────────────────── */}
+        {activeTab === "menu" && <AdminMenuManager />}
 
-          <button
-            onClick={() => doGPS(true)}
-            disabled={homeGpsLoading}
-            className="w-full py-3 rounded-xl font-bold text-base mb-4 transition-all hover:scale-[1.02]"
-            style={{ background: "rgba(201,148,10,0.12)", color: "#7a4f00", border: "1.5px solid rgba(180,120,0,0.25)" }}
-          >
-            {homeGpsLoading ? "Getting GPS…" : "🏠 Use Current Location as Home Base"}
-          </button>
+        {/* ── ANALYTICS TAB ─────────────────────────── */}
+        {activeTab === "analytics" && <AdminAnalytics />}
 
-          {homeLocation && (
-            <div className="rounded-xl overflow-hidden mb-4" style={{ height: 200 }}>
-              <iframe
-                key={homeMapKey}
-                title="Home Base"
-                width="100%" height="100%"
-                style={{ border: 0 }}
-                src={`https://www.openstreetmap.org/export/embed.html?bbox=${homeLocation.lng - 0.01},${homeLocation.lat - 0.01},${homeLocation.lng + 0.01},${homeLocation.lat + 0.01}&layer=mapnik&marker=${homeLocation.lat},${homeLocation.lng}`}
-              />
-            </div>
-          )}
-          {!homeLocation && (
-            <div className="rounded-xl mb-4 flex items-center justify-center text-sm" style={{ height: 100, background: "rgba(201,148,10,0.05)", border: "1.5px dashed rgba(180,120,0,0.2)", color: "rgba(61,34,0,0.4)" }}>
-              No home base set yet
-            </div>
-          )}
+        {/* ── MARKETING TAB ─────────────────────────── */}
+        {activeTab === "marketing" && <FollowerTracker />}
 
-          <input
-            type="text"
-            placeholder="Home base address"
-            value={homeAddress}
-            onChange={e => setHomeAddress(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-            style={{ background: "#fffbf0", border: "1.5px solid rgba(180,120,0,0.2)", color: "#2a1200" }}
-          />
-        </section>
+        {/* ── SQUARE TAB ────────────────────────────── */}
+        {activeTab === "square" && <SquareSetup />}
 
-        {/* Hours & Days */}
-        <section className="rounded-2xl p-6" style={sectionStyle}>
-          <h2 className="font-black text-lg mb-1" style={{ color: "#2a1200" }}>Hours & Days Open</h2>
-          <p className="text-xs mb-5" style={{ color: "rgba(61,34,0,0.45)" }}>These display across the website automatically.</p>
-
-          <div className="flex gap-4 mb-5">
-            <div className="flex-1">
-              <label className="text-xs font-bold uppercase tracking-wider block mb-1" style={{ color: "rgba(61,34,0,0.5)" }}>Opens</label>
-              <input
-                type="text"
-                placeholder="12:00 PM"
-                value={hoursOpen}
-                onChange={e => setHoursOpen(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-                style={{ background: "#fffbf0", border: "1.5px solid rgba(180,120,0,0.2)", color: "#2a1200" }}
-              />
-            </div>
-            <div className="flex-1">
-              <label className="text-xs font-bold uppercase tracking-wider block mb-1" style={{ color: "rgba(61,34,0,0.5)" }}>Closes</label>
-              <input
-                type="text"
-                placeholder="6:00 PM"
-                value={hoursClose}
-                onChange={e => setHoursClose(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-                style={{ background: "#fffbf0", border: "1.5px solid rgba(180,120,0,0.2)", color: "#2a1200" }}
-              />
-            </div>
-          </div>
-
-          <label className="text-xs font-bold uppercase tracking-wider block mb-3" style={{ color: "rgba(61,34,0,0.5)" }}>Open Days</label>
-          <div className="flex flex-wrap gap-2">
-            {ALL_DAYS.map(day => {
-              const active = openDays.includes(day);
-              return (
-                <button
-                  key={day}
-                  onClick={() => toggleDay(day)}
-                  className="px-4 py-2 rounded-full text-sm font-bold transition-all"
-                  style={{
-                    background: active ? "#c9940a" : "rgba(0,0,0,0.05)",
-                    color: active ? "#fff8e8" : "#555",
-                    border: `2px solid ${active ? "#c9940a" : "transparent"}`,
-                  }}
-                >
-                  {day}
-                </button>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* Customer Note */}
-        <section className="rounded-2xl p-6" style={sectionStyle}>
-          <h2 className="font-black text-lg mb-2" style={{ color: "#2a1200" }}>Customer Message</h2>
-          <p className="text-xs mb-3" style={{ color: "rgba(61,34,0,0.45)" }}>Optional — shown on the Find Us page (e.g. "Today's special: Lobster Grilled Cheese!")</p>
-          <textarea
-            rows={3}
-            placeholder="Leave a note for customers..."
-            value={note}
-            onChange={e => setNote(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none"
-            style={{ background: "#fffbf0", border: "1.5px solid rgba(180,120,0,0.2)", color: "#2a1200" }}
-          />
-        </section>
-
-        {/* Save */}
-        <button
-          onClick={handleSave}
-          disabled={saving}
-          className="w-full py-4 rounded-2xl font-black text-lg transition-all hover:scale-[1.02]"
-          style={{ background: saveSuccess ? "#22c55e" : "#c9940a", color: "#fff8e8", boxShadow: "0 4px 20px rgba(180,120,0,0.3)" }}
-        >
-          {saving ? "Saving…" : saveSuccess ? "✓ Saved & Published!" : "Save & Publish"}
-        </button>
-
-        {/* Square Dashboard */}
-        <SquareDashboard />
-
-        {/* Square Customers + Loyalty */}
-        <SquareCustomers />
-
-        {/* Follower & Social Tracker */}
-        <FollowerTracker />
-
-        {/* Analytics */}
-        <AdminAnalytics />
-
-        {/* Menu Manager */}
-        <AdminMenuManager />
       </div>
     </div>
   );
