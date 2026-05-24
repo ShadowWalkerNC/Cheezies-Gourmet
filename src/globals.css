@@ -40,20 +40,20 @@ body {
 .dark {
   color-scheme: dark;
 
-  --color-bg:        #0f0a04;
-  --color-bg-deep:   #160e05;
-  --color-bg-mid:    #1d1108;
-  --color-bg-warm:   #261608;
-  --color-bg-warmer: #2e1b0a;
-  --color-gold:      #e0ab20;
-  --color-cream:     #fdf0d5;
-  --color-text-muted: rgba(253,240,213,0.55);
-  --color-border:    rgba(224,171,32,0.2);
+  --color-bg:        #fffbf0;
+  --color-bg-deep:   #fff8e8;
+  --color-bg-mid:    #fdf3d8;
+  --color-bg-warm:   #faecc4;
+  --color-bg-warmer: #f5e0a0;
+  --color-gold:      #c9940a;
+  --color-cream:     #1a0800;
+  --color-text-muted: rgba(61,34,0,0.65);
+  --color-border:    rgba(180,120,0,0.2);
 
   /* Tab bar tokens */
-  --tab-bg:       #160e05;
-  --tab-border:   rgba(224,171,32,0.18);
-  --tab-inactive: rgba(253,240,213,0.35);
+  --tab-bg:       #ffffff;
+  --tab-border:   #e8e0d0;
+  --tab-inactive: rgba(26,8,0,0.35);
 }
 
 /* Light tab bar tokens */
@@ -64,7 +64,7 @@ body {
 }
 
 .dark body {
-  background: linear-gradient(135deg, #0f0a04 0%, #1d1108 100%);
+  background: linear-gradient(135deg, #fffbf0 0%, #fdf3d8 100%);
 }
 
 /* ─── Scrollbar cosmetics ────────────────────────────────── */
