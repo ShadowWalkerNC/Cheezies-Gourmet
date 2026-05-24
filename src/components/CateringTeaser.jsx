@@ -27,14 +27,14 @@ export default function CateringTeaser() {
           <div className="flex flex-wrap gap-3">
             <button
               onClick={() => { navigate("/Catering"); window.scrollTo({ top: 0, behavior: "instant" }); }}
-              className="px-6 py-3 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
+              className="px-6 py-3 rounded-full font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
               style={{ background: "#c9940a", color: "#fff", border: "none", cursor: "pointer" }}
             >
               Request a Quote
             </button>
             <a
               href="tel:3305108875"
-              className="px-6 py-3 font-black text-xs tracking-widest uppercase transition-all hover:bg-white/10"
+              className="px-6 py-3 rounded-full font-black text-xs tracking-widest uppercase transition-all hover:bg-white/10"
               style={{ background: "transparent", border: "1.5px solid rgba(255,248,232,0.3)", color: "#fff8e8", textDecoration: "none" }}
             >
               Call Us

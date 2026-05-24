@@ -56,7 +56,7 @@ export default function Hero() {
               href="https://cheeziesgourmetohio.square.site/"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-7 py-3.5 font-black text-sm tracking-widest uppercase transition-opacity hover:opacity-85"
+              className="px-7 py-3.5 rounded-full font-black text-sm tracking-widest uppercase transition-opacity hover:opacity-85"
               style={{
                 background: "#c9940a",
                 color: "#fff",
@@ -68,7 +68,7 @@ export default function Hero() {
             </a>
             <button
               onClick={() => { navigate("/Menu"); window.scrollTo({ top: 0, behavior: "instant" }); }}
-              className="px-7 py-3.5 font-black text-sm tracking-widest uppercase transition-all hover:bg-amber-50"
+              className="px-7 py-3.5 rounded-full font-black text-sm tracking-widest uppercase transition-all hover:bg-amber-50"
               style={{
                 background: "transparent",
                 border: "2px solid #c9940a",
@@ -88,7 +88,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 0.2 }}
-        style={{ background: "#fffbf0", minHeight: "40vw" }}
+        style={{ background: "#fffbf0", minHeight: "40vw", borderRadius: "0 0 0 2rem" }}
       >
         <img
           src="https://media.base44.com/images/public/69b410ceece31b13c728497b/5e68b0a48_generated_image.png"

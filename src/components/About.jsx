@@ -35,12 +35,12 @@ export default function About() {
   const liveAddress = hasLiveLocation ? truckData.address : (truckData?.home_address || "Akron, Ohio");
 
   return (
-    <section id="about" className="py-16 px-6" style={{ background: "#fff", borderTop: "1.5px solid #e8e0d0" }}>
+    <section id="about" className="py-16 px-6" style={{ background: "#fffbf0", borderTop: "1.5px solid #e8e0d0" }}>
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row gap-12 items-start">
           {/* Left text */}
           <motion.div
-            className="flex-1"
+            className="flex-1 min-w-0"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -59,7 +59,7 @@ export default function About() {
 
             <div className="grid grid-cols-3 gap-3 mb-7">
               {[["Made Fresh", "Crafted to order."], ["Premium Cheese", "Melted perfectly."], ["Akron Proud", "Community first."]].map(([title, desc]) => (
-                <div key={title} className="p-4 text-sm" style={{ background: "#f9f4ea", border: "1.5px solid #e8e0d0" }}>
+                <div key={title} className="p-4 text-sm rounded-2xl" style={{ background: "#f9f4ea", border: "1.5px solid #e8e0d0" }}>
                 <p className="font-black text-xs mb-1" style={{ color: "#1a0800" }}>{title}</p>
                 <p className="text-xs" style={{ color: "rgba(61,34,0,0.55)" }}>{desc}</p>
                 </div>
@@ -89,7 +89,7 @@ export default function About() {
             <div className="flex flex-wrap gap-3">
               <button
                 onClick={() => { navigate("/FindUs"); window.scrollTo({ top: 0, behavior: "instant" }); }}
-                className="px-6 py-3 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
+                className="px-6 py-3 rounded-full font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
                 style={{ background: "#c9940a", color: "#fff", border: "2px solid #c9940a", cursor: "pointer" }}
               >
                 Find the Truck →
@@ -98,7 +98,7 @@ export default function About() {
                 href="https://cheeziesgourmetohio.square.site/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3 font-black text-xs tracking-widest uppercase transition-all hover:bg-amber-50"
+                className="px-6 py-3 rounded-full font-black text-xs tracking-widest uppercase transition-all hover:bg-amber-50"
                 style={{ background: "transparent", border: "2px solid #1a0800", color: "#1a0800", textDecoration: "none" }}
               >
                 Order Online
@@ -114,21 +114,21 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="w-full aspect-square flex items-center justify-center" style={{ background: "#fffbf0", border: "1.5px solid #e8e0d0" }}>
+            <div className="w-full aspect-square flex items-center justify-center rounded-3xl overflow-hidden" style={{ background: "#fffbf0", border: "1.5px solid #e8e0d0" }}>
               <img
                 src="https://media.base44.com/images/public/69b410ceece31b13c728497b/03ee6d0a3_generated_image.png"
                 alt="Cheezies mascot"
                 className="w-full h-full object-contain p-6"
               />
             </div>
-            <div className="mt-4 p-5" style={{ background: "#1a0800" }}>
+            <div className="mt-4 p-5 rounded-2xl" style={{ background: "#1a0800" }}>
               <p className="text-xs font-black tracking-[0.2em] uppercase mb-1" style={{ color: "#c9940a" }}>Fan Favorites</p>
               <p className="text-sm leading-relaxed" style={{ color: "rgba(255,248,232,0.75)" }}>
                 From The Patty Meltdown to The Mac Attack — every sandwich is a showstopper. Come hungry.
               </p>
               <button
                 onClick={() => { navigate("/Menu"); window.scrollTo({ top: 0, behavior: "instant" }); }}
-                className="mt-4 w-full py-3 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
+                className="mt-4 w-full py-3 rounded-full font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
                 style={{ background: "#c9940a", color: "#fff", border: "none", cursor: "pointer" }}
               >
                 View Full Menu →

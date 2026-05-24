@@ -28,7 +28,7 @@ export default function TruckRequest() {
           </p>
 
           {sent ? (
-            <div className="text-center py-10" style={{ background: "#fff", border: "1.5px solid #e8e0d0" }}>
+            <div className="text-center py-10 rounded-2xl" style={{ background: "#fff", border: "1.5px solid #e8e0d0" }}>
               <div className="text-5xl mb-3">🧀</div>
               <p className="font-black text-xl mb-1" style={{ color: "#1a0800" }}>Request Received!</p>
               <p className="text-sm" style={{ color: "rgba(61,34,0,0.55)" }}>We'll reach out soon. Thanks for the invite!</p>
@@ -47,6 +47,7 @@ export default function TruckRequest() {
                       background: form.type === opt.value ? "#c9940a" : "#fff",
                       color: form.type === opt.value ? "#fff" : "#7a4f00",
                       border: `1.5px solid ${form.type === opt.value ? "#c9940a" : "#e8e0d0"}`,
+                      borderRadius: "999px",
                     }}
                   >
                     {opt.label}
@@ -59,7 +60,7 @@ export default function TruckRequest() {
                 placeholder="Your name"
                 value={form.name}
                 onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                className="w-full px-4 py-3 text-sm outline-none"
+                className="w-full px-4 py-3 text-sm outline-none rounded-xl"
                 style={{ background: "#fff", border: "1.5px solid #e8e0d0", color: "#1a0800" }}
               />
               <input
@@ -68,14 +69,14 @@ export default function TruckRequest() {
                 placeholder="Email address"
                 value={form.email}
                 onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                className="w-full px-4 py-3 text-sm outline-none"
+                className="w-full px-4 py-3 text-sm outline-none rounded-xl"
                 style={{ background: "#fff", border: "1.5px solid #e8e0d0", color: "#1a0800" }}
               />
               <input
                 placeholder="Phone number (optional)"
                 value={form.phone}
                 onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-                className="w-full px-4 py-3 text-sm outline-none"
+                className="w-full px-4 py-3 text-sm outline-none rounded-xl"
                 style={{ background: "#fff", border: "1.5px solid #e8e0d0", color: "#1a0800" }}
               />
               <textarea
@@ -84,13 +85,13 @@ export default function TruckRequest() {
                 placeholder={form.type === "location" ? "Where would you like us? (neighborhood, street, business, etc.)" : "Tell us about your event — date, location, estimated guests…"}
                 value={form.details}
                 onChange={e => setForm(f => ({ ...f, details: e.target.value }))}
-                className="w-full px-4 py-3 text-sm outline-none resize-none"
+                className="w-full px-4 py-3 text-sm outline-none resize-none rounded-xl"
                 style={{ background: "#fff", border: "1.5px solid #e8e0d0", color: "#1a0800" }}
               />
               <button
                 type="submit"
                 disabled={sending}
-                className="w-full py-4 font-black text-xs tracking-[0.2em] uppercase transition-opacity hover:opacity-85"
+                className="w-full py-4 rounded-full font-black text-xs tracking-[0.2em] uppercase transition-opacity hover:opacity-85"
                 style={{ background: "#c9940a", color: "#fff", border: "none", cursor: "pointer" }}
               >
                 {sending ? "Sending…" : "Send Request"}

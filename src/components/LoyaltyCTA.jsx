@@ -26,7 +26,7 @@ export default function LoyaltyCTA() {
                 href="https://squareup.com/loyalty/cheeziesohio"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block px-6 py-3 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
+                className="inline-block px-6 py-3 rounded-full font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
                 style={{ background: "#c9940a", color: "#fff", textDecoration: "none" }}
               >
                 Join Loyalty Program →
@@ -35,7 +35,7 @@ export default function LoyaltyCTA() {
                 href="https://www.facebook.com/cheeziesohio"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block px-6 py-3 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-75"
+                className="inline-block px-6 py-3 rounded-full font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-75"
                 style={{ background: "rgba(255,248,232,0.08)", color: "#fff8e8", textDecoration: "none", border: "1.5px solid rgba(255,248,232,0.2)" }}
               >
                 Follow on Facebook →
@@ -51,7 +51,7 @@ export default function LoyaltyCTA() {
               { icon: "🎂", title: "Birthday Loyalty Bonus", desc: "Add your birthday when you sign up for exclusive birthday deals." },
               { icon: "📣", title: "Exclusive Facebook Deals", desc: "Follow us for flash specials and loyalty bonus days." },
             ].map(({ icon, title, desc }) => (
-              <div key={title} className="flex items-start gap-4 px-5 py-4" style={{ background: "rgba(255,248,232,0.05)", border: "1px solid rgba(255,248,232,0.1)" }}>
+              <div key={title} className="flex items-start gap-4 px-5 py-4 rounded-2xl" style={{ background: "rgba(255,248,232,0.05)", border: "1px solid rgba(255,248,232,0.1)" }}>
                 <span className="text-2xl shrink-0">{icon}</span>
                 <div>
                   <p className="font-black text-sm mb-0.5" style={{ color: "#fff8e8" }}>{title}</p>
