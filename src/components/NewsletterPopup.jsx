@@ -102,7 +102,7 @@ export default function NewsletterPopup() {
               </div>
 
               {/* Body */}
-              <div className="px-8 py-7" style={{ background: "var(--color-surface-2)" }}>
+              <div className="px-8 py-7" style={{ background: "#fff" }}>
                 {done ? (
                   <div className="text-center py-4">
                     <div className="text-4xl mb-3">🎉</div>
