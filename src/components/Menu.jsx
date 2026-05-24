@@ -60,19 +60,19 @@ function MenuItemCard({ item, index }) {
       <motion.div
         initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.06 }}
         onClick={() => setOpen(!open)}
-        className="rounded-2xl overflow-hidden cursor-pointer select-none"
+        className="rounded-3xl overflow-hidden cursor-pointer select-none"
         style={{ background: "#fff", border: open ? "1.5px solid rgba(201,148,10,0.45)" : "1px solid rgba(180,120,0,0.14)", boxShadow: open ? "0 12px 40px rgba(180,120,0,0.18)" : "0 2px 12px rgba(180,120,0,0.07)", transition: "box-shadow 0.25s ease, border-color 0.25s ease" }}
       >
         <div className="relative h-44 overflow-hidden">
           <img src={item.img} alt={item.name} className="w-full h-full object-cover transition-transform duration-700" style={{ transform: open ? "scale(1.07)" : "scale(1)" }} />
           <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(30,12,0,0.72) 0%, transparent 55%)" }} />
           {item.badge && (
-            <span className="absolute top-2.5 left-2.5 text-xs font-black px-2.5 py-1 rounded"
+            <span className="absolute top-2.5 left-2.5 text-xs font-black px-2.5 py-1 rounded-full"
               style={{ background: badgeColor, color: "#fff8e8", letterSpacing: "0.05em" }}>
               {item.badge}
             </span>
           )}
-          <span className="absolute top-2.5 right-2.5 font-black text-sm px-2.5 py-1 rounded"
+          <span className="absolute top-2.5 right-2.5 font-black text-sm px-2.5 py-1 rounded-full"
             style={{ background: "rgba(42,18,0,0.75)", color: "#e8b800" }}>
             {item.price}
           </span>
@@ -93,7 +93,7 @@ function MenuItemCard({ item, index }) {
                   onClick={e => e.stopPropagation()}
                   className="inline-flex items-center px-5 py-2.5 rounded-full font-bold text-sm transition-opacity duration-200 hover:opacity-85"
                   style={{ background: "#c9940a", color: "#fff8e8", textDecoration: "none", minHeight: "44px" }}>
-                  Order This
+                  Order This →
                 </a>
               </div>
             </motion.div>
@@ -107,7 +107,7 @@ function MenuItemCard({ item, index }) {
     <motion.div
       initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.06 }}
       onClick={() => setOpen(!open)}
-      className="flex items-start justify-between gap-4 p-4 rounded-2xl cursor-pointer select-none"
+      className="flex items-start justify-between gap-4 p-4 rounded-3xl cursor-pointer select-none"
       style={{ background: open ? "#fffbf0" : "#fff", border: open ? "1.5px solid rgba(201,148,10,0.35)" : "1px solid rgba(180,120,0,0.13)", boxShadow: "0 1px 8px rgba(180,120,0,0.05)", transition: "background 0.2s ease, border-color 0.2s ease" }}
     >
       <div className="flex-1">
@@ -117,11 +117,53 @@ function MenuItemCard({ item, index }) {
         </div>
         <p className={`text-sm leading-relaxed ${open ? "" : "line-clamp-1"}`} style={{ color: "rgba(61,34,0,0.55)" }}>{item.desc}</p>
         {item.price_note && open && <p className="text-xs mt-1" style={{ color: "rgba(61,34,0,0.4)" }}>{item.price_note}</p>}
+        {open && (
+          <a href="https://cheeziesgourmetohio.square.site/" target="_blank" rel="noopener noreferrer"
+            onClick={e => e.stopPropagation()}
+            className="inline-flex items-center mt-3 px-4 py-2 rounded-full font-bold text-xs transition-opacity hover:opacity-85"
+            style={{ background: "#c9940a", color: "#fff8e8", textDecoration: "none" }}>
+            Order This →
+          </a>
+        )}
       </div>
       <div className="flex flex-col items-end gap-1 flex-shrink-0">
         <span className="font-black text-base" style={{ color: "#c9940a" }}>{item.price}</span>
         <ChevronDown size={14} style={{ color: "rgba(180,120,0,0.4)", transform: open ? "rotate(180deg)" : "rotate(0)", transition: "transform 0.3s" }} />
       </div>
+    </motion.div>
+  );
+}
+
+function SectionBlock({ section, defaultOpen = true }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center gap-4 mb-2 text-left"
+        style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
+      >
+        <h3 className="text-2xl font-black" style={{ fontFamily: "Georgia, serif", color: "#2a1200" }}>{section.title}</h3>
+        <div className="flex-1 h-px" style={{ background: "rgba(180,120,0,0.15)" }} />
+        <ChevronDown size={18} style={{ color: "#c9940a", flexShrink: 0, transition: "transform 0.3s", transform: open ? "rotate(180deg)" : "rotate(0)" }} />
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }} className="overflow-hidden">
+            {section.note && (
+              <div className="inline-flex items-center gap-2 mb-5 px-4 py-2 rounded-2xl" style={{ background: "rgba(201,148,10,0.13)", border: "1.5px solid rgba(201,148,10,0.35)" }}>
+                <span style={{ fontSize: "16px" }}>🧀</span>
+                <p className="text-sm font-black uppercase tracking-wide" style={{ color: "#8a5a00" }}>{section.note}</p>
+              </div>
+            )}
+            <div className={section.items.some(i => i.img) ? "grid sm:grid-cols-2 md:grid-cols-3 gap-4" : "space-y-3"}>
+              {section.items.map((item, i) => (
+                <MenuItemCard key={item.id || item.name} item={item} index={i} />
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
@@ -156,25 +198,9 @@ export default function Menu() {
           </div>
         </motion.div>
 
-        <div className="space-y-14">
+        <div className="space-y-8">
           {sections.map((section, si) => (
-            <motion.div key={section.title} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: si * 0.08 }}>
-              <div className="flex items-center gap-4 mb-2">
-                <h3 className="text-2xl font-black" style={{ fontFamily: "Georgia, serif", color: "#2a1200" }}>{section.title}</h3>
-                <div className="flex-1 h-px" style={{ background: "rgba(180,120,0,0.15)" }} />
-              </div>
-              {section.note && (
-                <div className="inline-flex items-center gap-2 mb-5 px-4 py-2 rounded-lg" style={{ background: "rgba(201,148,10,0.13)", border: "1.5px solid rgba(201,148,10,0.35)" }}>
-                  <span style={{ fontSize: "16px" }}>🧀</span>
-                  <p className="text-sm font-black uppercase tracking-wide" style={{ color: "#8a5a00" }}>{section.note}</p>
-                </div>
-              )}
-              <div className={section.items.some(i => i.img) ? "grid sm:grid-cols-2 md:grid-cols-3 gap-4" : "space-y-3"}>
-                {section.items.map((item, i) => (
-                  <MenuItemCard key={item.id || item.name} item={item} index={i} />
-                ))}
-              </div>
-            </motion.div>
+            <SectionBlock key={section.title} section={section} defaultOpen={si === 0} />
           ))}
         </div>
 

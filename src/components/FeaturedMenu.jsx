@@ -25,7 +25,7 @@ export default function FeaturedMenu() {
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
           <p className="text-xs font-black tracking-[0.25em] uppercase mb-2" style={{ color: "#c9940a" }}>Fan Favorite</p>
           <h2 className="font-black uppercase" style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", color: "#1a0800", letterSpacing: "-0.01em" }}>Try This</h2>
-          <div className="inline-flex items-center gap-2 mt-4 px-4 py-2" style={{ background: "#fff8e8", border: "1.5px solid #c9940a" }}>
+          <div className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-full" style={{ background: "#fff8e8", border: "1.5px solid #c9940a" }}>
             <span>🧀</span>
             <p className="text-xs font-black uppercase tracking-widest" style={{ color: "#7a4f00" }}>All sandwiches include Chips and a Drink</p>
           </div>
@@ -39,22 +39,22 @@ export default function FeaturedMenu() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
-              className="overflow-hidden group"
-              style={{ background: "#fff", border: "1.5px solid #e8e0d0" }}
+              className="rounded-3xl overflow-hidden group"
+              style={{ background: "#fff", border: "1.5px solid #e8e0d0", boxShadow: "0 4px 24px rgba(180,120,0,0.1)" }}
             >
               <div className="relative h-48 overflow-hidden">
                 <img src={item.img} alt={item.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                 <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(26,8,0,0.8) 0%, transparent 55%)" }} />
                 {item.badge && (
                   <span
-                    className="absolute top-3 left-3 text-xs font-black px-2.5 py-1"
+                    className="absolute top-3 left-3 text-xs font-black px-2.5 py-1 rounded-full"
                     style={{ background: item.badge_color || "#c9940a", color: "#fff", letterSpacing: "0.05em" }}
                   >
                     {item.badge}
                   </span>
                 )}
                 <span
-                  className="absolute top-3 right-3 font-black text-sm px-2.5 py-1"
+                  className="absolute top-3 right-3 font-black text-sm px-2.5 py-1 rounded-full"
                   style={{ background: "#1a0800", color: "#e8b800" }}
                 >
                   {item.price}
@@ -67,7 +67,7 @@ export default function FeaturedMenu() {
                   href="https://cheeziesgourmetohio.square.site/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 px-5 py-2.5 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
+                  className="inline-flex items-center gap-1 px-5 py-2.5 rounded-full font-bold text-sm transition-opacity hover:opacity-85"
                   style={{ background: "#c9940a", color: "#fff", textDecoration: "none" }}
                 >
                   Order This →
@@ -80,7 +80,7 @@ export default function FeaturedMenu() {
         <div className="text-center">
           <button
             onClick={() => { navigate("/Menu"); window.scrollTo({ top: 0, behavior: "instant" }); }}
-            className="inline-flex items-center gap-2 px-8 py-4 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-black text-sm transition-opacity hover:opacity-85"
             style={{ background: "#1a0800", color: "#fff" }}
           >
             View Full Menu →
