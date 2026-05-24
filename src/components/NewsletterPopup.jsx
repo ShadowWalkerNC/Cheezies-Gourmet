@@ -102,12 +102,12 @@ export default function NewsletterPopup() {
               </div>
 
               {/* Body */}
-              <div className="px-8 py-7" style={{ background: "#fffbf0" }}>
+              <div className="px-8 py-7" style={{ background: "var(--color-surface-2)" }}>
                 {done ? (
                   <div className="text-center py-4">
                     <div className="text-4xl mb-3">🎉</div>
-                    <p className="font-bold text-lg" style={{ color: "#3d2200" }}>You're on the list!</p>
-                    <p className="text-sm mt-1 mb-4" style={{ color: "rgba(80,45,0,0.6)" }}>Use this code on your next order:</p>
+                    <p className="font-bold text-lg" style={{ color: "var(--color-cream)" }}>You're on the list!</p>
+                    <p className="text-sm mt-1 mb-4" style={{ color: "var(--color-text-muted)" }}>Use this code on your next order:</p>
                     <div
                       className="py-3 px-6 text-2xl font-black tracking-widest text-center rounded-xl"
                       style={{ background: "#1a0800", color: "#e8b800", letterSpacing: "0.2em" }}
@@ -126,10 +126,10 @@ export default function NewsletterPopup() {
                         value={email}
                         onChange={e => { setEmail(e.target.value); setError(""); }}
                         style={{
-                          background: "#fff",
+                          background: "var(--color-surface)",
                           border: "1.5px solid rgba(180,120,0,0.25)",
                           borderRadius: "999px",
-                          color: "#3d2200",
+                          color: "var(--color-cream)",
                           padding: "13px 20px",
                           outline: "none",
                           fontSize: "15px",
@@ -138,7 +138,7 @@ export default function NewsletterPopup() {
                         onBlur={e => (e.target.style.borderColor = "rgba(180,120,0,0.25)")}
                       />
                       <div>
-                        <label className="text-xs font-bold tracking-widest uppercase mb-1 block" style={{ color: "rgba(80,45,0,0.5)" }}>
+                        <label className="text-xs font-bold tracking-widest uppercase mb-1 block" style={{ color: "var(--color-text-muted)" }}>
                           Birthday (optional — for birthday deals 🎂)
                         </label>
                         <input
@@ -146,11 +146,11 @@ export default function NewsletterPopup() {
                           value={birthday}
                           onChange={e => setBirthday(e.target.value)}
                           style={{
-                            background: "#fff",
-                            border: "1.5px solid rgba(180,120,0,0.25)",
-                            borderRadius: "999px",
-                            color: "#3d2200",
-                            padding: "10px 20px",
+                            background: "var(--color-surface)",
+                              border: "1.5px solid rgba(180,120,0,0.25)",
+                              borderRadius: "999px",
+                              color: "var(--color-cream)",
+                              padding: "10px 20px",
                             outline: "none",
                             fontSize: "14px",
                             width: "100%",

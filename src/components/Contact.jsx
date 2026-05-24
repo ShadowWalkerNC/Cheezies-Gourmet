@@ -42,7 +42,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-16 px-6" style={{ background: "#fff", borderTop: "1.5px solid #e8e0d0" }}>
+    <section id="contact" className="py-16 px-6" style={{ background: "var(--color-surface)", borderTop: "1.5px solid var(--color-border-ui)" }}>
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -51,19 +51,19 @@ export default function Contact() {
           className="text-center mb-12"
         >
           <p className="text-xs font-black tracking-[0.25em] uppercase mb-2" style={{ color: "#c9940a" }}>Get in Touch</p>
-          <h2 className="font-black uppercase" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: "#1a0800" }}>Contact Us</h2>
+          <h2 className="font-black uppercase" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: "var(--color-cream)" }}>Contact Us</h2>
         </motion.div>
 
         {/* Phone + Email */}
         <div className="grid sm:grid-cols-2 gap-4 mb-8 max-w-2xl mx-auto">
           <div
             className="p-5 flex items-center justify-between gap-4 cursor-pointer"
-            style={{ background: "#f9f4ea", border: "1.5px solid #e8e0d0" }}
+            style={{ background: "var(--color-surface-2)", border: "1.5px solid var(--color-border-ui)" }}
             onClick={copyPhone}
           >
             <div>
-              <p className="text-xs font-black tracking-widest uppercase mb-1" style={{ color: "rgba(61,34,0,0.4)" }}>Call Us</p>
-              <p className="font-black text-lg" style={{ color: "#1a0800" }}>330-510-8875</p>
+              <p className="text-xs font-black tracking-widest uppercase mb-1" style={{ color: "var(--color-text-muted)" }}>Call Us</p>
+              <p className="font-black text-lg" style={{ color: "var(--color-cream)" }}>330-510-8875</p>
             </div>
             <a
               href="tel:3305108875"
@@ -74,15 +74,15 @@ export default function Contact() {
               {copied ? "Copied!" : "Call Now"}
             </a>
           </div>
-          <div className="p-5 flex items-center justify-between gap-4" style={{ background: "#fff", border: "1.5px solid #e8e0d0" }}>
+          <div className="p-5 flex items-center justify-between gap-4" style={{ background: "var(--color-surface)", border: "1.5px solid var(--color-border-ui)" }}>
             <div>
-              <p className="text-xs font-black tracking-widest uppercase mb-1" style={{ color: "rgba(61,34,0,0.4)" }}>Email Us</p>
-              <p className="font-black text-sm" style={{ color: "#1a0800" }}>cheeziesohio@gmail.com</p>
+              <p className="text-xs font-black tracking-widest uppercase mb-1" style={{ color: "var(--color-text-muted)" }}>Email Us</p>
+              <p className="font-black text-sm" style={{ color: "var(--color-cream)" }}>cheeziesohio@gmail.com</p>
             </div>
             <a
               href="mailto:cheeziesohio@gmail.com"
               className="px-4 py-2 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
-              style={{ background: "#1a0800", color: "#fff8e8", textDecoration: "none" }}
+              style={{ background: "var(--color-cream)", color: "var(--color-surface)", textDecoration: "none" }}
             >
               Email
             </a>
@@ -103,14 +103,14 @@ export default function Contact() {
               target="_blank"
               rel="noopener noreferrer"
               className="flex flex-col items-center gap-3 py-5 px-4 text-center transition-all duration-150 hover:scale-105"
-              style={{ background: "#fff", border: "1.5px solid #e8e0d0", textDecoration: "none" }}
+              style={{ background: "var(--color-surface)", border: "1.5px solid var(--color-border-ui)", textDecoration: "none" }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = color; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "#e8e0d0"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--color-border-ui)"; }}
             >
               <span style={{ color }}>{icon}</span>
               <div>
-                <p className="font-black text-sm" style={{ color: "#1a0800" }}>{label}</p>
-                <p className="text-xs mt-0.5" style={{ color: "rgba(61,34,0,0.45)" }}>{sub}</p>
+                <p className="font-black text-sm" style={{ color: "var(--color-cream)" }}>{label}</p>
+                <p className="text-xs mt-0.5" style={{ color: "var(--color-text-muted)" }}>{sub}</p>
               </div>
             </a>
           ))}
