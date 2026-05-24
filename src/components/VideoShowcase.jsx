@@ -6,7 +6,7 @@ export default function VideoShowcase() {
   const [playing, setPlaying] = useState(false);
 
   return (
-    <section className="py-20 px-6" style={{ background: "var(--color-bg)", borderTop: "1.5px solid var(--color-border)" }}>
+    <section className="py-12 px-6" style={{ background: "#fff" }}>
       <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -17,7 +17,7 @@ export default function VideoShowcase() {
           <p className="text-xs font-black tracking-[0.25em] uppercase mb-2" style={{ color: "#c9940a" }}>
             See Us in Action
           </p>
-          <h2 className="font-black uppercase" style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)", color: "var(--color-cream)" }}>
+          <h2 className="font-black uppercase" style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)", color: "#1a0800" }}>
             Truck Life
           </h2>
         </motion.div>
@@ -71,7 +71,7 @@ export default function VideoShowcase() {
           transition={{ delay: 0.1 }}
           className="text-center mt-6"
         >
-          <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
+          <p className="text-sm leading-relaxed" style={{ color: "rgba(61,34,0,0.65)" }}>
             From prep to plate, watch the craft behind every gourmet creation. This is Cheezies.
           </p>
         </motion.div>

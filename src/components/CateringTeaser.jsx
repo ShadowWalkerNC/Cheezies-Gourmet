@@ -5,7 +5,7 @@ export default function CateringTeaser() {
   const navigate = useNavigate();
 
   return (
-    <section className="py-20 px-6" style={{ background: "#1a0800", borderTop: "1.5px solid rgba(224,171,32,0.15)" }}>
+    <section className="py-16 px-6" style={{ background: "#1a0800", borderTop: "1.5px solid #2a1200" }}>
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10">
         {/* Text */}
         <motion.div
