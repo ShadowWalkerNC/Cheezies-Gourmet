@@ -9,8 +9,6 @@ import Footer from "../components/Footer";
 import PageTransition from "../components/PageTransition";
 import PullToRefresh from "../components/PullToRefresh";
 import NewsletterPopup from "../components/NewsletterPopup";
-import LoyaltyCTA from "../components/LoyaltyCTA";
-import VideoShowcase from "../components/VideoShowcase";
 
 export default function Home() {
   const handleRefresh = () =>
@@ -26,11 +24,8 @@ export default function Home() {
         <PullToRefresh onRefresh={handleRefresh}>
           <Hero />
           <FeaturedMenu />
-          <VideoShowcase />
           <About />
-          <TruckRequest />
           <CateringTeaser />
-          <LoyaltyCTA />
           <Contact />
           <Footer />
           <div className="md:hidden" style={{ height: "var(--tab-bar-h)" }} />
