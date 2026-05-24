@@ -1,5 +1,13 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { MapPin } from "lucide-react";
+import { base44 } from "@/api/base44Client";
+
+const statusConfig = {
+  open:     { label: "Open Now", bg: "#dcfce7", color: "#15803d" },
+  closed:   { label: "Closed",   bg: "#fee2e2", color: "#b91c1c" },
+  en_route: { label: "En Route", bg: "#fef9c3", color: "#a16207" },
+};
 
 const tabs = [
   { label: "Home",     path: "/Home" },
@@ -12,8 +20,24 @@ const tabs = [
 export default function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [truckData, setTruckData] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    base44.entities.TruckLocation.list("-updated_date", 1).then(records => {
+      if (records.length > 0) setTruckData(records[0]);
+    });
+    const unsub = base44.entities.TruckLocation.subscribe(event => {
+      if (event.type === "create" || event.type === "update") setTruckData(event.data);
+    });
+    return unsub;
+  }, []);
+
+  const truckStatus = truckData?.status || "closed";
+  const sc = statusConfig[truckStatus] || statusConfig.closed;
+  const hasLive = truckStatus !== "closed" && truckData?.latitude && truckData?.longitude;
+  const truckAddress = hasLive ? truckData.address : (truckData?.home_address || "Akron, Ohio");
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40);
@@ -103,6 +127,27 @@ export default function NavBar() {
           <span className={`block w-6 h-0.5 transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} style={{ background: "#1a0800" }} />
           <span className={`block w-6 h-0.5 transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} style={{ background: "#1a0800" }} />
           <span className={`block w-6 h-0.5 transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} style={{ background: "#1a0800" }} />
+        </button>
+      </div>
+
+      {/* Truck status banner — always visible, part of fixed nav */}
+      <div
+        className="px-4 py-2 flex items-center justify-between gap-3"
+        style={{ background: "#1a0800", borderTop: "1px solid rgba(201,148,10,0.3)" }}
+      >
+        <div className="flex items-center gap-2 min-w-0">
+          <MapPin className="w-3.5 h-3.5 shrink-0" style={{ color: "#c9940a" }} />
+          <span className="text-xs font-bold truncate" style={{ color: "#fff8e8" }}>{truckAddress}</span>
+          <span className="shrink-0 text-xs font-black px-2 py-0.5 rounded" style={{ background: sc.bg, color: sc.color }}>
+            {sc.label}
+          </span>
+        </div>
+        <button
+          onClick={() => { navigate("/FindUs"); window.scrollTo({ top: 0, behavior: "instant" }); }}
+          className="shrink-0 text-xs font-black tracking-widest uppercase px-3 py-1.5 transition-opacity hover:opacity-80"
+          style={{ background: "#c9940a", color: "#fff", border: "none", cursor: "pointer", whiteSpace: "nowrap" }}
+        >
+          Live Tracker →
         </button>
       </div>
 
