@@ -10,7 +10,6 @@ Deno.serve(async (req) => {
     const action = body.action || "orders";
 
     if (action === "orders") {
-      // Fetch recent orders from Square
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       const startAt = today.toISOString();
@@ -25,9 +24,7 @@ Deno.serve(async (req) => {
         body: JSON.stringify({
           query: {
             filter: {
-              date_time_filter: {
-                created_at: { start_at: startAt }
-              },
+              date_time_filter: { created_at: { start_at: startAt } },
               state_filter: { states: ["COMPLETED", "OPEN"] }
             },
             sort: { sort_field: "CREATED_AT", sort_order: "DESC" }
@@ -39,13 +36,10 @@ Deno.serve(async (req) => {
       const data = await res.json();
       const orders = data.orders || [];
 
-      // Calculate summary
-      const totalRevenue = orders.reduce((sum, o) => {
-        const amount = o.total_money?.amount || 0;
-        return sum + amount;
-      }, 0);
+      const totalRevenue = orders.reduce((sum, o) => sum + (o.total_money?.amount || 0), 0);
 
-      const summary = {
+      return Response.json({
+        success: true,
         order_count: orders.length,
         total_revenue_cents: totalRevenue,
         total_revenue_dollars: (totalRevenue / 100).toFixed(2),
@@ -56,12 +50,9 @@ Deno.serve(async (req) => {
           total: ((o.total_money?.amount || 0) / 100).toFixed(2),
           items: (o.line_items || []).map(i => ({ name: i.name, qty: i.quantity, price: ((i.total_money?.amount || 0) / 100).toFixed(2) }))
         }))
-      };
-
-      return Response.json({ success: true, ...summary });
+      });
 
     } else if (action === "notify_new_orders") {
-      // Fetch orders from last 15 minutes and email owner
       const since = new Date(Date.now() - 15 * 60 * 1000).toISOString();
 
       const res = await fetch("https://connect.squareup.com/v2/orders/search", {
@@ -102,7 +93,6 @@ Deno.serve(async (req) => {
       return Response.json({ success: true, new_orders: orders.length });
 
     } else if (action === "customers") {
-      // Fetch recent Square customers
       const res = await fetch("https://connect.squareup.com/v2/customers?sort_field=CREATED_AT&sort_order=DESC&limit=50", {
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -122,7 +112,6 @@ Deno.serve(async (req) => {
       return Response.json({ success: true, customers, total: customers.length });
 
     } else if (action === "sales_summary") {
-      // Weekly sales summary
       const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
 
       const res = await fetch("https://connect.squareup.com/v2/orders/search", {
@@ -146,7 +135,6 @@ Deno.serve(async (req) => {
       const data = await res.json();
       const orders = data.orders || [];
 
-      // Group by day
       const byDay = {};
       orders.forEach(o => {
         const day = o.created_at.slice(0, 10);
@@ -169,6 +157,66 @@ Deno.serve(async (req) => {
         week_revenue: totalRevenue.toFixed(2),
         daily_breakdown: dailyBreakdown
       });
+
+    } else if (action === "sync_menu") {
+      // Fetch categories first for mapping
+      const catRes = await fetch("https://connect.squareup.com/v2/catalog/list?types=CATEGORY", {
+        headers: { "Authorization": `Bearer ${token}`, "Square-Version": "2024-01-17" }
+      });
+      const catData = await catRes.json();
+      const catById = {};
+      for (const c of (catData.objects || [])) {
+        catById[c.id] = c.category_data?.name || "";
+      }
+
+      // Fetch all catalog items
+      const itemRes = await fetch("https://connect.squareup.com/v2/catalog/list?types=ITEM", {
+        headers: { "Authorization": `Bearer ${token}`, "Square-Version": "2024-01-17" }
+      });
+      const itemData = await itemRes.json();
+      const objects = itemData.objects || [];
+
+      const sectionMap = {
+        "gourmet grilled cheese": "Gourmet Melts",
+        "sandwiches": "Signature Creations",
+        "sides": "Sides & Refreshments",
+        "other items": "Add-Ons & Extras",
+        "beverage": "Sides & Refreshments",
+        "bagged chips": "Sides & Refreshments",
+      };
+
+      const synced = [];
+      for (const obj of objects) {
+        if (obj.type !== "ITEM") continue;
+        const d = obj.item_data || {};
+        const name = d.name || "";
+        if (!name) continue;
+        // Skip sandwich-only variants
+        if (name.toLowerCase().includes("sandwich only")) continue;
+
+        const variation = (d.variations || [])[0];
+        const priceCents = variation?.item_variation_data?.price_money?.amount;
+        const price = priceCents ? `$${(priceCents / 100).toFixed(0)}` : "";
+
+        const rawCat = (catById[d.category_id] || "").toLowerCase();
+        let section = "Signature Creations";
+        for (const [key, val] of Object.entries(sectionMap)) {
+          if (rawCat.includes(key)) { section = val; break; }
+        }
+
+        synced.push({ name, desc: d.description || "", price, section, is_active: true });
+      }
+
+      // Replace all existing menu items
+      const existing = await base44.asServiceRole.entities.MenuItem.list();
+      for (const item of existing) {
+        await base44.asServiceRole.entities.MenuItem.delete(item.id);
+      }
+      for (let i = 0; i < synced.length; i++) {
+        await base44.asServiceRole.entities.MenuItem.create({ ...synced[i], sort_order: i });
+      }
+
+      return Response.json({ success: true, synced: synced.length });
     }
 
     return Response.json({ error: "Unknown action" }, { status: 400 });
