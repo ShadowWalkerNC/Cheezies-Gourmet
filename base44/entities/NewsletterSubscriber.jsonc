@@ -1,0 +1,44 @@
+{
+  "name": "NewsletterSubscriber",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "description": "Subscriber email address"
+    },
+    "birthday": {
+      "type": "string",
+      "description": "Birthday month and day, e.g. 06-15"
+    },
+    "promo_claimed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether promo code was already claimed"
+    },
+    "source": {
+      "type": "string",
+      "description": "How they subscribed: popup, loyalty"
+    }
+  },
+  "required": [
+    "email"
+  ],
+  "rls": {
+    "create": {},
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

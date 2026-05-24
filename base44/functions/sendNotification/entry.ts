@@ -63,8 +63,26 @@ Message: ${data?.message || "N/A"}
       if (!data?.email || !emailRegex.test(data.email)) {
         return Response.json({ error: "Invalid email" }, { status: 400 });
       }
+      // Check if email already subscribed
+      const existing = await base44.asServiceRole.entities.NewsletterSubscriber.filter({ email: data.email });
+      if (existing.length > 0) {
+        return Response.json({ error: "already_subscribed" }, { status: 409 });
+      }
+      // Save subscriber
+      await base44.asServiceRole.entities.NewsletterSubscriber.create({
+        email: data.email,
+        birthday: data.birthday || null,
+        promo_claimed: true,
+        source: data.source || "popup",
+      });
       subject = "New Newsletter Subscriber";
-      body = `New subscriber: ${data.email}`;
+      body = `New subscriber: ${data.email}${data.birthday ? ` | Birthday: ${data.birthday}` : ""}`;
+      // Also send welcome email with promo code to subscriber
+      await base44.asServiceRole.integrations.Core.SendEmail({
+        to: data.email,
+        subject: "🧀 Welcome to Cheezies — Here's Your Promo Code!",
+        body: `Thanks for joining the Cheezies crew!\n\nUse code CHEEZIE26 on your next order for a special discount.\n\nOrder online: https://cheeziesgourmetohio.square.site/\n\nSee you at the truck! 🧀`,
+      });
 
     } else if (type === "merch_notify") {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

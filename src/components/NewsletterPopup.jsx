@@ -2,14 +2,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { base44 } from "@/api/base44Client";
-import { useToast } from "@/components/ui/use-toast";
+
+const PROMO_CODE = "CHEEZIE26";
 
 export default function NewsletterPopup() {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
+  const [birthday, setBirthday] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
-  const { toast } = useToast();
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const hasCookie = document.cookie.split(";").some(c => c.trim().startsWith("cheezies_popup="));
@@ -27,12 +29,24 @@ export default function NewsletterPopup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Optimistic: show success immediately
-    setDone(true);
-    toast({ title: "🧀 You're in!", description: "We'll let you know where we're rolling next." });
-    setTimeout(() => dismiss(), 2200);
-    // Background send
-    base44.functions.invoke("sendNotification", { type: "newsletter_signup", data: { email } });
+    setError("");
+    setSubmitting(true);
+    try {
+      const res = await base44.functions.invoke("sendNotification", {
+        type: "newsletter_signup",
+        data: { email, birthday, source: "popup" },
+      });
+      if (res.data?.error === "already_subscribed") {
+        setError("This email is already subscribed.");
+        setSubmitting(false);
+        return;
+      }
+      setDone(true);
+      setTimeout(() => dismiss(), 8000);
+    } catch {
+      setError("Something went wrong. Please try again.");
+    }
+    setSubmitting(false);
   };
 
   return (
@@ -80,10 +94,10 @@ export default function NewsletterPopup() {
                   className="text-3xl font-black leading-tight"
                   style={{ fontFamily: "Georgia, serif", color: "#fff8e8", textShadow: "0 2px 8px rgba(100,50,0,0.3)" }}
                 >
-                  Stay in the Melt!
+                  Get a Promo Code!
                 </h2>
                 <p className="text-sm mt-2 font-medium" style={{ color: "rgba(255,248,224,0.85)" }}>
-                  Get updates on where we're parked, daily specials & secret deals.
+                  Join our list with a new email & get an exclusive discount code.
                 </p>
               </div>
 
@@ -93,17 +107,24 @@ export default function NewsletterPopup() {
                   <div className="text-center py-4">
                     <div className="text-4xl mb-3">🎉</div>
                     <p className="font-bold text-lg" style={{ color: "#3d2200" }}>You're on the list!</p>
-                    <p className="text-sm mt-1" style={{ color: "rgba(80,45,0,0.6)" }}>See you at the truck!</p>
+                    <p className="text-sm mt-1 mb-4" style={{ color: "rgba(80,45,0,0.6)" }}>Use this code on your next order:</p>
+                    <div
+                      className="py-3 px-6 text-2xl font-black tracking-widest text-center rounded-xl"
+                      style={{ background: "#1a0800", color: "#e8b800", letterSpacing: "0.2em" }}
+                    >
+                      {PROMO_CODE}
+                    </div>
+                    <p className="text-xs mt-3" style={{ color: "rgba(80,45,0,0.5)" }}>Code also sent to your email!</p>
                   </div>
                 ) : (
                   <>
-                    <form onSubmit={handleSubmit} className="flex flex-col gap-3 mb-5">
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-3 mb-3">
                       <input
                         required
                         type="email"
                         placeholder="your@email.com"
                         value={email}
-                        onChange={e => setEmail(e.target.value)}
+                        onChange={e => { setEmail(e.target.value); setError(""); }}
                         style={{
                           background: "#fff",
                           border: "1.5px solid rgba(180,120,0,0.25)",
@@ -116,42 +137,48 @@ export default function NewsletterPopup() {
                         onFocus={e => (e.target.style.borderColor = "#c9940a")}
                         onBlur={e => (e.target.style.borderColor = "rgba(180,120,0,0.25)")}
                       />
+                      <div>
+                        <label className="text-xs font-bold tracking-widest uppercase mb-1 block" style={{ color: "rgba(80,45,0,0.5)" }}>
+                          Birthday (optional — for birthday deals 🎂)
+                        </label>
+                        <input
+                          type="date"
+                          value={birthday}
+                          onChange={e => setBirthday(e.target.value)}
+                          style={{
+                            background: "#fff",
+                            border: "1.5px solid rgba(180,120,0,0.25)",
+                            borderRadius: "999px",
+                            color: "#3d2200",
+                            padding: "10px 20px",
+                            outline: "none",
+                            fontSize: "14px",
+                            width: "100%",
+                          }}
+                        />
+                      </div>
+                      {error && (
+                        <p className="text-xs text-center font-bold" style={{ color: "#c0392b" }}>{error}</p>
+                      )}
                       <button
                         type="submit"
                         disabled={submitting}
                         className="py-3.5 rounded-full font-bold text-sm transition-all duration-300 hover:scale-[1.02] disabled:opacity-60"
                         style={{ background: "#c9940a", color: "#fff8e8", boxShadow: "0 6px 24px rgba(180,120,0,0.3)" }}
                       >
-                        {submitting ? "Subscribing…" : "🔔 Subscribe for Updates"}
+                        {submitting ? "Checking…" : "🔔 Get My Promo Code"}
                       </button>
                     </form>
 
-                    <div className="flex items-center gap-3 mb-5">
-                      <div className="flex-1 h-px" style={{ background: "rgba(180,120,0,0.15)" }} />
-                      <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "rgba(80,45,0,0.4)" }}>or</span>
-                      <div className="flex-1 h-px" style={{ background: "rgba(180,120,0,0.15)" }} />
-                    </div>
-
-                    <a
-                      href="https://www.facebook.com/profile.php?id=61572987417963"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-3 py-3.5 rounded-full font-bold text-sm transition-all duration-300 hover:scale-[1.02] hover:opacity-90 w-full"
-                      style={{ background: "#1877F2", color: "#ffffff", textDecoration: "none", boxShadow: "0 4px 20px rgba(24,119,242,0.3)" }}
+                    <button
+                      onClick={dismiss}
+                      className="w-full text-center text-xs mt-2 underline-offset-2 hover:underline"
+                      style={{ color: "rgba(80,45,0,0.4)", background: "none", border: "none", cursor: "pointer" }}
                     >
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                      Follow on Facebook
-                    </a>
+                      No thanks, I'll miss the deals
+                    </button>
                   </>
                 )}
-
-                <button
-                  onClick={dismiss}
-                  className="w-full text-center text-xs mt-4 underline-offset-2 hover:underline"
-                  style={{ color: "rgba(80,45,0,0.4)", background: "none", border: "none", cursor: "pointer" }}
-                >
-                  No thanks, I'll miss the deals
-                </button>
               </div>
             </div>
           </motion.div>

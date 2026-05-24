@@ -48,7 +48,7 @@ export default function LoyaltyCTA() {
             {[
               { icon: "🧀", title: "Earn on Every Order", desc: "Points added automatically when you pay with Square." },
               { icon: "🎁", title: "Redeem for Free Items", desc: "Use points toward menu items — no minimum." },
-              { icon: "📱", title: "Track via Square App", desc: "Check your balance anytime in the Square loyalty app." },
+              { icon: "🎂", title: "Birthday Loyalty Bonus", desc: "Add your birthday when you sign up for exclusive birthday deals." },
               { icon: "📣", title: "Exclusive Facebook Deals", desc: "Follow us for flash specials and loyalty bonus days." },
             ].map(({ icon, title, desc }) => (
               <div key={title} className="flex items-start gap-4 px-5 py-4" style={{ background: "rgba(255,248,232,0.05)", border: "1px solid rgba(255,248,232,0.1)" }}>

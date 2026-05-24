@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { base44 } from "@/api/base44Client";
+import { useState } from "react";
 
 const socials = [
   {
@@ -34,56 +32,14 @@ const socials = [
   },
 ];
 
-function formatDays(days) {
-  if (!days || days.length === 0) return "Closed";
-  if (days.length === 7) return "Every day";
-  return days.join(", ");
-}
-
-const statusConfig = {
-  open:     { label: "Open Now", color: "#22c55e" },
-  closed:   { label: "Closed",   color: "#ef4444" },
-  en_route: { label: "En Route", color: "#f59e0b" },
-};
-
 export default function Contact() {
   const [copied, setCopied] = useState(false);
-  const [truckData, setTruckData] = useState(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    base44.entities.TruckLocation.list("-updated_date", 1).then(records => {
-      if (records.length > 0) setTruckData(records[0]);
-    });
-    const unsub = base44.entities.TruckLocation.subscribe(event => {
-      if (event.type === "create" || event.type === "update") setTruckData(event.data);
-    });
-    return unsub;
-  }, []);
 
   const copyPhone = () => {
     navigator.clipboard.writeText("3305108875");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
-
-  const status = truckData?.status || "closed";
-  const sc = statusConfig[status] || statusConfig.closed;
-  const isClosed = status === "closed";
-  const showLive = !isClosed && truckData?.latitude && truckData?.longitude;
-  const mapLat = showLive ? truckData.latitude : (truckData?.home_latitude || null);
-  const mapLng = showLive ? truckData.longitude : (truckData?.home_longitude || null);
-  const hasMap = mapLat && mapLng;
-
-  const mapSrc = hasMap
-    ? `https://www.openstreetmap.org/export/embed.html?bbox=${mapLng - 0.015},${mapLat - 0.015},${mapLng + 0.015},${mapLat + 0.015}&layer=mapnik&marker=${mapLat},${mapLng}`
-    : `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d95836.42234567!2d-81.57890!3d41.08144!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8836f98fa9e9bedf%3A0xfcdfe8b36a347c0!2sAkron%2C%20OH!5e0!3m2!1sen!2sus!4v1700000000000`;
-
-  const displayAddress = showLive ? truckData?.address : (truckData?.home_address || "Akron, Ohio");
-  const hoursText = truckData?.hours_open && truckData?.hours_close
-    ? `${truckData.hours_open} – ${truckData.hours_close}`
-    : "Noon – 6:00 PM";
-  const daysText = formatDays(truckData?.open_days);
 
   return (
     <section id="contact" className="py-16 px-6" style={{ background: "#fff", borderTop: "1.5px solid #e8e0d0" }}>
@@ -95,110 +51,42 @@ export default function Contact() {
           className="text-center mb-12"
         >
           <p className="text-xs font-black tracking-[0.25em] uppercase mb-2" style={{ color: "#c9940a" }}>Get in Touch</p>
-          <h2 className="font-black uppercase" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: "#1a0800" }}>Find Us</h2>
+          <h2 className="font-black uppercase" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: "#1a0800" }}>Contact Us</h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-5 gap-6 mb-8">
-          {/* Map */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="lg:col-span-3 overflow-hidden"
-            style={{ minHeight: "380px", border: "1.5px solid #e8e0d0" }}
+        {/* Phone + Email */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-8 max-w-2xl mx-auto">
+          <div
+            className="p-5 flex items-center justify-between gap-4 cursor-pointer"
+            style={{ background: "#f9f4ea", border: "1.5px solid #e8e0d0" }}
+            onClick={copyPhone}
           >
-            <iframe
-              title="Cheezies location"
-              src={mapSrc}
-              width="100%"
-              height="100%"
-              style={{ border: 0, minHeight: "380px", display: "block" }}
-              allowFullScreen
-              loading="lazy"
-            />
-          </motion.div>
-
-          {/* Right info column */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="lg:col-span-2 flex flex-col gap-4"
-          >
-            {/* Location */}
-            <div className="p-5" style={{ background: "#fff", border: "1.5px solid #e8e0d0" }}>
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-xs font-black tracking-widest uppercase" style={{ color: "rgba(80,45,0,0.4)" }}>Location</p>
-                <span className="text-xs font-black px-2 py-0.5" style={{ background: `${sc.color}18`, color: sc.color }}>
-                  {sc.label}
-                </span>
-              </div>
-              <p className="font-black text-base mb-1" style={{ color: "#1a0800" }}>{displayAddress || "Akron, Ohio"}</p>
-              <p className="text-xs mb-4" style={{ color: "rgba(61,34,0,0.55)" }}>
-                {isClosed ? "We're currently closed. See our home base above." : "We move daily — follow our social pages for updates."}
-              </p>
-              <button
-                onClick={() => { navigate("/FindUs"); window.scrollTo({ top: 0, behavior: "instant" }); }}
-                className="w-full text-center py-2.5 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
-                style={{ background: "#c9940a", color: "#fff", border: "none", cursor: "pointer" }}
-              >
-                View Live Tracker →
-              </button>
+            <div>
+              <p className="text-xs font-black tracking-widest uppercase mb-1" style={{ color: "rgba(61,34,0,0.4)" }}>Call Us</p>
+              <p className="font-black text-lg" style={{ color: "#1a0800" }}>330-510-8875</p>
             </div>
-
-            {/* Hours */}
-            <div className="p-5" style={{ background: "#fff", border: "1.5px solid #e8e0d0" }}>
-              <p className="text-xs font-black tracking-widest uppercase mb-3" style={{ color: "rgba(80,45,0,0.4)" }}>Hours</p>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between gap-4">
-                  <span style={{ color: "rgba(61,34,0,0.65)" }}>{daysText}</span>
-                  <span className="font-black whitespace-nowrap" style={{ color: "#1a0800" }}>{hoursText}</span>
-                </div>
-                {truckData?.open_days && !truckData.open_days.includes("Mon") && (
-                  <div className="flex justify-between gap-4">
-                    <span style={{ color: "rgba(61,34,0,0.65)" }}>Monday</span>
-                    <span className="font-black" style={{ color: "#1a0800" }}>Closed</span>
-                  </div>
-                )}
-              </div>
-              <p className="text-xs mt-4" style={{ color: "rgba(61,34,0,0.35)" }}>Hours may vary. Follow us on Facebook for daily updates.</p>
-            </div>
-
-            {/* Phone */}
-            <div
-              className="p-5 flex items-center justify-between gap-4 cursor-pointer"
-              style={{ background: "#f9f4ea", border: "1.5px solid #e8e0d0" }}
-              onClick={copyPhone}
+            <a
+              href="tel:3305108875"
+              onClick={e => e.stopPropagation()}
+              className="px-4 py-2 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
+              style={{ background: "#c9940a", color: "#fff", textDecoration: "none" }}
             >
-              <div>
-                <p className="text-xs font-black tracking-widest uppercase mb-1" style={{ color: "rgba(61,34,0,0.4)" }}>Call Us</p>
-                <p className="font-black text-lg" style={{ color: "#1a0800" }}>330-510-8875</p>
-              </div>
-              <a
-                href="tel:3305108875"
-                onClick={e => e.stopPropagation()}
-                className="px-4 py-2 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
-                style={{ background: "#c9940a", color: "#fff", textDecoration: "none" }}
-              >
-                {copied ? "Copied!" : "Call Now"}
-              </a>
+              {copied ? "Copied!" : "Call Now"}
+            </a>
+          </div>
+          <div className="p-5 flex items-center justify-between gap-4" style={{ background: "#fff", border: "1.5px solid #e8e0d0" }}>
+            <div>
+              <p className="text-xs font-black tracking-widest uppercase mb-1" style={{ color: "rgba(61,34,0,0.4)" }}>Email Us</p>
+              <p className="font-black text-sm" style={{ color: "#1a0800" }}>cheeziesohio@gmail.com</p>
             </div>
-
-            {/* Email */}
-            <div className="p-5 flex items-center justify-between gap-4" style={{ background: "#fff", border: "1.5px solid #e8e0d0" }}>
-              <div>
-                <p className="text-xs font-black tracking-widest uppercase mb-1" style={{ color: "rgba(61,34,0,0.4)" }}>Email Us</p>
-                <p className="font-black text-sm" style={{ color: "#1a0800" }}>cheeziesohio@gmail.com</p>
-              </div>
-              <a
-                href="mailto:cheeziesohio@gmail.com"
-                className="px-4 py-2 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
-                style={{ background: "#1a0800", color: "#fff8e8", textDecoration: "none" }}
-              >
-                Email
-              </a>
-            </div>
-          </motion.div>
+            <a
+              href="mailto:cheeziesohio@gmail.com"
+              className="px-4 py-2 font-black text-xs tracking-widest uppercase transition-opacity hover:opacity-85"
+              style={{ background: "#1a0800", color: "#fff8e8", textDecoration: "none" }}
+            >
+              Email
+            </a>
+          </div>
         </div>
 
         {/* Social row */}

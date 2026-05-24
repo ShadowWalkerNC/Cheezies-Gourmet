@@ -11,6 +11,7 @@ import PullToRefresh from "../components/PullToRefresh";
 import NewsletterPopup from "../components/NewsletterPopup";
 import LoyaltyCTA from "../components/LoyaltyCTA";
 import VideoShowcase from "../components/VideoShowcase";
+import TruckBanner from "../components/TruckBanner";
 
 export default function Home() {
   const handleRefresh = () =>
@@ -19,6 +20,7 @@ export default function Home() {
   return (
     <div className="min-h-screen font-sans" style={{ background: "var(--color-bg)" }}>
       <NavBar />
+      <TruckBanner />
       <NewsletterPopup />
       <PageTransition>
         <PullToRefresh onRefresh={handleRefresh}>
