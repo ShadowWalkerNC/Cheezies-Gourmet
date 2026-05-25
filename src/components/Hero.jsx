@@ -75,26 +75,14 @@ export default function Hero() {
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <button
-              onClick={() => { navigate("/FindUs"); window.scrollTo({ top: 0, behavior: "instant" }); }}
-              className="px-7 py-3.5 rounded-full font-black text-sm tracking-widest uppercase transition-opacity hover:opacity-85"
-              style={{
-                background: "#c9940a",
-                color: "#fff",
-                border: "2px solid #c9940a",
-                cursor: "pointer",
-              }}
-            >
-              Find Us Now
-            </button>
             <a
               href="https://cheeziesgourmetohio.square.site/"
               target="_blank"
               rel="noopener noreferrer"
               className="px-7 py-3.5 rounded-full font-black text-sm tracking-widest uppercase transition-opacity hover:opacity-85"
               style={{
-                background: "transparent",
-                color: "#c9940a",
+                background: "#c9940a",
+                color: "#fff",
                 textDecoration: "none",
                 border: "2px solid #c9940a",
               }}
@@ -102,8 +90,20 @@ export default function Hero() {
               Order Online
             </a>
             <button
-              onClick={() => { navigate("/Menu"); window.scrollTo({ top: 0, behavior: "instant" }); }}
-              className="hidden sm:block px-7 py-3.5 rounded-full font-black text-sm tracking-widest uppercase transition-all hover:bg-amber-50"
+              onClick={() => { navigate("/GiftCards"); window.scrollTo({ top: 0, behavior: "instant" }); }}
+              className="px-7 py-3.5 rounded-full font-black text-sm tracking-widest uppercase transition-opacity hover:opacity-85"
+              style={{
+                background: "#1a0800",
+                color: "#fff8e8",
+                border: "2px solid #1a0800",
+                cursor: "pointer",
+              }}
+            >
+              🎁 Gift Cards
+            </button>
+            <button
+              onClick={() => { navigate("/FindUs"); window.scrollTo({ top: 0, behavior: "instant" }); }}
+              className="px-7 py-3.5 rounded-full font-black text-sm tracking-widest uppercase transition-all hover:bg-amber-50"
               style={{
                 background: "transparent",
                 border: "2px solid #c9940a",
@@ -111,7 +111,7 @@ export default function Hero() {
                 cursor: "pointer",
               }}
             >
-              View the Menu
+              Find Us
             </button>
           </div>
         </motion.div>
