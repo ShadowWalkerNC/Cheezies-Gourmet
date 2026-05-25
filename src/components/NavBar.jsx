@@ -10,11 +10,12 @@ const statusConfig = {
 };
 
 const tabs = [
-  { label: "Home",     path: "/Home" },
-  { label: "Menu",     path: "/Menu" },
-  { label: "Catering", path: "/Catering" },
-  { label: "Find Us",  path: "/FindUs" },
-  { label: "Contact",  path: "/ContactUs" },
+  { label: "Home",       path: "/Home" },
+  { label: "Menu",       path: "/Menu" },
+  { label: "Catering",   path: "/Catering" },
+  { label: "Gift Cards", path: "/GiftCards" },
+  { label: "Find Us",    path: "/FindUs" },
+  { label: "Contact",    path: "/ContactUs" },
 ];
 
 export default function NavBar() {

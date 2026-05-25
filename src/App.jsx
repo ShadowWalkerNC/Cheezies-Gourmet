@@ -22,6 +22,7 @@ import FindUs from "./pages/FindUs";
 import AdminPage from "./pages/AdminPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage2 from "./pages/ContactPage2";
+import GiftCards from "./pages/GiftCards";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -46,6 +47,7 @@ function AnimatedRoutes() {
                 <Route path="/FindUs" element={<FindUs />} />
                 <Route path="/About" element={<AboutPage />} />
                 <Route path="/ContactUs" element={<ContactPage2 />} />
+                <Route path="/GiftCards" element={<GiftCards />} />
                 <Route path="*" element={<PageNotFound />} />
               </Routes>
             </AnimatePresence>
