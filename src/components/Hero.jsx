@@ -52,14 +52,26 @@ export default function Hero() {
           </div>
 
           <div className="flex flex-wrap gap-3">
+            <button
+              onClick={() => { navigate("/FindUs"); window.scrollTo({ top: 0, behavior: "instant" }); }}
+              className="px-7 py-3.5 rounded-full font-black text-sm tracking-widest uppercase transition-opacity hover:opacity-85"
+              style={{
+                background: "#c9940a",
+                color: "#fff",
+                border: "2px solid #c9940a",
+                cursor: "pointer",
+              }}
+            >
+              Find Us Now
+            </button>
             <a
               href="https://cheeziesgourmetohio.square.site/"
               target="_blank"
               rel="noopener noreferrer"
               className="px-7 py-3.5 rounded-full font-black text-sm tracking-widest uppercase transition-opacity hover:opacity-85"
               style={{
-                background: "#c9940a",
-                color: "#fff",
+                background: "transparent",
+                color: "#c9940a",
                 textDecoration: "none",
                 border: "2px solid #c9940a",
               }}
@@ -68,7 +80,7 @@ export default function Hero() {
             </a>
             <button
               onClick={() => { navigate("/Menu"); window.scrollTo({ top: 0, behavior: "instant" }); }}
-              className="px-7 py-3.5 rounded-full font-black text-sm tracking-widest uppercase transition-all hover:bg-amber-50"
+              className="hidden sm:block px-7 py-3.5 rounded-full font-black text-sm tracking-widest uppercase transition-all hover:bg-amber-50"
               style={{
                 background: "transparent",
                 border: "2px solid #c9940a",
