@@ -1,0 +1,57 @@
+{
+  "name": "WeeklySpecial",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Special item name"
+    },
+    "desc": {
+      "type": "string",
+      "description": "Description of the special"
+    },
+    "price": {
+      "type": "string",
+      "description": "Price string e.g. $14"
+    },
+    "img": {
+      "type": "string",
+      "description": "Image URL"
+    },
+    "is_top_seller": {
+      "type": "boolean",
+      "default": false,
+      "description": "Mark as top selling sandwich"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Currently active/available"
+    },
+    "sort_order": {
+      "type": "number",
+      "description": "Display order (max 3 shown)"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
