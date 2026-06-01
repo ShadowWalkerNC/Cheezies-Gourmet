@@ -50,7 +50,7 @@ export default function AdminMenuManager() {
   };
 
   const invokeMenuItem = (action, itemId, payload) =>
-    base44.functions.invoke("saveMenuItem", { action, itemId, payload });
+    base44.functions.invoke("saveMenuItem", { passcode: "cheezies2024", action, itemId, payload });
 
   const handleSave = async () => {
     setSaving(true);

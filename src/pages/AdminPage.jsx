@@ -7,6 +7,7 @@ import FollowerTracker from "@/components/admin/FollowerTracker";
 import { Truck, UtensilsCrossed, BarChart2, Megaphone, CreditCard } from "lucide-react";
 
 const ALL_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const ADMIN_PASSCODE = "cheezies2024";
 
 const statusLabels = {
   open:     { label: "Open Now",  color: "#22c55e" },
@@ -26,8 +27,9 @@ const sectionStyle = { background: "#fff", border: "1px solid rgba(180,120,0,0.1
 const inputStyle = { background: "#fffbf0", border: "1.5px solid rgba(180,120,0,0.2)", color: "#2a1200" };
 
 export default function AdminPage() {
-  const [user, setUser] = useState(null);
-  const [authLoading, setAuthLoading] = useState(true);
+  const [authed, setAuthed] = useState(false);
+  const [passcode, setPasscode] = useState("");
+  const [passcodeError, setPasscodeError] = useState(false);
   const [activeTab, setActiveTab] = useState("truck");
   const [recordId, setRecordId] = useState(null);
 
@@ -53,14 +55,12 @@ export default function AdminPage() {
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
 
-  useEffect(() => {
-    base44.auth.me().then(u => {
-      setUser(u);
-      setAuthLoading(false);
-    }).catch(() => setAuthLoading(false));
-  }, []);
+  useEffect(() => { if (authed) load(); }, [authed]);
 
-  useEffect(() => { if (user?.role === 'admin') load(); }, [user]);
+  const handlePasscode = () => {
+    if (passcode === ADMIN_PASSCODE) { setAuthed(true); setPasscodeError(false); }
+    else setPasscodeError(true);
+  };
 
   const load = async () => {
     const records = await base44.entities.TruckLocation.list("-updated_date", 1);
@@ -130,17 +130,8 @@ export default function AdminPage() {
     setTimeout(() => setSaveSuccess(false), 3000);
   };
 
-  // ── Auth Loading ─────────────────────────────────────────────────
-  if (authLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "#fffbf0" }}>
-        <div className="w-8 h-8 border-4 border-amber-200 border-t-amber-600 rounded-full animate-spin" />
-      </div>
-    );
-  }
-
-  // ── Not logged in ────────────────────────────────────────────────
-  if (!user) {
+  // ── Login Screen ────────────────────────────────────────────────
+  if (!authed) {
     return (
       <div className="min-h-screen flex items-center justify-center px-6" style={{ background: "#fffbf0" }}>
         <div className="w-full max-w-sm text-center">
@@ -148,23 +139,18 @@ export default function AdminPage() {
           <h1 className="text-3xl font-black mb-2" style={{ fontFamily: "Georgia, serif", color: "#2a1200" }}>
             Chee<span style={{ color: "#c9940a" }}>zies</span> Admin
           </h1>
-          <p className="text-sm mb-6" style={{ color: "rgba(61,34,0,0.5)" }}>Please log in to access the admin panel.</p>
-          <button onClick={() => base44.auth.redirectToLogin(window.location.href)} className="w-full py-3 rounded-xl font-bold text-base" style={{ background: "#c9940a", color: "#fff8e8" }}>
-            Log In
+          <p className="text-sm mb-6" style={{ color: "rgba(61,34,0,0.5)" }}>Enter your passcode to continue.</p>
+          <input
+            type="password" placeholder="Passcode" value={passcode}
+            onChange={e => setPasscode(e.target.value)}
+            onKeyDown={e => e.key === "Enter" && handlePasscode()}
+            className="w-full px-4 py-3 rounded-xl text-sm outline-none mb-3"
+            style={{ background: "#fff", border: `1.5px solid ${passcodeError ? "#ef4444" : "rgba(180,120,0,0.2)"}`, color: "#2a1200" }}
+          />
+          {passcodeError && <p className="text-sm text-red-500 mb-3">Incorrect passcode. Try again.</p>}
+          <button onClick={handlePasscode} className="w-full py-3 rounded-xl font-bold text-base" style={{ background: "#c9940a", color: "#fff8e8" }}>
+            Enter
           </button>
-        </div>
-      </div>
-    );
-  }
-
-  // ── Not admin ────────────────────────────────────────────────────
-  if (user.role !== 'admin') {
-    return (
-      <div className="min-h-screen flex items-center justify-center px-6" style={{ background: "#fffbf0" }}>
-        <div className="w-full max-w-sm text-center">
-          <p className="text-5xl mb-4">🚫</p>
-          <h1 className="text-2xl font-black mb-2" style={{ color: "#2a1200" }}>Access Denied</h1>
-          <p className="text-sm" style={{ color: "rgba(61,34,0,0.5)" }}>You need admin privileges to view this page.</p>
         </div>
       </div>
     );
@@ -181,7 +167,7 @@ export default function AdminPage() {
             Chee<span style={{ color: "#c9940a" }}>zies</span> Admin
           </span>
         </div>
-        <button onClick={() => base44.auth.logout("/")} className="text-sm px-4 py-2 rounded-lg font-semibold" style={{ background: "rgba(255,248,232,0.1)", color: "rgba(255,248,232,0.6)" }}>
+        <button onClick={() => { setAuthed(false); setPasscode(""); }} className="text-sm px-4 py-2 rounded-lg font-semibold" style={{ background: "rgba(255,248,232,0.1)", color: "rgba(255,248,232,0.6)" }}>
           Logout
         </button>
       </div>
