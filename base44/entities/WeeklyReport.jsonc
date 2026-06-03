@@ -1,0 +1,43 @@
+{
+  "name": "WeeklyReport",
+  "type": "object",
+  "properties": {
+    "week_start": {
+      "type": "string",
+      "description": "ISO date of Monday for this week, e.g. 2024-07-01"
+    },
+    "sales": {
+      "type": "number",
+      "description": "Total gross sales for the week in USD"
+    },
+    "labor_cost": {
+      "type": "number",
+      "description": "Total labor/wages paid this week"
+    },
+    "food_cost": {
+      "type": "number",
+      "description": "Food and ingredient costs this week"
+    },
+    "fuel_cost": {
+      "type": "number",
+      "description": "Fuel/transportation cost"
+    },
+    "other_cost": {
+      "type": "number",
+      "description": "Any other overhead costs"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Admin notes for this week"
+    }
+  },
+  "required": [
+    "week_start"
+  ],
+  "rls": {
+    "create": {},
+    "read": {},
+    "update": {},
+    "delete": {}
+  }
+}

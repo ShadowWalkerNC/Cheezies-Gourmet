@@ -99,14 +99,11 @@
     }
     </script>
 
-    <!-- Force-clear stale service workers and caches -->
+    <!-- PWA: Register service worker -->
     <script>
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations().then(function(regs) {
-          regs.forEach(function(reg) { reg.unregister(); });
-        });
-        caches.keys().then(function(keys) {
-          keys.forEach(function(key) { caches.delete(key); });
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js').catch(function() {});
         });
       }
     </script>

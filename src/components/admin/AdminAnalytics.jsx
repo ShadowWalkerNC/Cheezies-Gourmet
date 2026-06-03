@@ -29,12 +29,13 @@ export default function AdminAnalytics() {
       const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
       const twoWeeksAgo = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000);
 
-      const [subscribers, menuItems, weeklySpecials, events, truckLocations] = await Promise.all([
+      const [subscribers, menuItems, weeklySpecials, events, truckLocations, pageViews] = await Promise.all([
         base44.entities.NewsletterSubscriber.list("-created_date", 500),
         base44.entities.MenuItem.list(),
         base44.entities.WeeklySpecial.list(),
         base44.entities.Event.list("-date", 50),
         base44.entities.TruckLocation.list("-updated_date", 20),
+        base44.entities.PageView.list("-created_date", 1000),
       ]);
 
       // Subscribers
@@ -86,6 +87,14 @@ export default function AdminAnalytics() {
       const latest = truckLocations[0];
       const locationUpdatesThisWeek = truckLocations.filter(l => new Date(l.updated_date) >= oneWeekAgo).length;
 
+      // Page views (last 7 days)
+      const recentViews = pageViews.filter(v => new Date(v.created_date) >= oneWeekAgo);
+      const totalViews7d = recentViews.length;
+      const uniqueSessions7d = new Set(recentViews.map(v => v.session_id)).size;
+      const pageCounts = {};
+      recentViews.forEach(v => { pageCounts[v.page] = (pageCounts[v.page] || 0) + 1; });
+      const topPages = Object.entries(pageCounts).sort((a, b) => b[1] - a[1]).slice(0, 6);
+
       setData({
         totalSubs, newSubsThisWeek, newSubsPrevWeek, promoClaimed, subsByDay,
         activeItems, hiddenItems, featuredItems, sectionCounts,
@@ -97,6 +106,7 @@ export default function AdminAnalytics() {
         openDays: latest?.open_days,
         hoursOpen: latest?.hours_open,
         hoursClose: latest?.hours_close,
+        totalViews7d, uniqueSessions7d, topPages,
       });
     };
     load();
