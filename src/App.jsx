@@ -10,6 +10,8 @@ import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import BottomTabBar from './components/BottomTabBar';
 import ChatWidget from './components/ChatWidget';
 import InstallBanner from './components/InstallBanner';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import Login from './pages/Login';
 
 
 // Page imports
@@ -37,12 +39,15 @@ function AnimatedRoutes() {
           <>
             <AnimatePresence mode="wait" initial={false}>
               <Routes location={location} key={location.pathname}>
+                <Route path="/login" element={<Login />} />
                 <Route path="/" element={<Navigate to="/Home" replace />} />
                 <Route path="/Home" element={<Home />} />
                 <Route path="/Menu" element={<MenuPage />} />
                 <Route path="/Catering" element={<CateringPage />} />
                 <Route path="/Contact" element={<ContactPage />} />
-                <Route path="/Profile" element={<ProfilePage />} />
+                <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
+                  <Route path="/Profile" element={<ProfilePage />} />
+                </Route>
                 <Route path="/FindUs" element={<FindUs />} />
                 <Route path="/About" element={<AboutPage />} />
                 <Route path="/ContactUs" element={<ContactPage2 />} />
