@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Home, UtensilsCrossed, CalendarHeart, Phone, UserCircle } from "lucide-react";
+import { Home, UtensilsCrossed, CalendarDays, Phone, UserCircle } from "lucide-react";
 
 const tabs = [
   { label: "Home",     path: "/Home",      Icon: Home },
   { label: "Menu",     path: "/Menu",       Icon: UtensilsCrossed },
-  { label: "Catering", path: "/Catering",   Icon: CalendarHeart },
+  { label: "Events",   path: "/Events",     Icon: CalendarDays },
   { label: "Contact",  path: "/Contact",    Icon: Phone },
   { label: "Profile",  path: "/Profile",    Icon: UserCircle },
 ];

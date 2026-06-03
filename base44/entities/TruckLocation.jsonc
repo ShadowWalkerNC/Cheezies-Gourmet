@@ -61,5 +61,23 @@
       "description": "Days of week the truck is open, e.g. ['Tue','Wed','Thu','Fri','Sat','Sun']"
     }
   },
-  "required": []
+  "required": [],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
 }
