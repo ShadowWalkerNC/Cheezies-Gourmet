@@ -12,6 +12,7 @@ import ChatWidget from './components/ChatWidget';
 import InstallBanner from './components/InstallBanner';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import Login from './pages/Login';
+import { usePageTracking } from '@/hooks/usePageTracking';
 
 
 // Page imports
@@ -30,6 +31,7 @@ import FacebookPage from "./pages/FacebookPage";
 
 function AnimatedRoutes() {
   const location = useLocation();
+  usePageTracking();
   return (
     <Routes>
       {/* All other pages — animated with tab bar + chat */}

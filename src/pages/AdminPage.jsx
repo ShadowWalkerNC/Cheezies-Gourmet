@@ -6,7 +6,8 @@ import SquareSetup from "@/components/admin/SquareSetup";
 import FollowerTracker from "@/components/admin/FollowerTracker";
 import AdminEventManager from "@/components/admin/AdminEventManager";
 import AdminContentManager from "@/components/admin/AdminContentManager";
-import { Truck, UtensilsCrossed, BarChart2, Megaphone, CreditCard, CalendarDays, Layers } from "lucide-react";
+import VisitorAnalytics from "@/components/admin/VisitorAnalytics";
+import { Truck, UtensilsCrossed, BarChart2, Megaphone, CreditCard, CalendarDays, Layers, Users } from "lucide-react";
 
 const ALL_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const ADMIN_PASSCODE = "cheezies2024";
@@ -25,6 +26,7 @@ const TABS = [
   { id: "square",    label: "Square",    Icon: CreditCard },
   { id: "events",    label: "Events",    Icon: CalendarDays },
   { id: "content",   label: "Content",   Icon: Layers },
+  { id: "visitors",  label: "Visitors",  Icon: Users },
 ];
 
 const sectionStyle = { background: "#fff", border: "1px solid rgba(180,120,0,0.15)", boxShadow: "0 2px 12px rgba(180,120,0,0.06)" };
@@ -333,6 +335,9 @@ export default function AdminPage() {
 
         {/* ── CONTENT TAB ───────────────────────────── */}
         {activeTab === "content" && <AdminContentManager />}
+
+        {/* ── VISITORS TAB ──────────────────────────── */}
+        {activeTab === "visitors" && <VisitorAnalytics />}
 
       </div>
     </div>

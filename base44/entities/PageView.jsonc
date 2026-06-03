@@ -1,0 +1,72 @@
+{
+  "name": "PageView",
+  "type": "object",
+  "properties": {
+    "page": {
+      "type": "string",
+      "description": "Page path e.g. /Home, /Menu"
+    },
+    "referrer": {
+      "type": "string",
+      "description": "Referring URL or source"
+    },
+    "device_type": {
+      "type": "string",
+      "enum": [
+        "mobile",
+        "tablet",
+        "desktop"
+      ],
+      "description": "Device category"
+    },
+    "os": {
+      "type": "string",
+      "description": "Operating system e.g. iOS, Android, Windows, macOS"
+    },
+    "browser": {
+      "type": "string",
+      "description": "Browser name e.g. Chrome, Safari, Firefox"
+    },
+    "country": {
+      "type": "string",
+      "description": "Country name from IP geo lookup"
+    },
+    "city": {
+      "type": "string",
+      "description": "City from IP geo lookup"
+    },
+    "region": {
+      "type": "string",
+      "description": "State/region from IP geo lookup"
+    },
+    "session_id": {
+      "type": "string",
+      "description": "Anonymous session identifier"
+    },
+    "is_pwa": {
+      "type": "boolean",
+      "description": "Whether the visitor is using the installed PWA"
+    }
+  },
+  "required": [
+    "page"
+  ],
+  "rls": {
+    "create": {},
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
