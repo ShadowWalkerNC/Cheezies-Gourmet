@@ -3,11 +3,12 @@ import { base44 } from "@/api/base44Client";
 import AdminMenuManager from "@/components/admin/AdminMenuManager";
 import AdminAnalytics from "@/components/admin/AdminAnalytics";
 import SquareSetup from "@/components/admin/SquareSetup";
-import FollowerTracker from "@/components/admin/FollowerTracker";
 import AdminEventManager from "@/components/admin/AdminEventManager";
 import AdminContentManager from "@/components/admin/AdminContentManager";
 import VisitorAnalytics from "@/components/admin/VisitorAnalytics";
-import { Truck, UtensilsCrossed, BarChart2, Megaphone, CreditCard, CalendarDays, Layers, Users } from "lucide-react";
+import MissionControl from "@/components/admin/MissionControl";
+import CRMPanel from "@/components/admin/CRMPanel";
+import { Truck, UtensilsCrossed, BarChart2, Mail, CreditCard, CalendarDays, Layers, Users, LayoutDashboard } from "lucide-react";
 
 const ALL_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const ADMIN_PASSCODE = "cheezies2024";
@@ -19,14 +20,15 @@ const statusLabels = {
 };
 
 const TABS = [
-  { id: "truck",     label: "Truck",     Icon: Truck },
-  { id: "menu",      label: "Menu",      Icon: UtensilsCrossed },
-  { id: "analytics", label: "Analytics", Icon: BarChart2 },
-  { id: "marketing", label: "Marketing", Icon: Megaphone },
-  { id: "square",    label: "Square",    Icon: CreditCard },
-  { id: "events",    label: "Events",    Icon: CalendarDays },
-  { id: "content",   label: "Content",   Icon: Layers },
-  { id: "visitors",  label: "Visitors",  Icon: Users },
+  { id: "dashboard", label: "Dashboard",  Icon: LayoutDashboard },
+  { id: "truck",     label: "Truck",      Icon: Truck },
+  { id: "menu",      label: "Menu",       Icon: UtensilsCrossed },
+  { id: "crm",       label: "CRM",        Icon: Mail },
+  { id: "analytics", label: "Analytics",  Icon: BarChart2 },
+  { id: "visitors",  label: "Visitors",   Icon: Users },
+  { id: "events",    label: "Events",     Icon: CalendarDays },
+  { id: "content",   label: "Content",    Icon: Layers },
+  { id: "square",    label: "Square",     Icon: CreditCard },
 ];
 
 const sectionStyle = { background: "#fff", border: "1px solid rgba(180,120,0,0.15)", boxShadow: "0 2px 12px rgba(180,120,0,0.06)" };
@@ -36,7 +38,14 @@ export default function AdminPage() {
   const [authed, setAuthed] = useState(false);
   const [passcode, setPasscode] = useState("");
   const [passcodeError, setPasscodeError] = useState(false);
-  const [activeTab, setActiveTab] = useState("truck");
+  const [activeTab, setActiveTab] = useState("dashboard");
+
+  // Allow MissionControl quick-action buttons to navigate tabs
+  useEffect(() => {
+    const handler = (e) => setActiveTab(e.detail);
+    window.addEventListener("admin-nav", handler);
+    return () => window.removeEventListener("admin-nav", handler);
+  }, []);
   const [recordId, setRecordId] = useState(null);
 
   // Truck state
@@ -321,11 +330,14 @@ export default function AdminPage() {
         {/* ── MENU TAB ──────────────────────────────── */}
         {activeTab === "menu" && <AdminMenuManager />}
 
+        {/* ── DASHBOARD TAB ─────────────────────────── */}
+        {activeTab === "dashboard" && <MissionControl />}
+
         {/* ── ANALYTICS TAB ─────────────────────────── */}
         {activeTab === "analytics" && <AdminAnalytics />}
 
-        {/* ── MARKETING TAB ─────────────────────────── */}
-        {activeTab === "marketing" && <FollowerTracker />}
+        {/* ── CRM TAB ───────────────────────────────── */}
+        {activeTab === "crm" && <CRMPanel />}
 
         {/* ── SQUARE TAB ────────────────────────────── */}
         {activeTab === "square" && <SquareSetup />}
