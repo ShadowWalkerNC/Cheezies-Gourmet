@@ -6,11 +6,18 @@ export function usePWA() {
   const [isInstalled, setIsInstalled] = useState(false);
 
   useEffect(() => {
-    // Register service worker
+    // Register service worker only in production
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker
-        .register("/sw.js")
-        .catch((err) => console.warn("SW registration failed:", err));
+      if (import.meta.env.PROD) {
+        navigator.serviceWorker
+          .register("/sw.js")
+          .catch((err) => console.warn("SW registration failed:", err));
+      } else {
+        // In dev, unregister any stale service workers to prevent caching issues
+        navigator.serviceWorker.getRegistrations().then((regs) => {
+          regs.forEach((reg) => reg.unregister());
+        });
+      }
     }
 
     // Check if already installed (standalone mode)
