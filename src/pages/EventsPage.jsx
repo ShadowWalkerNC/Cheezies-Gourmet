@@ -140,32 +140,6 @@ export default function EventsPage() {
             </div>
           )}
 
-          {/* Facebook Feed Section */}
-          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-16">
-            <div className="text-center mb-6">
-              <h2 className="text-2xl font-black mb-2" style={{ fontFamily: "Georgia, serif", color: "#2a1200" }}>Latest from Facebook</h2>
-              <p className="text-sm" style={{ color: "rgba(61,34,0,0.5)" }}>Real-time updates, daily specials, and event announcements.</p>
-            </div>
-            <div className="flex justify-center">
-              <div className="rounded-3xl overflow-hidden w-full max-w-lg" style={{ border: "1.5px solid rgba(180,120,0,0.15)", boxShadow: "0 4px 20px rgba(180,120,0,0.08)" }}>
-                <iframe
-                  src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fcheeziesohio&tabs=timeline&width=500&height=600&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false&appId"
-                  width="100%"
-                  height="600"
-                  style={{ border: "none", overflow: "hidden" }}
-                  scrolling="no"
-                  frameBorder="0"
-                  allowFullScreen
-                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                  title="Cheezies Facebook Feed"
-                />
-              </div>
-            </div>
-            <p className="text-center text-xs mt-4" style={{ color: "rgba(61,34,0,0.35)" }}>
-              If the feed doesn't load, <a href="https://www.facebook.com/cheeziesohio" target="_blank" rel="noopener noreferrer" style={{ color: "#1877f2" }}>visit us directly on Facebook ↗</a>
-            </p>
-          </motion.div>
-
         </div>
         <Footer />
         <div className="md:hidden" style={{ height: "var(--tab-bar-h)" }} />

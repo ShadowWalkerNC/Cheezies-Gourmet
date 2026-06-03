@@ -13,6 +13,7 @@ const tabs = [
   { label: "Home",       path: "/Home" },
   { label: "Menu",       path: "/Menu" },
   { label: "Events",     path: "/Events" },
+  { label: "Facebook",   path: "/Facebook" },
   { label: "Catering",   path: "/Catering" },
   { label: "Gift Cards", path: "/GiftCards" },
   { label: "Find Us",    path: "/FindUs" },
