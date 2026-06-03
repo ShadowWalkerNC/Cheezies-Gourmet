@@ -60,7 +60,7 @@ export default function VisitorAnalytics() {
   const [range, setRange] = useState(7); // days
 
   useEffect(() => {
-    base44.entities.PageView.list("-created_date", 2000).then(setViews);
+    base44.functions.invoke("getPageViews", {}).then(res => setViews(res.data?.views || []));
   }, []);
 
   if (!views) return (

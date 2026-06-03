@@ -1,10 +1,19 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { usePageContent } from "@/hooks/usePageContent";
+import { useState, useEffect } from "react";
+import { base44 } from "@/api/base44Client";
 
 export default function Hero() {
   const navigate = useNavigate();
   const c = usePageContent().hero;
+  const [specials, setSpecials] = useState([]);
+
+  useEffect(() => {
+    base44.entities.WeeklySpecial.filter({ is_active: true }, "sort_order", 3).then(data => {
+      if (data.length > 0) setSpecials(data);
+    });
+  }, []);
 
   return (
     <section className="relative flex flex-col md:flex-row min-h-screen" style={{ background: "var(--color-surface)" }}>
@@ -104,6 +113,23 @@ export default function Hero() {
               🎁 Gift Cards
             </button>
           </div>
+
+          {/* Weekly Specials strip */}
+          {specials.length > 0 && (
+            <div className="mt-8 flex flex-col gap-2">
+              <p className="text-xs font-black tracking-[0.2em] uppercase" style={{ color: "#c9940a" }}>🔥 This Week's Specials</p>
+              <div className="flex flex-wrap gap-2">
+                {specials.map(s => (
+                  <div key={s.id} className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold"
+                    style={{ background: "rgba(201,148,10,0.12)", border: "1.5px solid rgba(201,148,10,0.35)", color: "#7a4f00" }}>
+                    {s.is_top_seller && <span>⭐</span>}
+                    <span style={{ color: "#2a1200" }}>{s.name}</span>
+                    {s.price && <span style={{ color: "#c9940a" }}>{s.price}</span>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </motion.div>
       </div>
 

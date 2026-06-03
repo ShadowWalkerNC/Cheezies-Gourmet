@@ -26,13 +26,14 @@ export default function MissionControl() {
   useEffect(() => {
     const load = async () => {
       const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-      const [subscribers, menuItems, events, truckLocations, pageViews] = await Promise.all([
+      const [subscribers, menuItems, events, truckLocations, pvRes] = await Promise.all([
         base44.entities.NewsletterSubscriber.list("-created_date", 2000),
         base44.entities.MenuItem.list(),
         base44.entities.Event.list("-date", 50),
         base44.entities.TruckLocation.list("-updated_date", 1),
-        base44.entities.PageView.list("-created_date", 500),
+        base44.functions.invoke("getPageViews", {}),
       ]);
+      const pageViews = pvRes?.data?.views || [];
 
       const truck = truckLocations[0];
       const newSubs = subscribers.filter(s => new Date(s.created_date) >= oneWeekAgo).length;

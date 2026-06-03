@@ -2,13 +2,23 @@ import { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import AdminMenuManager from "@/components/admin/AdminMenuManager";
 import AdminAnalytics from "@/components/admin/AdminAnalytics";
-import SquareSetup from "@/components/admin/SquareSetup";
 import AdminEventManager from "@/components/admin/AdminEventManager";
 import AdminContentManager from "@/components/admin/AdminContentManager";
 import VisitorAnalytics from "@/components/admin/VisitorAnalytics";
 import MissionControl from "@/components/admin/MissionControl";
 import CRMPanel from "@/components/admin/CRMPanel";
-import { Truck, UtensilsCrossed, BarChart2, Mail, CreditCard, CalendarDays, Layers, Users, LayoutDashboard } from "lucide-react";
+import FinancialsPanel from "@/components/admin/FinancialsPanel";
+import WeeklyChecklistDialog from "@/components/admin/WeeklyChecklistDialog";
+import { Truck, UtensilsCrossed, BarChart2, Mail, CalendarDays, Layers, Users, LayoutDashboard, DollarSign } from "lucide-react";
+
+const CHECKLIST_KEY = "cheezies_checklist_week";
+function getThisWeek() {
+  const d = new Date();
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  d.setDate(diff);
+  return d.toISOString().split("T")[0];
+}
 
 const ALL_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const ADMIN_PASSCODE = "cheezies2024";
@@ -20,15 +30,15 @@ const statusLabels = {
 };
 
 const TABS = [
-  { id: "dashboard", label: "Dashboard",  Icon: LayoutDashboard },
-  { id: "truck",     label: "Truck",      Icon: Truck },
-  { id: "menu",      label: "Menu",       Icon: UtensilsCrossed },
-  { id: "crm",       label: "CRM",        Icon: Mail },
-  { id: "analytics", label: "Analytics",  Icon: BarChart2 },
-  { id: "visitors",  label: "Visitors",   Icon: Users },
-  { id: "events",    label: "Events",     Icon: CalendarDays },
-  { id: "content",   label: "Content",    Icon: Layers },
-  { id: "square",    label: "Square",     Icon: CreditCard },
+  { id: "dashboard",   label: "Dashboard",   Icon: LayoutDashboard },
+  { id: "truck",       label: "Truck",       Icon: Truck },
+  { id: "menu",        label: "Menu",        Icon: UtensilsCrossed },
+  { id: "financials",  label: "Financials",  Icon: DollarSign },
+  { id: "crm",         label: "CRM",         Icon: Mail },
+  { id: "analytics",   label: "Analytics",   Icon: BarChart2 },
+  { id: "visitors",    label: "Visitors",     Icon: Users },
+  { id: "events",      label: "Events",      Icon: CalendarDays },
+  { id: "content",     label: "Content",     Icon: Layers },
 ];
 
 const sectionStyle = { background: "#fff", border: "1px solid rgba(180,120,0,0.15)", boxShadow: "0 2px 12px rgba(180,120,0,0.06)" };
@@ -39,6 +49,7 @@ export default function AdminPage() {
   const [passcode, setPasscode] = useState("");
   const [passcodeError, setPasscodeError] = useState(false);
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [showChecklist, setShowChecklist] = useState(false);
 
   // Allow MissionControl quick-action buttons to navigate tabs
   useEffect(() => {
@@ -70,7 +81,15 @@ export default function AdminPage() {
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
 
-  useEffect(() => { if (authed) load(); }, [authed]);
+  useEffect(() => {
+    if (authed) {
+      load();
+      // Show checklist if not dismissed this week
+      if (localStorage.getItem(CHECKLIST_KEY) !== getThisWeek()) {
+        setShowChecklist(true);
+      }
+    }
+  }, [authed]);
 
   const handlePasscode = () => {
     if (passcode === ADMIN_PASSCODE) { setAuthed(true); setPasscodeError(false); }
@@ -339,8 +358,8 @@ export default function AdminPage() {
         {/* ── CRM TAB ───────────────────────────────── */}
         {activeTab === "crm" && <CRMPanel />}
 
-        {/* ── SQUARE TAB ────────────────────────────── */}
-        {activeTab === "square" && <SquareSetup />}
+        {/* ── FINANCIALS TAB ────────────────────────── */}
+        {activeTab === "financials" && <FinancialsPanel />}
 
         {/* ── EVENTS TAB ────────────────────────────── */}
         {activeTab === "events" && <AdminEventManager />}
@@ -352,6 +371,14 @@ export default function AdminPage() {
         {activeTab === "visitors" && <VisitorAnalytics />}
 
       </div>
+
+      {/* ── WEEKLY CHECKLIST DIALOG ───────────────── */}
+      {showChecklist && (
+        <WeeklyChecklistDialog
+          onClose={() => setShowChecklist(false)}
+          onNavigate={(tab) => { setActiveTab(tab); setShowChecklist(false); }}
+        />
+      )}
     </div>
   );
 }
