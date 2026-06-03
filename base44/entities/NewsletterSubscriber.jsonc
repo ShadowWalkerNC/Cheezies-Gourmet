@@ -18,6 +18,10 @@
     "source": {
       "type": "string",
       "description": "How they subscribed: popup, loyalty"
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional notes about this subscriber (up to 1000 characters)"
     }
   },
   "required": [

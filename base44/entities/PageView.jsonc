@@ -46,6 +46,10 @@
     "is_pwa": {
       "type": "boolean",
       "description": "Whether the visitor is using the installed PWA"
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional description or notes for this page view record (up to 1000 characters)"
     }
   },
   "required": [
