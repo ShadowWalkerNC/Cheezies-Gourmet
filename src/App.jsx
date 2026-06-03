@@ -30,9 +30,6 @@ function AnimatedRoutes() {
   const location = useLocation();
   return (
     <Routes>
-      {/* Admin page — completely isolated, no animations, no overlays */}
-      <Route path="/admin" element={<AdminPage />} />
-
       {/* All other pages — animated with tab bar + chat */}
       <Route
         path="*"
@@ -91,14 +88,24 @@ const AuthenticatedApp = () => {
 function App() {
   return (
     <ThemeProvider>
-      <AuthProvider>
-        <QueryClientProvider client={queryClientInstance}>
-          <Router>
-            <AuthenticatedApp />
-          </Router>
-          <Toaster />
-        </QueryClientProvider>
-      </AuthProvider>
+      <QueryClientProvider client={queryClientInstance}>
+        <Router>
+          <Routes>
+            {/* Admin — completely outside auth, uses its own passcode */}
+            <Route path="/admin" element={<AdminPage />} />
+            {/* Everything else — wrapped in auth */}
+            <Route
+              path="*"
+              element={
+                <AuthProvider>
+                  <AuthenticatedApp />
+                </AuthProvider>
+              }
+            />
+          </Routes>
+        </Router>
+        <Toaster />
+      </QueryClientProvider>
     </ThemeProvider>
   )
 }
