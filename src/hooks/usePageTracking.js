@@ -56,12 +56,15 @@ function parseReferrer(ref) {
   }
 }
 
-// Geo lookup via free API (no key needed)
+// Geo lookup via free API (no key needed) — cached for the session
+let _geoCache = null;
 async function getGeo() {
+  if (_geoCache) return _geoCache;
   try {
     const res = await fetch("https://ipapi.co/json/", { signal: AbortSignal.timeout(3000) });
     const d = await res.json();
-    return { country: d.country_name || "", city: d.city || "", region: d.region || "" };
+    _geoCache = { country: d.country_name || "", city: d.city || "", region: d.region || "" };
+    return _geoCache;
   } catch {
     return { country: "", city: "", region: "" };
   }

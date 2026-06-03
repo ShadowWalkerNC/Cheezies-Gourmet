@@ -1,22 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { useToast } from "@/components/ui/use-toast";
+import { useTruckData } from "@/hooks/useTruckData";
 
 export default function Footer() {
   const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(false);
-  const [truckData, setTruckData] = useState(null);
-
-  useEffect(() => {
-    base44.entities.TruckLocation.list("-updated_date", 1).then(records => {
-      if (records.length > 0) setTruckData(records[0]);
-    });
-    const unsub = base44.entities.TruckLocation.subscribe(event => {
-      if (event.type === "create" || event.type === "update") setTruckData(event.data);
-    });
-    return unsub;
-  }, []);
+  const truckData = useTruckData();
 
   const hoursText = truckData?.hours_open && truckData?.hours_close
     ? `${truckData.hours_open} – ${truckData.hours_close}`
@@ -25,13 +16,20 @@ export default function Footer() {
   const daysLabel = openDays && openDays.length > 0 ? openDays.join(", ") : "Tue – Sun";
   const closedDays = openDays && !openDays.includes("Mon") ? "Closed Monday" : null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setDone(true);
     const captured = email;
     setEmail("");
-    toast({ title: "You're subscribed!", description: "We'll keep you in the loop." });
-    base44.functions.invoke("sendNotification", { type: "newsletter_signup", data: { email: captured } });
+    const res = await base44.functions.invoke("sendNotification", {
+      type: "newsletter_signup",
+      data: { email: captured, source: "footer" },
+    });
+    if (res.data?.error === "already_subscribed") {
+      toast({ title: "Already subscribed!", description: "You're already on our list." });
+    } else {
+      setDone(true);
+      toast({ title: "You're subscribed!", description: "We'll keep you in the loop." });
+    }
   };
 
   return (

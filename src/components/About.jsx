@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { base44 } from "@/api/base44Client";
 import { usePageContent } from "@/hooks/usePageContent";
+import { useTruckData } from "@/hooks/useTruckData";
 
 function formatDays(days) {
   if (!days || days.length === 0) return "Closed";
@@ -11,19 +10,9 @@ function formatDays(days) {
 }
 
 export default function About() {
-  const [truckData, setTruckData] = useState(null);
   const navigate = useNavigate();
   const c = usePageContent().about;
-
-  useEffect(() => {
-    base44.entities.TruckLocation.list("-updated_date", 1).then(records => {
-      if (records.length > 0) setTruckData(records[0]);
-    });
-    const unsub = base44.entities.TruckLocation.subscribe(event => {
-      if (event.type === "create" || event.type === "update") setTruckData(event.data);
-    });
-    return unsub;
-  }, []);
+  const truckData = useTruckData();
 
   const hoursText = truckData?.hours_open && truckData?.hours_close
     ? `${truckData.hours_open} – ${truckData.hours_close}`

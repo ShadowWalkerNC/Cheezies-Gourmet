@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MapPin } from "lucide-react";
-import { base44 } from "@/api/base44Client";
+import { useTruckData } from "@/hooks/useTruckData";
 
 const statusConfig = {
   open:     { label: "Open Now", bg: "#dcfce7", color: "#15803d" },
@@ -23,19 +23,9 @@ const tabs = [
 export default function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [truckData, setTruckData] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    base44.entities.TruckLocation.list("-updated_date", 1).then(records => {
-      if (records.length > 0) setTruckData(records[0]);
-    });
-    const unsub = base44.entities.TruckLocation.subscribe(event => {
-      if (event.type === "create" || event.type === "update") setTruckData(event.data);
-    });
-    return unsub;
-  }, []);
+  const truckData = useTruckData();
 
   const truckStatus = truckData?.status || "closed";
   const sc = statusConfig[truckStatus] || statusConfig.closed;

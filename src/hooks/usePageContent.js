@@ -53,17 +53,10 @@ export function usePageContent() {
   const [content, setContent] = useState(DEFAULTS);
 
   useEffect(() => {
+    // Single fetch on mount — content rarely changes in real-time for visitors
     base44.entities.SiteContent.list("section", 200).then(records => {
       setContent(buildMerged(records));
     });
-
-    const unsub = base44.entities.SiteContent.subscribe(() => {
-      base44.entities.SiteContent.list("section", 200).then(records => {
-        setContent(buildMerged(records));
-      });
-    });
-
-    return unsub;
   }, []);
 
   return content;

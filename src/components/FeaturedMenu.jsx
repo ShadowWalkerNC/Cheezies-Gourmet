@@ -14,8 +14,8 @@ export default function FeaturedMenu() {
   const [display, setDisplay] = useState(FALLBACK);
 
   useEffect(() => {
-    base44.entities.MenuItem.filter({ is_featured: true, is_active: true }, "sort_order", 1).then(data => {
-      if (data.length > 0) setDisplay([data[0]]);
+    base44.entities.MenuItem.filter({ is_featured: true, is_active: true }, "sort_order", 6).then(data => {
+      if (data.length > 0) setDisplay(data);
     });
   }, []);
 
@@ -31,7 +31,7 @@ export default function FeaturedMenu() {
           </div>
         </motion.div>
 
-        <div className="max-w-xs mx-auto mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto mb-10">
           {display.map((item, i) => (
             <motion.div
               key={item.id || item.name}

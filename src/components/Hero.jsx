@@ -120,6 +120,8 @@ export default function Hero() {
           alt="Cheezies gourmet grilled cheese"
           className="w-full max-w-lg object-contain"
           style={{ maxHeight: "60vh" }}
+          loading="eager"
+          fetchpriority="high"
         />
       </motion.div>
     </section>
