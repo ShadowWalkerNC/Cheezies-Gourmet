@@ -29,13 +29,12 @@ export default function AdminAnalytics() {
       const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
       const twoWeeksAgo = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000);
 
-      const [subscribers, menuItems, weeklySpecials, events, truckLocations, pageViews] = await Promise.all([
+      const [subscribers, menuItems, weeklySpecials, events, truckLocations] = await Promise.all([
         base44.entities.NewsletterSubscriber.list("-created_date", 500),
         base44.entities.MenuItem.list(),
         base44.entities.WeeklySpecial.list(),
         base44.entities.Event.list("-date", 50),
         base44.entities.TruckLocation.list("-updated_date", 20),
-        base44.entities.PageView.list("-created_date", 1000),
       ]);
 
       // Subscribers
@@ -87,15 +86,6 @@ export default function AdminAnalytics() {
       const latest = truckLocations[0];
       const locationUpdatesThisWeek = truckLocations.filter(l => new Date(l.updated_date) >= oneWeekAgo).length;
 
-      // Page Views
-      const totalViews7d = pageViews.filter(v => new Date(v.created_date) >= oneWeekAgo).length;
-      const uniqueSessions7d = new Set(pageViews.filter(v => new Date(v.created_date) >= oneWeekAgo).map(v => v.session_id)).size;
-      const topPages = Object.entries(
-        pageViews.filter(v => new Date(v.created_date) >= oneWeekAgo).reduce((acc, v) => {
-          acc[v.page] = (acc[v.page] || 0) + 1; return acc;
-        }, {})
-      ).sort((a, b) => b[1] - a[1]).slice(0, 5);
-
       setData({
         totalSubs, newSubsThisWeek, newSubsPrevWeek, promoClaimed, subsByDay,
         activeItems, hiddenItems, featuredItems, sectionCounts,
@@ -107,9 +97,6 @@ export default function AdminAnalytics() {
         openDays: latest?.open_days,
         hoursOpen: latest?.hours_open,
         hoursClose: latest?.hours_close,
-        totalViews7d,
-        uniqueSessions7d,
-        topPages,
       });
     };
     load();
@@ -256,35 +243,6 @@ export default function AdminAnalytics() {
               <StatCard label="Featured on Home" value={data.featuredEvents} color="#5a3e8a" icon="⭐" />
               <StatCard label="Past Events" value={data.pastEvents} color="rgba(61,34,0,0.4)" icon="📁" />
             </div>
-          </section>
-
-          {/* ── Site Traffic ── */}
-          <section className="rounded-2xl p-6" style={{ background: "#fff", border: "1px solid rgba(180,120,0,0.15)" }}>
-            <SectionHeader emoji="👁️" title="Site Traffic (Last 7 Days)" />
-            <div className="grid grid-cols-2 gap-3 mb-4">
-              <StatCard label="Page Views" value={data.totalViews7d} icon="📄" />
-              <StatCard label="Unique Sessions" value={data.uniqueSessions7d} sub="estimated unique visitors" color="#3d2200" icon="👤" />
-            </div>
-            {data.topPages.length > 0 && (
-              <div>
-                <p className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color: "rgba(61,34,0,0.4)" }}>Top Pages</p>
-                <div className="flex flex-col gap-2">
-                  {data.topPages.map(([page, count]) => {
-                    const pct = data.totalViews7d > 0 ? Math.round((count / data.totalViews7d) * 100) : 0;
-                    return (
-                      <div key={page}>
-                        <div className="flex justify-between text-xs font-semibold mb-1" style={{ color: "#3d2200" }}>
-                          <span>{page}</span><span>{count} ({pct}%)</span>
-                        </div>
-                        <div className="h-1.5 rounded-full" style={{ background: "rgba(180,120,0,0.1)" }}>
-                          <div className="h-1.5 rounded-full" style={{ width: `${pct}%`, background: "#c9940a" }} />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
           </section>
         </>
       )}

@@ -2,23 +2,13 @@ import { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import AdminMenuManager from "@/components/admin/AdminMenuManager";
 import AdminAnalytics from "@/components/admin/AdminAnalytics";
+import SquareSetup from "@/components/admin/SquareSetup";
 import AdminEventManager from "@/components/admin/AdminEventManager";
 import AdminContentManager from "@/components/admin/AdminContentManager";
 import VisitorAnalytics from "@/components/admin/VisitorAnalytics";
 import MissionControl from "@/components/admin/MissionControl";
 import CRMPanel from "@/components/admin/CRMPanel";
-import FinancialsPanel from "@/components/admin/FinancialsPanel";
-import WeeklyChecklistDialog from "@/components/admin/WeeklyChecklistDialog";
-import { Truck, UtensilsCrossed, BarChart2, Mail, DollarSign, CalendarDays, Layers, Users, LayoutDashboard } from "lucide-react";
-
-const CHECKLIST_KEY = "cheezies_checklist_week";
-function getThisWeek() {
-  const d = new Date();
-  const day = d.getDay();
-  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
-  d.setDate(diff);
-  return d.toISOString().split("T")[0];
-}
+import { Truck, UtensilsCrossed, BarChart2, Mail, CreditCard, CalendarDays, Layers, Users, LayoutDashboard } from "lucide-react";
 
 const ALL_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const ADMIN_PASSCODE = "cheezies2024";
@@ -30,15 +20,15 @@ const statusLabels = {
 };
 
 const TABS = [
-  { id: "dashboard",   label: "Dashboard",   Icon: LayoutDashboard },
-  { id: "truck",       label: "Truck",       Icon: Truck },
-  { id: "menu",        label: "Menu",        Icon: UtensilsCrossed },
-  { id: "crm",         label: "CRM",         Icon: Mail },
-  { id: "financials",  label: "Financials",  Icon: DollarSign },
-  { id: "analytics",   label: "Analytics",   Icon: BarChart2 },
-  { id: "visitors",    label: "Visitors",    Icon: Users },
-  { id: "events",      label: "Events",      Icon: CalendarDays },
-  { id: "content",     label: "Content",     Icon: Layers },
+  { id: "dashboard", label: "Dashboard",  Icon: LayoutDashboard },
+  { id: "truck",     label: "Truck",      Icon: Truck },
+  { id: "menu",      label: "Menu",       Icon: UtensilsCrossed },
+  { id: "crm",       label: "CRM",        Icon: Mail },
+  { id: "analytics", label: "Analytics",  Icon: BarChart2 },
+  { id: "visitors",  label: "Visitors",   Icon: Users },
+  { id: "events",    label: "Events",     Icon: CalendarDays },
+  { id: "content",   label: "Content",    Icon: Layers },
+  { id: "square",    label: "Square",     Icon: CreditCard },
 ];
 
 const sectionStyle = { background: "#fff", border: "1px solid rgba(180,120,0,0.15)", boxShadow: "0 2px 12px rgba(180,120,0,0.06)" };
@@ -49,17 +39,6 @@ export default function AdminPage() {
   const [passcode, setPasscode] = useState("");
   const [passcodeError, setPasscodeError] = useState(false);
   const [activeTab, setActiveTab] = useState("dashboard");
-  const [showChecklist, setShowChecklist] = useState(false);
-
-  // Show checklist once per week on login
-  useEffect(() => {
-    if (authed) {
-      const lastSeen = localStorage.getItem(CHECKLIST_KEY);
-      if (lastSeen !== getThisWeek()) {
-        setShowChecklist(true);
-      }
-    }
-  }, [authed]);
 
   // Allow MissionControl quick-action buttons to navigate tabs
   useEffect(() => {
@@ -203,14 +182,9 @@ export default function AdminPage() {
             Chee<span style={{ color: "#c9940a" }}>zies</span> Admin
           </span>
         </div>
-        <div className="flex items-center gap-2">
-          <button onClick={() => setShowChecklist(true)} className="text-sm px-4 py-2 rounded-lg font-semibold" style={{ background: "rgba(201,148,10,0.2)", color: "#c9940a" }}>
-            🎯 Weekly Brief
-          </button>
-          <button onClick={() => { setAuthed(false); setPasscode(""); }} className="text-sm px-4 py-2 rounded-lg font-semibold" style={{ background: "rgba(255,248,232,0.1)", color: "rgba(255,248,232,0.6)" }}>
-            Logout
-          </button>
-        </div>
+        <button onClick={() => { setAuthed(false); setPasscode(""); }} className="text-sm px-4 py-2 rounded-lg font-semibold" style={{ background: "rgba(255,248,232,0.1)", color: "rgba(255,248,232,0.6)" }}>
+          Logout
+        </button>
       </div>
 
       {/* Tab Bar */}
@@ -231,14 +205,6 @@ export default function AdminPage() {
           </button>
         ))}
       </div>
-
-      {/* Weekly Checklist Dialog */}
-      {showChecklist && (
-        <WeeklyChecklistDialog
-          onClose={() => setShowChecklist(false)}
-          onNavigate={(tab) => { setActiveTab(tab); setShowChecklist(false); }}
-        />
-      )}
 
       {/* Tab Content */}
       <div className="max-w-3xl mx-auto px-6 py-8 pb-24 flex flex-col gap-6">
@@ -373,8 +339,8 @@ export default function AdminPage() {
         {/* ── CRM TAB ───────────────────────────────── */}
         {activeTab === "crm" && <CRMPanel />}
 
-        {/* ── FINANCIALS TAB ────────────────────────── */}
-        {activeTab === "financials" && <FinancialsPanel />}
+        {/* ── SQUARE TAB ────────────────────────────── */}
+        {activeTab === "square" && <SquareSetup />}
 
         {/* ── EVENTS TAB ────────────────────────────── */}
         {activeTab === "events" && <AdminEventManager />}
