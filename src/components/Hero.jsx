@@ -80,38 +80,23 @@ export default function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               className="px-7 py-3.5 rounded-full font-black text-sm tracking-widest uppercase transition-opacity hover:opacity-85"
-              style={{
-                background: "#c9940a",
-                color: "#fff",
-                textDecoration: "none",
-                border: "2px solid #c9940a",
-              }}
+              style={{ background: "#c9940a", color: "#fff", textDecoration: "none", border: "2px solid #c9940a" }}
             >
               Order Online
             </a>
             <button
-              onClick={() => { navigate("/GiftCards"); window.scrollTo({ top: 0, behavior: "instant" }); }}
+              onClick={() => { navigate("/Events"); window.scrollTo({ top: 0, behavior: "instant" }); }}
               className="px-7 py-3.5 rounded-full font-black text-sm tracking-widest uppercase transition-opacity hover:opacity-85"
-              style={{
-                background: "#1a0800",
-                color: "#fff8e8",
-                border: "2px solid #1a0800",
-                cursor: "pointer",
-              }}
+              style={{ background: "#1a0800", color: "#fff8e8", border: "2px solid #1a0800", cursor: "pointer" }}
             >
-              🎁 Gift Cards
+              📅 Events
             </button>
             <button
-              onClick={() => { navigate("/FindUs"); window.scrollTo({ top: 0, behavior: "instant" }); }}
+              onClick={() => { navigate("/GiftCards"); window.scrollTo({ top: 0, behavior: "instant" }); }}
               className="px-7 py-3.5 rounded-full font-black text-sm tracking-widest uppercase transition-all hover:bg-amber-50"
-              style={{
-                background: "transparent",
-                border: "2px solid #c9940a",
-                color: "#c9940a",
-                cursor: "pointer",
-              }}
+              style={{ background: "transparent", border: "2px solid #c9940a", color: "#c9940a", cursor: "pointer" }}
             >
-              Find Us
+              🎁 Gift Cards
             </button>
           </div>
         </motion.div>
