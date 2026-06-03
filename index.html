@@ -99,6 +99,18 @@
     }
     </script>
 
+    <!-- Force-clear stale service workers and caches -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(regs) {
+          regs.forEach(function(reg) { reg.unregister(); });
+        });
+        caches.keys().then(function(keys) {
+          keys.forEach(function(key) { caches.delete(key); });
+        });
+      }
+    </script>
+
     <!-- PWA / App meta -->
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#c9940a" />
