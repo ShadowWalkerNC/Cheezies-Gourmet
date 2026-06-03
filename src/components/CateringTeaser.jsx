@@ -1,8 +1,16 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { usePageContent } from "@/hooks/usePageContent";
 
 export default function CateringTeaser() {
   const navigate = useNavigate();
+  const c = usePageContent().catering;
+
+  const stats = [
+    [c.stat1_val, c.stat1_label],
+    [c.stat2_val, c.stat2_label],
+    [c.stat3_val, c.stat3_label],
+  ];
 
   return (
     <section className="py-16 px-6" style={{ background: "var(--color-bg)", borderTop: "1.5px solid #e8e0d0" }}>
@@ -18,11 +26,11 @@ export default function CateringTeaser() {
             className="font-black leading-tight mb-4"
             style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: "#1a0800" }}
           >
-            Catering &<br />
-            <span style={{ color: "#c9940a" }}>Private Events</span>
+            {c.headline}<br />
+            <span style={{ color: "#c9940a" }}>{c.headline_accent}</span>
           </h2>
           <p className="text-sm leading-relaxed mb-7" style={{ color: "rgba(61,34,0,0.65)", maxWidth: "380px", lineHeight: "1.8" }}>
-            Birthday parties · Corporate lunches · Weddings · Festivals. We scale up and show up, from 25 guests to 300+.
+            {c.body}
           </p>
           <div className="flex flex-wrap gap-3">
             <button
@@ -44,7 +52,7 @@ export default function CateringTeaser() {
 
         {/* Stats */}
         <div className="flex md:flex-col gap-8 md:gap-6 flex-shrink-0 md:w-40">
-          {[["25-300+", "GUESTS"], ["3", "PACKAGES"], ["24HR", "RESPONSE"]].map(([val, label]) => (
+          {stats.map(([val, label]) => (
             <div key={label} className="text-right md:text-right">
               <p className="font-black leading-none" style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)", color: "#c9940a" }}>{val}</p>
               <p className="text-xs font-black tracking-widest mt-0.5" style={{ color: "rgba(61,34,0,0.4)" }}>{label}</p>

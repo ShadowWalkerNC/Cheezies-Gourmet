@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
+import { usePageContent } from "@/hooks/usePageContent";
 
 function formatDays(days) {
   if (!days || days.length === 0) return "Closed";
@@ -12,6 +13,7 @@ function formatDays(days) {
 export default function About() {
   const [truckData, setTruckData] = useState(null);
   const navigate = useNavigate();
+  const c = usePageContent().about;
 
   useEffect(() => {
     base44.entities.TruckLocation.list("-updated_date", 1).then(records => {
@@ -34,6 +36,12 @@ export default function About() {
   const hasLiveLocation = !isClosed && truckData?.latitude && truckData?.longitude;
   const liveAddress = hasLiveLocation ? truckData.address : (truckData?.home_address || "Akron, Ohio");
 
+  const stats = [
+    [c.stat1_val, c.stat1_desc],
+    [c.stat2_val, c.stat2_desc],
+    [c.stat3_val, c.stat3_desc],
+  ];
+
   return (
     <section id="about" className="py-16 px-6" style={{ background: "#fff", borderTop: "1.5px solid #e8e0d0" }}>
       <div className="max-w-6xl mx-auto">
@@ -46,22 +54,22 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-xs font-black tracking-[0.25em] uppercase mb-2" style={{ color: "#c9940a" }}>Our Story</p>
+            <p className="text-xs font-black tracking-[0.25em] uppercase mb-2" style={{ color: "#c9940a" }}>{c.eyebrow}</p>
             <h2
               className="font-black leading-tight mb-5"
               style={{ fontFamily: "Georgia, serif", color: "#1a0800", fontSize: "clamp(2rem, 4vw, 2.8rem)" }}
             >
-              More Than Just a Grilled Cheese
+              {c.headline}
             </h2>
             <p className="text-sm leading-relaxed mb-7" style={{ color: "rgba(61,34,0,0.7)", lineHeight: "1.8" }}>
-              Cheezies started with one idea — take the most comforting food in the world and make it extraordinary. We blend bold flavors, premium ingredients, and a whole lot of heart into every sandwich. Born and raised in Akron, Ohio, proud to serve our community fresh to order.
+              {c.body}
             </p>
 
             <div className="grid grid-cols-3 gap-3 mb-7">
-              {[["Made Fresh", "Crafted to order."], ["Premium Cheese", "Melted perfectly."], ["Akron Proud", "Community first."]].map(([title, desc]) => (
+              {stats.map(([title, desc]) => (
                 <div key={title} className="p-4 text-sm rounded-2xl" style={{ background: "#f9f4ea", border: "1.5px solid #e8e0d0" }}>
-                <p className="font-black text-xs mb-1" style={{ color: "#1a0800" }}>{title}</p>
-                <p className="text-xs" style={{ color: "rgba(61,34,0,0.55)" }}>{desc}</p>
+                  <p className="font-black text-xs mb-1" style={{ color: "#1a0800" }}>{title}</p>
+                  <p className="text-xs" style={{ color: "rgba(61,34,0,0.55)" }}>{desc}</p>
                 </div>
               ))}
             </div>
@@ -72,12 +80,12 @@ export default function About() {
               <div>
                 <span className="font-black">{liveAddress}</span>
                 {status && (
-                <span className="ml-2 text-xs font-bold px-2 py-0.5" style={{
-                  background: status === "open" ? "#dcfce7" : status === "en_route" ? "#fef9c3" : "#fee2e2",
-                  color: status === "open" ? "#15803d" : status === "en_route" ? "#a16207" : "#b91c1c",
-                }}>
-                  {status === "open" ? "Open Now" : status === "en_route" ? "En Route" : "Closed"}
-                </span>
+                  <span className="ml-2 text-xs font-bold px-2 py-0.5" style={{
+                    background: status === "open" ? "#dcfce7" : status === "en_route" ? "#fef9c3" : "#fee2e2",
+                    color: status === "open" ? "#15803d" : status === "en_route" ? "#a16207" : "#b91c1c",
+                  }}>
+                    {status === "open" ? "Open Now" : status === "en_route" ? "En Route" : "Closed"}
+                  </span>
                 )}
                 <p className="text-xs mt-0.5" style={{ color: "rgba(61,34,0,0.55)" }}>
                   {daysText}: {hoursText}
@@ -109,7 +117,7 @@ export default function About() {
           >
             <div className="w-full aspect-square flex items-center justify-center rounded-3xl overflow-hidden" style={{ background: "#fffbf0", border: "1.5px solid #e8e0d0" }}>
               <img
-                src="https://media.base44.com/images/public/69b410ceece31b13c728497b/03ee6d0a3_generated_image.png"
+                src={c.image_url}
                 alt="Cheezies mascot"
                 className="w-full h-full object-contain p-6"
               />
@@ -117,7 +125,7 @@ export default function About() {
             <div className="mt-4 p-5 rounded-2xl" style={{ background: "#1a0800" }}>
               <p className="text-xs font-black tracking-[0.2em] uppercase mb-1" style={{ color: "#c9940a" }}>Fan Favorites</p>
               <p className="text-sm leading-relaxed" style={{ color: "rgba(255,248,232,0.75)" }}>
-                From The Patty Meltdown to The Mac Attack — every sandwich is a showstopper. Come hungry.
+                {c.fan_fav_text}
               </p>
               <button
                 onClick={() => { navigate("/Menu"); window.scrollTo({ top: 0, behavior: "instant" }); }}

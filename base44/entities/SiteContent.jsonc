@@ -1,0 +1,44 @@
+{
+  "name": "SiteContent",
+  "type": "object",
+  "properties": {
+    "section": {
+      "type": "string",
+      "description": "Section identifier e.g. hero, about, catering, video"
+    },
+    "field": {
+      "type": "string",
+      "description": "Field name e.g. headline, subline, body, image_url, cta_label, cta_url"
+    },
+    "value": {
+      "type": "string",
+      "description": "The content value"
+    },
+    "label": {
+      "type": "string",
+      "description": "Human-readable label for the admin panel"
+    }
+  },
+  "required": [
+    "section",
+    "field"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

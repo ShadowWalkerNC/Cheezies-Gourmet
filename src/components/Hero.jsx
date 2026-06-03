@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { usePageContent } from "@/hooks/usePageContent";
 
 export default function Hero() {
   const navigate = useNavigate();
+  const c = usePageContent().hero;
 
   return (
     <section className="relative flex flex-col md:flex-row min-h-screen" style={{ background: "var(--color-surface)" }}>
@@ -45,12 +47,15 @@ export default function Hero() {
               lineHeight: 0.95,
             }}
           >
-            ARTISAN<br />GRILLED<br />CHEESE.<br />
-            <span style={{ color: "#c9940a" }}>REIMAGINED.</span>
+            {c.headline.split("\n").map((line, i) => (
+              <span key={i}>{line}<br /></span>
+            ))}
+            <span style={{ color: "#c9940a" }}>{c.headline_accent}</span>
           </h1>
           <p className="text-base mb-8 leading-relaxed" style={{ color: "rgba(61,34,0,0.65)", maxWidth: "420px" }}>
-            Akron, Ohio's gourmet food truck making every sandwich an experience that stops you in your tracks.
+            {c.subline}
           </p>
+
           {/* Trust bar */}
           <div className="flex flex-wrap items-center gap-4 mb-8">
             <div className="flex items-center gap-1.5">
@@ -64,7 +69,7 @@ export default function Hero() {
             </div>
             <div className="w-px h-4" style={{ background: "#e8e0d0" }} />
             <a
-              href="https://maps.app.goo.gl/dUyof854YsHaKcNE9"
+              href={c.review_url}
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs font-bold underline-offset-2 hover:underline"
@@ -76,7 +81,7 @@ export default function Hero() {
 
           <div className="flex flex-wrap gap-3">
             <a
-              href="https://cheeziesgourmetohio.square.site/"
+              href={c.order_url}
               target="_blank"
               rel="noopener noreferrer"
               className="px-7 py-3.5 rounded-full font-black text-sm tracking-widest uppercase transition-opacity hover:opacity-85"
@@ -111,7 +116,7 @@ export default function Hero() {
         style={{ background: "#fffbf0", minHeight: "40vw", borderRadius: "0 0 0 2rem" }}
       >
         <img
-          src="https://media.base44.com/images/public/69b410ceece31b13c728497b/5e68b0a48_generated_image.png"
+          src={c.image_url}
           alt="Cheezies gourmet grilled cheese"
           className="w-full max-w-lg object-contain"
           style={{ maxHeight: "60vh" }}
