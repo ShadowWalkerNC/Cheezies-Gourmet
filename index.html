@@ -99,12 +99,24 @@
     }
     </script>
 
-    <!-- PWA: Register service worker -->
+    <!-- PWA: Register service worker (production only) -->
     <script>
       if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register('/sw.js').catch(function() {});
-        });
+        var isDevPreview = (
+          window.location.hostname === 'localhost' ||
+          window.location.hostname.includes('base44') ||
+          window.location.port !== ''
+        );
+        if (isDevPreview) {
+          // Unregister any stale service workers in dev/preview to prevent caching issues
+          navigator.serviceWorker.getRegistrations().then(function(regs) {
+            regs.forEach(function(reg) { reg.unregister(); });
+          });
+        } else {
+          window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js').catch(function() {});
+          });
+        }
       }
     </script>
 
