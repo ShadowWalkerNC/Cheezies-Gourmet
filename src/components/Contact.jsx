@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import ContactForm from "@/components/ContactForm";
 
 const socials = [
   {
@@ -87,6 +88,11 @@ export default function Contact() {
               Email
             </a>
           </div>
+        </div>
+
+        {/* Contact Form */}
+        <div className="max-w-2xl mx-auto mb-8">
+          <ContactForm />
         </div>
 
         {/* Social row */}

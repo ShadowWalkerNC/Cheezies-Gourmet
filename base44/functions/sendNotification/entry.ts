@@ -100,6 +100,23 @@ Message: ${data?.message || "N/A"}
       subject = "Merch Drop Notification Request";
       body = `${data.email} wants to be notified for the merch drop.`;
 
+    } else if (type === "contact_message") {
+      if (!data?.name || !data?.email || !data?.message) {
+        return Response.json({ error: "Missing required fields" }, { status: 400 });
+      }
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(data.email)) {
+        return Response.json({ error: "Invalid email" }, { status: 400 });
+      }
+      subject = `New Message from ${data.name}`;
+      body = `Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data?.phone || "N/A"}\n\nMessage:\n${data.message}`;
+      // Also send confirmation to the customer
+      await base44.asServiceRole.integrations.Core.SendEmail({
+        to: data.email,
+        subject: "We got your message — Cheezies Gourmet",
+        body: `Hi ${data.name},\n\nThanks for reaching out! We received your message and will get back to you soon.\n\nYour message:\n"${data.message}"\n\n— Cheezies Gourmet\ncheeziesohio@gmail.com | 330-510-8875`,
+      });
+
     } else {
       return Response.json({ error: "Unknown notification type" }, { status: 400 });
     }

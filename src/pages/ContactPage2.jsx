@@ -1,6 +1,7 @@
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
+import ContactForm from "@/components/ContactForm";
 
 const socials = [
   { href: "https://www.facebook.com/cheeziesohio", label: "Facebook", color: "#1877F2" },
@@ -70,6 +71,11 @@ export default function ContactPage2() {
                 </a>
               ))}
             </div>
+          </div>
+
+          {/* Contact Form */}
+          <div className="mt-8">
+            <ContactForm />
           </div>
 
           {/* Location */}
