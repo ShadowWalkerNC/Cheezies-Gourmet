@@ -7,7 +7,7 @@ const entityStub = {
   update:      async () => ({}),
   delete:      async () => {},
   count:       async () => 0,
-  subscribe:   (cb) => { cb([]); return () => {}; },
+  subscribe:   () => () => {},
   unsubscribe: () => {},
 };
 
