@@ -1,4 +1,4 @@
-// Base44 removed — universal stub via Proxy so ANY entity.method() is a safe no-op
+// Legacy stub — safe no-op so any remaining base44 imports don't crash
 const entityStub = {
   list:        async () => [],
   filter:      async () => [],
@@ -11,16 +11,10 @@ const entityStub = {
   unsubscribe: () => {},
 };
 
-const entitiesProxy = new Proxy({}, {
-  get: () => entityStub,
-});
+const entitiesProxy = new Proxy({}, { get: () => entityStub });
 
 export const base44 = {
   entities: entitiesProxy,
   functions: { invoke: async () => ({}) },
-  auth: {
-    getUser:  async () => null,
-    signIn:   async () => {},
-    signOut:  async () => {},
-  },
+  auth: { getUser: async () => null, signIn: async () => {}, signOut: async () => {} },
 };
