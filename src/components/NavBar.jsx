@@ -111,19 +111,41 @@ export default function NavBar() {
           </a>
         </div>
 
-        {/* Hamburger */}
+        {/* Hamburger — inline styles so Tailwind purge doesn't break transforms */}
         <button
           className="md:hidden flex flex-col gap-1.5 p-2 select-none"
           onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
           style={{ background: "none", border: "none", cursor: "pointer", WebkitTapHighlightColor: "transparent" }}
         >
-          <span className={`block w-6 h-0.5 transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} style={{ background: "#1a0800" }} />
-          <span className={`block w-6 h-0.5 transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} style={{ background: "#1a0800" }} />
-          <span className={`block w-6 h-0.5 transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} style={{ background: "#1a0800" }} />
+          <span
+            style={{
+              display: "block", width: 24, height: 2,
+              background: "#1a0800",
+              transition: "transform 0.3s",
+              transform: menuOpen ? "rotate(45deg) translate(0px, 8px)" : "none",
+            }}
+          />
+          <span
+            style={{
+              display: "block", width: 24, height: 2,
+              background: "#1a0800",
+              transition: "opacity 0.3s",
+              opacity: menuOpen ? 0 : 1,
+            }}
+          />
+          <span
+            style={{
+              display: "block", width: 24, height: 2,
+              background: "#1a0800",
+              transition: "transform 0.3s",
+              transform: menuOpen ? "rotate(-45deg) translate(0px, -8px)" : "none",
+            }}
+          />
         </button>
       </div>
 
-      {/* Truck status banner — always visible, part of fixed nav */}
+      {/* Truck status banner */}
       <div
         className="px-4 py-2 flex items-center justify-between gap-3"
         style={{ background: "#1a0800", borderTop: "1px solid rgba(201,148,10,0.3)" }}
@@ -144,6 +166,7 @@ export default function NavBar() {
         </button>
       </div>
 
+      {/* Mobile menu dropdown */}
       {menuOpen && (
         <div
           className="md:hidden px-6 pb-6 pt-2 flex flex-col gap-0"
