@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { base44 } from "@/api/base44Client";
+import { useTruckData } from "../hooks/useTruckData";
 import { MapPin } from "lucide-react";
 
 const statusConfig = {
@@ -10,24 +9,14 @@ const statusConfig = {
 };
 
 export default function TruckBanner() {
-  const [truckData, setTruckData] = useState(null);
+  const { data: truckData } = useTruckData();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    base44.entities.TruckLocation.list("-updated_date", 1).then(records => {
-      if (records.length > 0) setTruckData(records[0]);
-    });
-    const unsub = base44.entities.TruckLocation.subscribe(event => {
-      if (event.type === "create" || event.type === "update") setTruckData(event.data);
-    });
-    return unsub;
-  }, []);
 
   const status = truckData?.status || "closed";
   const sc = statusConfig[status] || statusConfig.closed;
   const isClosed = status === "closed";
   const hasLive = !isClosed && truckData?.latitude && truckData?.longitude;
-  const address = hasLive ? truckData.address : (truckData?.home_address || "Akron, Ohio");
+  const address = hasLive ? truckData.address : (truckData?.address || "Akron, Ohio");
 
   return (
     <div
