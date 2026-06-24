@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { base44 } from "@/api/base44Client";
+import eventsData from "@/data/events.json";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import PageTransition from "../components/PageTransition";
@@ -23,10 +23,8 @@ export default function EventsPage() {
   const [tab, setTab] = useState("upcoming");
 
   useEffect(() => {
-    base44.entities.Event.filter({ is_active: true }, "date", 100).then(data => {
-      setEvents(data);
-      setLoading(false);
-    });
+    setEvents(eventsData);
+    setLoading(false);
   }, []);
 
   const upcoming = events.filter(e => !isPast(e.date));
@@ -39,8 +37,6 @@ export default function EventsPage() {
       <div style={{ height: "calc(93px + var(--safe-top))" }} />
       <PageTransition>
         <div className="px-6 py-14 max-w-5xl mx-auto">
-
-          {/* Header */}
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
             <p className="text-xs font-bold tracking-[0.3em] uppercase mb-3" style={{ color: "#c9940a" }}>Where We'll Be</p>
             <h1 className="text-4xl md:text-5xl font-black mb-4" style={{ fontFamily: "Georgia, serif", color: "#2a1200" }}>Events</h1>
@@ -59,7 +55,6 @@ export default function EventsPage() {
             </a>
           </motion.div>
 
-          {/* Tabs */}
           <div className="flex rounded-xl overflow-hidden mb-8 max-w-xs mx-auto" style={{ border: "1.5px solid rgba(180,120,0,0.2)" }}>
             {["upcoming", "past"].map(t => (
               <button key={t} onClick={() => setTab(t)}
@@ -70,7 +65,6 @@ export default function EventsPage() {
             ))}
           </div>
 
-          {/* Events list */}
           {loading ? (
             <div className="flex justify-center py-16">
               <div className="w-8 h-8 border-4 border-amber-200 border-t-amber-600 rounded-full animate-spin" />
@@ -139,7 +133,6 @@ export default function EventsPage() {
               ))}
             </div>
           )}
-
         </div>
         <Footer />
         <div className="md:hidden" style={{ height: "var(--tab-bar-h)" }} />

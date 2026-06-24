@@ -1,9 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { base44 } from "@/api/base44Client";
-
-const SECTIONS = ["Signature Creations", "Gourmet Melts", "Sides & Refreshments", "Add-Ons & Extras"];
 
 const SECTION_NOTES = {
   "Signature Creations": "All sandwiches include Chips and a Drink.",
@@ -11,10 +8,10 @@ const SECTION_NOTES = {
   "Add-Ons & Extras": "Make it your own with our curated selection of premium add-ons.",
 };
 
-const FALLBACK_SECTIONS = [
+const SECTIONS = [
   {
     title: "Signature Creations",
-    note: "All sandwiches include Chips and a Drink.",
+    note: SECTION_NOTES["Signature Creations"],
     items: [
       { name: "The Patty Meltdown", badge: "Best Seller", badge_color: "#c9940a", desc: "A legendary, caramelized Prime Rib smashburger seasoned with our signature Burger Seasoning blend. Topped with tender grilled onions, a melt of Swiss and American cheeses, and our signature Sweet and Tangy sauce on buttery, toasted Sourdough.", price: "$13", img: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b410ceece31b13c728497b/dc51ccc91_generated_image.png" },
       { name: "The Smashburger", badge: "The Classic", badge_color: "#7a5c2e", desc: "Our signature Prime Rib & Fat blend, ground fresh and seared to perfection with Burger Seasoning. Served on a toasted Brioche roll with your choice of premium cheese and fresh toppings.", price: "$10 / $13", price_note: "Single / Double", img: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b410ceece31b13c728497b/abb4d4b5a_generated_image.png" },
@@ -24,7 +21,7 @@ const FALLBACK_SECTIONS = [
   },
   {
     title: "Gourmet Melts",
-    note: "Limited Daily Quantities. Includes Chips and a Drink.",
+    note: SECTION_NOTES["Gourmet Melts"],
     items: [
       { name: "The Mac Attack", badge: "Fan Favorite", badge_color: "#c9940a", desc: "The ultimate indulgence. Our famous Five Star Bacon Mac & Cheese—loaded with three cheeses and crispy bacon—stuffed between two thick slices of Texas Toast. Double the bacon? Add 3 strips for $3!", price: "$12", img: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b410ceece31b13c728497b/1b08b210d_generated_image.png" },
       { name: "The Spicy Melt", desc: "A fiery blend of Pepper Jack cheese, hand-sliced fresh jalapeños, and a drizzle of zesty Sriracha Aioli on toasted Sourdough.", price: "$13", img: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b410ceece31b13c728497b/b55b7ae1c_generated_image.png" },
@@ -42,7 +39,7 @@ const FALLBACK_SECTIONS = [
   },
   {
     title: "Add-Ons & Extras",
-    note: "Make it your own with our curated selection of premium add-ons.",
+    note: SECTION_NOTES["Add-Ons & Extras"],
     items: [
       { name: "The Mac-Topper", desc: "Add a golden scoop of Bacon Mac inside any sandwich.", price: "$3" },
       { name: "Bacon (3 pcs) or Baked Ham", desc: "Add crispy thick-cut bacon or savory baked ham to any sandwich.", price: "$3 each" },
@@ -158,7 +155,7 @@ function SectionBlock({ section, defaultOpen = true }) {
             )}
             <div className={section.items.some(i => i.img) ? "grid sm:grid-cols-2 md:grid-cols-3 gap-4" : "space-y-3"}>
               {section.items.map((item, i) => (
-                <MenuItemCard key={item.id || item.name} item={item} index={i} />
+                <MenuItemCard key={item.name} item={item} index={i} />
               ))}
             </div>
           </motion.div>
@@ -169,28 +166,6 @@ function SectionBlock({ section, defaultOpen = true }) {
 }
 
 export default function Menu() {
-  const [dbItems, setDbItems] = useState(null);
-  const [specials, setSpecials] = useState([]);
-
-  useEffect(() => {
-    base44.entities.MenuItem.filter({ is_active: true }, "sort_order", 200).then(data => {
-      setDbItems(data);
-    });
-    base44.entities.WeeklySpecial.filter({ is_active: true }, "sort_order", 3).then(data => {
-      setSpecials(data);
-    });
-  }, []);
-
-  const sections = dbItems && dbItems.length > 0
-    ? SECTIONS.map(title => ({
-        title,
-        note: SECTION_NOTES[title] || null,
-        items: dbItems.filter(i => i.section === title),
-      })).filter(s => s.items.length > 0)
-    : FALLBACK_SECTIONS;
-
-  const topSeller = specials.find(s => s.is_top_seller);
-
   return (
     <section id="menu" className="py-20 px-6" style={{ background: "#fdf6e3", borderTop: "1px solid rgba(180,120,0,0.1)" }}>
       <div className="max-w-5xl mx-auto">
@@ -203,64 +178,11 @@ export default function Menu() {
             <strong>Freshness Guarantee:</strong> Our Prime Rib beef is ground fresh and pressed every morning. Bacon Mac is crafted from scratch daily. <em>When we're out, we're out.</em>
           </div>
         </motion.div>
-
-        {/* Weekly Specials */}
-        {specials.length > 0 && (
-          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
-            <div className="flex items-center gap-4 mb-5">
-              <h3 className="text-2xl font-black" style={{ fontFamily: "Georgia, serif", color: "#2a1200" }}>🔥 This Week's Specials</h3>
-              <div className="flex-1 h-px" style={{ background: "rgba(180,120,0,0.15)" }} />
-            </div>
-            {topSeller && (
-              <div className="mb-4 px-4 py-2.5 rounded-2xl flex items-center gap-3 text-sm font-bold"
-                style={{ background: "rgba(201,148,10,0.13)", border: "1.5px solid rgba(201,148,10,0.35)", color: "#7a4f00" }}>
-                ⭐ Top Selling Sandwich this week: <span style={{ color: "#2a1200" }}>{topSeller.name}</span>
-              </div>
-            )}
-            <div className={`grid gap-4 ${specials.length > 1 ? "sm:grid-cols-2 md:grid-cols-3" : ""}`}>
-              {specials.map((s, i) => (
-                <motion.div key={s.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07 }}
-                  className="rounded-3xl overflow-hidden"
-                  style={{ background: "#fff", border: "1.5px solid rgba(201,148,10,0.3)", boxShadow: "0 4px 20px rgba(180,120,0,0.12)" }}>
-                  {s.img && (
-                    <div className="relative h-44 overflow-hidden">
-                      <img src={s.img} alt={s.name} className="w-full h-full object-cover" />
-                      <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(30,12,0,0.72) 0%, transparent 55%)" }} />
-                      <span className="absolute top-2.5 left-2.5 text-xs font-black px-2.5 py-1 rounded-full" style={{ background: "#c9940a", color: "#fff8e8" }}>
-                        {s.is_top_seller ? "⭐ Top Seller" : "🔥 Special"}
-                      </span>
-                      <span className="absolute top-2.5 right-2.5 font-black text-sm px-2.5 py-1 rounded-full" style={{ background: "rgba(42,18,0,0.75)", color: "#e8b800" }}>{s.price}</span>
-                      <div className="absolute bottom-0 left-0 right-0 px-4 pb-3">
-                        <h4 className="font-black text-sm text-white leading-tight">{s.name}</h4>
-                      </div>
-                    </div>
-                  )}
-                  <div className="px-4 py-4">
-                    {!s.img && (
-                      <div className="flex items-center justify-between mb-2">
-                        <h4 className="font-black text-base" style={{ color: "#2a1200" }}>{s.name}</h4>
-                        <span className="font-black text-base" style={{ color: "#c9940a" }}>{s.price}</span>
-                      </div>
-                    )}
-                    {s.desc && <p className="text-sm leading-relaxed mb-3" style={{ color: "rgba(61,34,0,0.65)" }}>{s.desc}</p>}
-                    <a href="https://cheeziesgourmetohio.square.site/" target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center px-5 py-2.5 rounded-full font-bold text-sm hover:opacity-85 transition-opacity"
-                      style={{ background: "#c9940a", color: "#fff8e8", textDecoration: "none" }}>
-                      Order This →
-                    </a>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-
         <div className="space-y-8">
-          {sections.map((section, si) => (
+          {SECTIONS.map((section, si) => (
             <SectionBlock key={section.title} section={section} defaultOpen={si === 0} />
           ))}
         </div>
-
         <p className="text-center text-xs mt-12" style={{ color: "rgba(61,34,0,0.3)" }}>
           Prices and availability may vary. Follow us on social media for daily specials.
         </p>

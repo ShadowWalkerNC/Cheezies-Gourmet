@@ -1,0 +1,16 @@
+[
+  {
+    "id": "1",
+    "title": "Example Event",
+    "date": "2026-07-04",
+    "time_start": "11:00 AM",
+    "time_end": "6:00 PM",
+    "location_name": "Downtown Akron",
+    "address": "123 Main St, Akron, OH",
+    "description": "Come find us at the summer festival! Fresh sandwiches, Bacon Mac, and more.",
+    "img": "",
+    "facebook_event_url": "https://www.facebook.com/cheeziesohio",
+    "is_featured": true,
+    "is_active": true
+  }
+]
