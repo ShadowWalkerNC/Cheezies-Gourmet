@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-// TODO: replace with your real Formspree endpoint
-const FORMSPREE_TRUCK = "https://formspree.io/f/REPLACE_TRUCK";
+const FORMSPREE_TRUCK = "https://formspree.io/f/xeeberyw";
 
 export default function TruckRequest() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", type: "location", details: "" });
@@ -29,7 +28,6 @@ export default function TruckRequest() {
           <p className="text-xs font-black tracking-[0.25em] uppercase mb-2" style={{ color: "#c9940a" }}>Request a Location or Event</p>
           <h2 className="font-black mb-2" style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)", color: "#1a0800", lineHeight: 1.1 }}>Request a Location or Event</h2>
           <p className="text-sm mb-8" style={{ color: "rgba(61,34,0,0.55)" }}>Want Cheezies at your neighborhood, office, or event? Send us a request and we'll be in touch.</p>
-
           {sent ? (
             <div className="text-center py-10 rounded-2xl" style={{ background: "#fff", border: "1.5px solid #e8e0d0" }}>
               <div className="text-5xl mb-3">🧀</div>

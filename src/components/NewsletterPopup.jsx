@@ -2,8 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 
-// TODO: replace with your real Formspree endpoint
-const FORMSPREE_NEWSLETTER = "https://formspree.io/f/REPLACE_NEWSLETTER";
+const FORMSPREE_NEWSLETTER = "https://formspree.io/f/xqeveyrg";
 const PROMO_CODE = "CHEEZIE26";
 
 export default function NewsletterPopup() {
@@ -54,15 +53,12 @@ export default function NewsletterPopup() {
     <AnimatePresence>
       {open && (
         <>
-          <motion.div
-            key="backdrop"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          <motion.div key="backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100]"
             style={{ background: "rgba(40,20,0,0.55)", backdropFilter: "blur(4px)" }}
             onClick={dismiss}
           />
-          <motion.div
-            key="popup"
+          <motion.div key="popup"
             initial={{ opacity: 0, scale: 0.88, y: 32 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.88, y: 32 }}

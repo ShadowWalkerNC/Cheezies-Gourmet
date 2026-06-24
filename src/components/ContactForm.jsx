@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-// TODO: replace with your real Formspree endpoint
-const FORMSPREE_CONTACT = "https://formspree.io/f/REPLACE_CONTACT";
+const FORMSPREE_CONTACT = "https://formspree.io/f/xpqgqoaa";
 
 export default function ContactForm() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
