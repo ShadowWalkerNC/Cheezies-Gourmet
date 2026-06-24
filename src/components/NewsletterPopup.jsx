@@ -1,8 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
-import { base44 } from "@/api/base44Client";
 
+// TODO: replace with your real Formspree endpoint
+const FORMSPREE_NEWSLETTER = "https://formspree.io/f/REPLACE_NEWSLETTER";
 const PROMO_CODE = "CHEEZIE26";
 
 export default function NewsletterPopup() {
@@ -32,17 +33,17 @@ export default function NewsletterPopup() {
     setError("");
     setSubmitting(true);
     try {
-      const res = await base44.functions.invoke("sendNotification", {
-        type: "newsletter_signup",
-        data: { email, birthday, source: "popup" },
+      const res = await fetch(FORMSPREE_NEWSLETTER, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ email, birthday, source: "popup" }),
       });
-      if (res.data?.error === "already_subscribed") {
-        setError("This email is already subscribed.");
-        setSubmitting(false);
-        return;
+      if (res.ok) {
+        setDone(true);
+        setTimeout(() => dismiss(), 8000);
+      } else {
+        setError("Something went wrong. Please try again.");
       }
-      setDone(true);
-      setTimeout(() => dismiss(), 8000);
     } catch {
       setError("Something went wrong. Please try again.");
     }
@@ -53,18 +54,13 @@ export default function NewsletterPopup() {
     <AnimatePresence>
       {open && (
         <>
-          {/* Backdrop */}
           <motion.div
             key="backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100]"
             style={{ background: "rgba(40,20,0,0.55)", backdropFilter: "blur(4px)" }}
             onClick={dismiss}
           />
-
-          {/* Modal */}
           <motion.div
             key="popup"
             initial={{ opacity: 0, scale: 0.88, y: 32 }}
@@ -73,110 +69,44 @@ export default function NewsletterPopup() {
             transition={{ type: "spring", damping: 22, stiffness: 300 }}
             className="fixed z-[101] inset-0 flex items-center justify-center px-4 pointer-events-none"
           >
-            <div
-              className="relative w-full max-w-md rounded-3xl overflow-hidden pointer-events-auto"
-              style={{ boxShadow: "0 32px 80px rgba(100,50,0,0.35)" }}
-            >
-              {/* Top gradient band */}
-              <div
-                className="relative px-8 pt-10 pb-6 text-center"
-                style={{ background: "linear-gradient(135deg, #c9940a 0%, #e8b800 50%, #f5c518 100%)" }}
-              >
-                <button
-                  onClick={dismiss}
-                  className="absolute top-4 right-4 p-1.5 rounded-full transition-all hover:bg-white/20"
-                  style={{ color: "#fff8e8" }}
-                >
+            <div className="relative w-full max-w-md rounded-3xl overflow-hidden pointer-events-auto" style={{ boxShadow: "0 32px 80px rgba(100,50,0,0.35)" }}>
+              <div className="relative px-8 pt-10 pb-6 text-center" style={{ background: "linear-gradient(135deg, #c9940a 0%, #e8b800 50%, #f5c518 100%)" }}>
+                <button onClick={dismiss} className="absolute top-4 right-4 p-1.5 rounded-full transition-all hover:bg-white/20" style={{ color: "#fff8e8" }}>
                   <X size={18} />
                 </button>
                 <div className="text-5xl mb-3">🧀</div>
-                <h2
-                  className="text-3xl font-black leading-tight"
-                  style={{ fontFamily: "Georgia, serif", color: "#fff8e8", textShadow: "0 2px 8px rgba(100,50,0,0.3)" }}
-                >
-                  Get a Promo Code!
-                </h2>
-                <p className="text-sm mt-2 font-medium" style={{ color: "rgba(255,248,224,0.85)" }}>
-                  Join our list with a new email & get an exclusive discount code.
-                </p>
+                <h2 className="text-3xl font-black leading-tight" style={{ fontFamily: "Georgia, serif", color: "#fff8e8", textShadow: "0 2px 8px rgba(100,50,0,0.3)" }}>Get a Promo Code!</h2>
+                <p className="text-sm mt-2 font-medium" style={{ color: "rgba(255,248,224,0.85)" }}>Join our list with a new email & get an exclusive discount code.</p>
               </div>
-
-              {/* Body */}
               <div className="px-8 py-7" style={{ background: "linear-gradient(135deg, #fff 0%, #fdf3d8 100%)" }}>
                 {done ? (
                   <div className="text-center py-4">
                     <div className="text-4xl mb-3">🎉</div>
-                    <p className="font-bold text-lg" style={{ color: "var(--color-cream)" }}>You're on the list!</p>
-                    <p className="text-sm mt-1 mb-4" style={{ color: "var(--color-text-muted)" }}>Use this code on your next order:</p>
-                    <div
-                      className="py-4 px-6 text-3xl font-black tracking-widest text-center rounded-xl"
-                      style={{ background: "#1a0800", color: "#ffd700", letterSpacing: "0.2em", boxShadow: "0 4px 16px rgba(100,50,0,0.3)" }}
-                    >
-                      {PROMO_CODE}
-                    </div>
+                    <p className="font-bold text-lg" style={{ color: "#1a0800" }}>You're on the list!</p>
+                    <p className="text-sm mt-1 mb-4" style={{ color: "rgba(61,34,0,0.6)" }}>Use this code on your next order:</p>
+                    <div className="py-4 px-6 text-3xl font-black tracking-widest text-center rounded-xl" style={{ background: "#1a0800", color: "#ffd700", letterSpacing: "0.2em", boxShadow: "0 4px 16px rgba(100,50,0,0.3)" }}>{PROMO_CODE}</div>
                     <p className="text-xs mt-3" style={{ color: "rgba(80,45,0,0.5)" }}>Code also sent to your email!</p>
                   </div>
                 ) : (
                   <>
                     <form onSubmit={handleSubmit} className="flex flex-col gap-3 mb-3">
-                      <input
-                        required
-                        type="email"
-                        placeholder="your@email.com"
-                        value={email}
+                      <input required type="email" placeholder="your@email.com" value={email}
                         onChange={e => { setEmail(e.target.value); setError(""); }}
-                        style={{
-                          background: "var(--color-surface)",
-                          border: "1.5px solid rgba(180,120,0,0.25)",
-                          borderRadius: "999px",
-                          color: "var(--color-cream)",
-                          padding: "13px 20px",
-                          outline: "none",
-                          fontSize: "15px",
-                        }}
-                        onFocus={e => (e.target.style.borderColor = "#c9940a")}
-                        onBlur={e => (e.target.style.borderColor = "rgba(180,120,0,0.25)")}
+                        style={{ background: "#fffbf0", border: "1.5px solid rgba(180,120,0,0.25)", borderRadius: "999px", color: "#2a1200", padding: "13px 20px", outline: "none", fontSize: "15px", width: "100%" }}
                       />
                       <div>
-                        <label className="text-xs font-bold tracking-widest uppercase mb-1 block" style={{ color: "var(--color-text-muted)" }}>
-                          Birthday (optional — for birthday deals 🎂)
-                        </label>
-                        <input
-                          type="date"
-                          value={birthday}
-                          onChange={e => setBirthday(e.target.value)}
-                          style={{
-                            background: "var(--color-surface)",
-                              border: "1.5px solid rgba(180,120,0,0.25)",
-                              borderRadius: "999px",
-                              color: "var(--color-cream)",
-                              padding: "10px 20px",
-                            outline: "none",
-                            fontSize: "14px",
-                            width: "100%",
-                          }}
+                        <label className="text-xs font-bold tracking-widest uppercase mb-1 block" style={{ color: "rgba(61,34,0,0.55)" }}>Birthday (optional — for birthday deals 🎂)</label>
+                        <input type="date" value={birthday} onChange={e => setBirthday(e.target.value)}
+                          style={{ background: "#fffbf0", border: "1.5px solid rgba(180,120,0,0.25)", borderRadius: "999px", color: "#2a1200", padding: "10px 20px", outline: "none", fontSize: "14px", width: "100%" }}
                         />
                       </div>
-                      {error && (
-                        <p className="text-xs text-center font-bold" style={{ color: "#c0392b" }}>{error}</p>
-                      )}
-                      <button
-                        type="submit"
-                        disabled={submitting}
+                      {error && <p className="text-xs text-center font-bold" style={{ color: "#c0392b" }}>{error}</p>}
+                      <button type="submit" disabled={submitting}
                         className="py-3.5 rounded-full font-bold text-sm transition-all duration-300 hover:scale-[1.02] disabled:opacity-60"
                         style={{ background: "#c9940a", color: "#fff8e8", boxShadow: "0 6px 24px rgba(180,120,0,0.3)" }}
-                      >
-                        {submitting ? "Checking…" : "🔔 Get My Promo Code"}
-                      </button>
+                      >{submitting ? "Sending…" : "🔔 Get My Promo Code"}</button>
                     </form>
-
-                    <button
-                      onClick={dismiss}
-                      className="w-full text-center text-xs mt-2 underline-offset-2 hover:underline"
-                      style={{ color: "rgba(80,45,0,0.4)", background: "none", border: "none", cursor: "pointer" }}
-                    >
-                      No thanks, I'll miss the deals
-                    </button>
+                    <button onClick={dismiss} className="w-full text-center text-xs mt-2 underline-offset-2 hover:underline" style={{ color: "rgba(80,45,0,0.4)", background: "none", border: "none", cursor: "pointer" }}>No thanks, I'll miss the deals</button>
                   </>
                 )}
               </div>
