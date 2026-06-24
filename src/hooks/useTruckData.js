@@ -25,7 +25,7 @@ async function fetchTruck() {
   const { data, error } = await supabase
     .from('truck_status')
     .select('*')
-    .limit(1)
+    .eq('id', 1)
     .single();
   if (!error && data) notify(data);
 }
@@ -57,10 +57,11 @@ export function useTruckData() {
 }
 
 export async function saveTruckData(data) {
+  const { id, updated_at, created_at, ...fields } = data;
   const { error } = await supabase
     .from('truck_status')
-    .update(data)
-    .neq('id', '00000000-0000-0000-0000-000000000000');
-  if (!error) notify(data);
+    .update({ ...fields, updated_at: new Date().toISOString() })
+    .eq('id', 1);
+  if (!error) notify({ ...data, id: 1 });
   return !error;
 }
