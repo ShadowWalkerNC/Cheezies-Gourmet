@@ -38,15 +38,12 @@ export function useTruckData() {
     return () => supabase.removeChannel(channel);
   }, []);
 
-  async function updateTruckData(updates) {
-    const { data: updated, error } = await supabase
-      .from('truck_status')
-      .upsert({ id: 1, ...updates })
-      .select()
-      .single();
-    if (!error && updated) setData(updated);
-    return { error };
-  }
+  return { data, loading };
+}
 
-  return { data, loading, updateTruckData };
+export async function saveTruckData(updates) {
+  const { error } = await supabase
+    .from('truck_status')
+    .upsert({ id: 1, ...updates, updated_at: new Date().toISOString() });
+  return !error;
 }
