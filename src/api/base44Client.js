@@ -1,9 +1,23 @@
-// Base44 removed - stub to prevent import errors during migration
+// Base44 removed — universal stub via Proxy so ANY entity.method() is a safe no-op
+const entityStub = {
+  list:   async () => [],
+  filter: async () => [],
+  get:    async () => null,
+  create: async () => ({}),
+  update: async () => ({}),
+  delete: async () => {},
+};
+
+const entitiesProxy = new Proxy({}, {
+  get: () => entityStub,
+});
+
 export const base44 = {
-  entities: {
-    MenuItem: { filter: async () => [] },
-    WeeklySpecial: { filter: async () => [] },
-    Event: { filter: async () => [] }
+  entities: entitiesProxy,
+  functions: { invoke: async () => ({}) },
+  auth: {
+    getUser: async () => null,
+    signIn: async () => {},
+    signOut: async () => {},
   },
-  functions: { invoke: async () => {} }
 };
