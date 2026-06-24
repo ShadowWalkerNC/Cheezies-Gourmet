@@ -1,11 +1,14 @@
 // Base44 removed — universal stub via Proxy so ANY entity.method() is a safe no-op
 const entityStub = {
-  list:   async () => [],
-  filter: async () => [],
-  get:    async () => null,
-  create: async () => ({}),
-  update: async () => ({}),
-  delete: async () => {},
+  list:        async () => [],
+  filter:      async () => [],
+  get:         async () => null,
+  create:      async () => ({}),
+  update:      async () => ({}),
+  delete:      async () => {},
+  count:       async () => 0,
+  subscribe:   (cb) => { cb([]); return () => {}; },
+  unsubscribe: () => {},
 };
 
 const entitiesProxy = new Proxy({}, {
@@ -16,8 +19,8 @@ export const base44 = {
   entities: entitiesProxy,
   functions: { invoke: async () => ({}) },
   auth: {
-    getUser: async () => null,
-    signIn: async () => {},
-    signOut: async () => {},
+    getUser:  async () => null,
+    signIn:   async () => {},
+    signOut:  async () => {},
   },
 };
