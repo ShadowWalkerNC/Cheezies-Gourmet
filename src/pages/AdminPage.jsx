@@ -9,9 +9,8 @@ const SECTIONS = ['Signature Creations','Gourmet Melts','Sides & Refreshments','
 const inp = { background:'#fffbf0', border:'1.5px solid rgba(180,120,0,0.25)', borderRadius:10, padding:'10px 14px', color:'#2a1200', fontSize:14, outline:'none', width:'100%', boxSizing:'border-box' };
 const FieldLabel = ({ text }) => <label className="text-xs font-black uppercase tracking-widest mb-1.5 block" style={{color:'#c9940a'}}>{text}</label>;
 
-// ─── TRUCK STATUS TAB ──────────────────────────────────────
 function TruckTab() {
-  const { data: truckData } = useTruckData();
+  const truckData = useTruckData();
   const [form, setForm] = useState(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -50,23 +49,16 @@ function TruckTab() {
           ))}
         </div>
       </div>
-
-      <div>
-        <FieldLabel text="Today's Address" />
-        <input value={form.address||''} onChange={e=>set('address',e.target.value)} placeholder="e.g. 123 Main St, Akron" style={inp} />
-      </div>
-
+      <div><FieldLabel text="Today's Address" /><input value={form.address||''} onChange={e=>set('address',e.target.value)} placeholder="e.g. 123 Main St, Akron" style={inp} /></div>
       <div className="grid grid-cols-2 gap-3">
         <div><FieldLabel text="Latitude" /><input value={form.latitude||''} onChange={e=>set('latitude',e.target.value)} placeholder="41.0814" style={inp} /></div>
         <div><FieldLabel text="Longitude" /><input value={form.longitude||''} onChange={e=>set('longitude',e.target.value)} placeholder="-81.5190" style={inp} /></div>
       </div>
       <p className="text-xs" style={{color:'rgba(61,34,0,0.4)'}}>Tip: Google Maps → right-click location → copy lat/lng. Leave blank to hide map pin.</p>
-
       <div className="grid grid-cols-2 gap-3">
         <div><FieldLabel text="Opens" /><input value={form.hours_open||''} onChange={e=>set('hours_open',e.target.value)} placeholder="11:00 AM" style={inp} /></div>
         <div><FieldLabel text="Closes" /><input value={form.hours_close||''} onChange={e=>set('hours_close',e.target.value)} placeholder="6:00 PM" style={inp} /></div>
       </div>
-
       <div>
         <FieldLabel text="Open Days" />
         <div className="flex flex-wrap gap-2">
@@ -79,12 +71,7 @@ function TruckTab() {
           ))}
         </div>
       </div>
-
-      <div>
-        <FieldLabel text="Today's Note (optional)" />
-        <textarea rows={2} value={form.note||''} onChange={e=>set('note',e.target.value)} placeholder="e.g. Cash only today!" style={{...inp, resize:'none'}} />
-      </div>
-
+      <div><FieldLabel text="Today's Note (optional)" /><textarea rows={2} value={form.note||''} onChange={e=>set('note',e.target.value)} placeholder="e.g. Cash only today!" style={{...inp, resize:'none'}} /></div>
       <button type="submit" disabled={saving} className="w-full py-4 rounded-full font-black text-sm uppercase tracking-widest" style={{background:'#1a0800',color:'#e8b800',opacity:saving?0.7:1}}>
         {saving ? 'Saving...' : saved ? '✅ Saved!' : 'Save & Publish'}
       </button>
@@ -92,7 +79,6 @@ function TruckTab() {
   );
 }
 
-// ─── MENU TAB ─────────────────────────────────────────────
 function MenuTab() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -110,11 +96,8 @@ function MenuTab() {
     e.preventDefault();
     setSaving(true);
     const { id, ...fields } = editing;
-    if (id) {
-      await supabase.from('menu_items').update(fields).eq('id', id);
-    } else {
-      await supabase.from('menu_items').insert(fields);
-    }
+    if (id) { await supabase.from('menu_items').update(fields).eq('id', id); }
+    else { await supabase.from('menu_items').insert(fields); }
     setSaving(false); setEditing(null); load();
   };
 
@@ -125,8 +108,7 @@ function MenuTab() {
 
   const deleteItem = async (id) => {
     if (!window.confirm('Delete this item?')) return;
-    await supabase.from('menu_items').delete().eq('id', id);
-    load();
+    await supabase.from('menu_items').delete().eq('id', id); load();
   };
 
   const BLANK = { name:'', section:'Signature Creations', description:'', price:'', price_note:'', badge:'', badge_color:'#c9940a', image_url:'', is_featured:false, is_active:true, sort_order: items.length + 1 };
@@ -135,33 +117,23 @@ function MenuTab() {
 
   if (editing) return (
     <form onSubmit={saveItem} className="flex flex-col gap-4">
-      <button type="button" onClick={() => setEditing(null)} className="text-sm font-bold text-left" style={{color:'#c9940a',background:'none',border:'none',cursor:'pointer'}}>← Back to list</button>
+      <button type="button" onClick={() => setEditing(null)} style={{color:'#c9940a',background:'none',border:'none',cursor:'pointer',textAlign:'left',fontSize:14,fontWeight:'bold'}}>← Back</button>
       <div><FieldLabel text="Name" /><input required value={editing.name} onChange={e=>setEditing(f=>({...f,name:e.target.value}))} style={inp} /></div>
-      <div>
-        <FieldLabel text="Section" />
-        <select value={editing.section} onChange={e=>setEditing(f=>({...f,section:e.target.value}))} style={inp}>
-          {SECTIONS.map(s => <option key={s} value={s}>{s}</option>)}
-        </select>
-      </div>
+      <div><FieldLabel text="Section" /><select value={editing.section} onChange={e=>setEditing(f=>({...f,section:e.target.value}))} style={inp}>{SECTIONS.map(s=><option key={s} value={s}>{s}</option>)}</select></div>
       <div><FieldLabel text="Description" /><textarea rows={3} value={editing.description||''} onChange={e=>setEditing(f=>({...f,description:e.target.value}))} style={{...inp,resize:'none'}} /></div>
       <div className="grid grid-cols-2 gap-3">
         <div><FieldLabel text="Price (e.g. $13)" /><input value={editing.price||''} onChange={e=>setEditing(f=>({...f,price:e.target.value}))} placeholder="$13" style={inp} /></div>
         <div><FieldLabel text="Price Note" /><input value={editing.price_note||''} onChange={e=>setEditing(f=>({...f,price_note:e.target.value}))} placeholder="Single / Double" style={inp} /></div>
       </div>
       <div className="grid grid-cols-2 gap-3">
-        <div><FieldLabel text="Badge Text" /><input value={editing.badge||''} onChange={e=>setEditing(f=>({...f,badge:e.target.value}))} placeholder="Best Seller" style={inp} /></div>
+        <div><FieldLabel text="Badge" /><input value={editing.badge||''} onChange={e=>setEditing(f=>({...f,badge:e.target.value}))} placeholder="Best Seller" style={inp} /></div>
         <div><FieldLabel text="Badge Color" /><input type="color" value={editing.badge_color||'#c9940a'} onChange={e=>setEditing(f=>({...f,badge_color:e.target.value}))} style={{...inp,height:42,padding:4}} /></div>
       </div>
       <div><FieldLabel text="Image URL" /><input value={editing.image_url||''} onChange={e=>setEditing(f=>({...f,image_url:e.target.value}))} placeholder="https://..." style={inp} /></div>
       <div className="flex gap-4">
-        <label className="flex items-center gap-2 text-sm font-bold cursor-pointer" style={{color:'#2a1200'}}>
-          <input type="checkbox" checked={!!editing.is_featured} onChange={e=>setEditing(f=>({...f,is_featured:e.target.checked}))} /> Featured on Home
-        </label>
-        <label className="flex items-center gap-2 text-sm font-bold cursor-pointer" style={{color:'#2a1200'}}>
-          <input type="checkbox" checked={!!editing.is_active} onChange={e=>setEditing(f=>({...f,is_active:e.target.checked}))} /> Active (visible)
-        </label>
+        <label style={{display:'flex',alignItems:'center',gap:8,fontSize:14,fontWeight:'bold',color:'#2a1200',cursor:'pointer'}}><input type="checkbox" checked={!!editing.is_featured} onChange={e=>setEditing(f=>({...f,is_featured:e.target.checked}))} /> Featured</label>
+        <label style={{display:'flex',alignItems:'center',gap:8,fontSize:14,fontWeight:'bold',color:'#2a1200',cursor:'pointer'}}><input type="checkbox" checked={!!editing.is_active} onChange={e=>setEditing(f=>({...f,is_active:e.target.checked}))} /> Active</label>
       </div>
-      <div><FieldLabel text="Sort Order" /><input type="number" value={editing.sort_order||0} onChange={e=>setEditing(f=>({...f,sort_order:parseInt(e.target.value)}))} style={inp} /></div>
       <button type="submit" disabled={saving} className="w-full py-4 rounded-full font-black text-sm uppercase tracking-widest" style={{background:'#1a0800',color:'#e8b800'}}>
         {saving ? 'Saving...' : editing.id ? 'Update Item' : 'Add Item'}
       </button>
@@ -170,18 +142,18 @@ function MenuTab() {
 
   return (
     <div>
-      <button onClick={() => setEditing(BLANK)} className="mb-5 px-5 py-2.5 rounded-full font-black text-sm uppercase tracking-widest" style={{background:'#c9940a',color:'#fff',border:'none',cursor:'pointer'}}>+ Add Menu Item</button>
+      <button onClick={() => setEditing(BLANK)} className="mb-5 px-5 py-2.5 rounded-full font-black text-sm uppercase tracking-widest" style={{background:'#c9940a',color:'#fff',border:'none',cursor:'pointer'}}>+ Add Item</button>
       <div className="flex flex-col gap-2">
         {items.map(item => (
-          <div key={item.id} className="flex items-center justify-between gap-3 p-3 rounded-2xl" style={{background:'#fff',border:`1.5px solid ${item.is_active?'rgba(180,120,0,0.15)':'rgba(180,120,0,0.07)'}`,opacity:item.is_active?1:0.5}}>
+          <div key={item.id} className="flex items-center justify-between gap-3 p-3 rounded-2xl" style={{background:'#fff',border:`1.5px solid rgba(180,120,0,0.15)`,opacity:item.is_active?1:0.5}}>
             <div className="flex-1 min-w-0">
               <p className="font-bold text-sm truncate" style={{color:'#2a1200'}}>{item.name}</p>
-              <p className="text-xs" style={{color:'rgba(61,34,0,0.45)'}}>{item.section} · {item.price}{item.is_featured?' · ⭐ Featured':''}</p>
+              <p className="text-xs" style={{color:'rgba(61,34,0,0.45)'}}>{item.section} · {item.price}{item.is_featured?' · ⭐':''}</p>
             </div>
             <div className="flex gap-2 shrink-0">
               <button onClick={() => toggleActive(item)} className="text-xs px-3 py-1.5 rounded-full font-bold" style={{background:item.is_active?'#fee2e2':'#dcfce7',color:item.is_active?'#b91c1c':'#15803d',border:'none',cursor:'pointer'}}>{item.is_active?'Hide':'Show'}</button>
               <button onClick={() => setEditing(item)} className="text-xs px-3 py-1.5 rounded-full font-bold" style={{background:'rgba(201,148,10,0.1)',color:'#7a4f00',border:'none',cursor:'pointer'}}>Edit</button>
-              <button onClick={() => deleteItem(item.id)} className="text-xs px-3 py-1.5 rounded-full font-bold" style={{background:'#fee2e2',color:'#b91c1c',border:'none',cursor:'pointer'}}>Delete</button>
+              <button onClick={() => deleteItem(item.id)} className="text-xs px-3 py-1.5 rounded-full font-bold" style={{background:'#fee2e2',color:'#b91c1c',border:'none',cursor:'pointer'}}>Del</button>
             </div>
           </div>
         ))}
@@ -190,7 +162,6 @@ function MenuTab() {
   );
 }
 
-// ─── EVENTS TAB ────────────────────────────────────────────
 function EventsTab() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -200,15 +171,14 @@ function EventsTab() {
   const BLANK = { title:'', date:'', time_start:'', time_end:'', location_name:'', address:'', description:'', image_url:'', facebook_event_url:'', is_featured:false, is_active:true };
 
   const load = async () => {
-    const { data } = await supabase.from('events').select('*').order('date', {ascending: true});
+    const { data } = await supabase.from('events').select('*').order('date', {ascending:true});
     if (data) setEvents(data);
     setLoading(false);
   };
   useEffect(() => { load(); }, []);
 
   const saveEvent = async (e) => {
-    e.preventDefault();
-    setSaving(true);
+    e.preventDefault(); setSaving(true);
     const { id, ...fields } = editing;
     if (id) { await supabase.from('events').update(fields).eq('id', id); }
     else { await supabase.from('events').insert(fields); }
@@ -217,15 +187,14 @@ function EventsTab() {
 
   const deleteEvent = async (id) => {
     if (!window.confirm('Delete this event?')) return;
-    await supabase.from('events').delete().eq('id', id);
-    load();
+    await supabase.from('events').delete().eq('id', id); load();
   };
 
   if (loading) return <div className="flex justify-center py-10"><div className="w-8 h-8 border-4 border-amber-200 border-t-amber-600 rounded-full animate-spin" /></div>;
 
   if (editing) return (
     <form onSubmit={saveEvent} className="flex flex-col gap-4">
-      <button type="button" onClick={() => setEditing(null)} className="text-sm font-bold text-left" style={{color:'#c9940a',background:'none',border:'none',cursor:'pointer'}}>← Back to list</button>
+      <button type="button" onClick={() => setEditing(null)} style={{color:'#c9940a',background:'none',border:'none',cursor:'pointer',textAlign:'left',fontSize:14,fontWeight:'bold'}}>← Back</button>
       <div><FieldLabel text="Title" /><input required value={editing.title} onChange={e=>setEditing(f=>({...f,title:e.target.value}))} style={inp} /></div>
       <div><FieldLabel text="Date" /><input type="date" value={editing.date||''} onChange={e=>setEditing(f=>({...f,date:e.target.value}))} style={inp} /></div>
       <div className="grid grid-cols-2 gap-3">
@@ -238,8 +207,8 @@ function EventsTab() {
       <div><FieldLabel text="Image URL" /><input value={editing.image_url||''} onChange={e=>setEditing(f=>({...f,image_url:e.target.value}))} placeholder="https://..." style={inp} /></div>
       <div><FieldLabel text="Facebook Event URL" /><input value={editing.facebook_event_url||''} onChange={e=>setEditing(f=>({...f,facebook_event_url:e.target.value}))} placeholder="https://facebook.com/events/..." style={inp} /></div>
       <div className="flex gap-4">
-        <label className="flex items-center gap-2 text-sm font-bold cursor-pointer" style={{color:'#2a1200'}}><input type="checkbox" checked={!!editing.is_featured} onChange={e=>setEditing(f=>({...f,is_featured:e.target.checked}))} /> Featured</label>
-        <label className="flex items-center gap-2 text-sm font-bold cursor-pointer" style={{color:'#2a1200'}}><input type="checkbox" checked={!!editing.is_active} onChange={e=>setEditing(f=>({...f,is_active:e.target.checked}))} /> Active</label>
+        <label style={{display:'flex',alignItems:'center',gap:8,fontSize:14,fontWeight:'bold',color:'#2a1200',cursor:'pointer'}}><input type="checkbox" checked={!!editing.is_featured} onChange={e=>setEditing(f=>({...f,is_featured:e.target.checked}))} /> Featured</label>
+        <label style={{display:'flex',alignItems:'center',gap:8,fontSize:14,fontWeight:'bold',color:'#2a1200',cursor:'pointer'}}><input type="checkbox" checked={!!editing.is_active} onChange={e=>setEditing(f=>({...f,is_active:e.target.checked}))} /> Active</label>
       </div>
       <button type="submit" disabled={saving} className="w-full py-4 rounded-full font-black text-sm uppercase tracking-widest" style={{background:'#1a0800',color:'#e8b800'}}>
         {saving ? 'Saving...' : editing.id ? 'Update Event' : 'Add Event'}
@@ -251,7 +220,7 @@ function EventsTab() {
     <div>
       <button onClick={() => setEditing(BLANK)} className="mb-5 px-5 py-2.5 rounded-full font-black text-sm uppercase tracking-widest" style={{background:'#c9940a',color:'#fff',border:'none',cursor:'pointer'}}>+ Add Event</button>
       {events.length === 0 ? (
-        <p className="text-sm text-center py-8" style={{color:'rgba(61,34,0,0.4)'}}>No events yet. Add your first one!</p>
+        <p className="text-sm text-center py-8" style={{color:'rgba(61,34,0,0.4)'}}>No events yet.</p>
       ) : (
         <div className="flex flex-col gap-2">
           {events.map(ev => (
@@ -272,7 +241,6 @@ function EventsTab() {
   );
 }
 
-// ─── MAIN ADMIN PAGE ───────────────────────────────────────
 const TABS = ['🚚 Truck Status', '🧀 Menu', '📅 Events'];
 
 export default function AdminPage() {

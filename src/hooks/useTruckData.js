@@ -3,42 +3,38 @@ import { supabase } from '../api/supabaseClient';
 
 const DEFAULT = {
   status: 'closed',
-  address: '',
+  address: 'Akron, Ohio',
+  home_address: 'Akron, Ohio',
   latitude: null,
   longitude: null,
   hours_open: '11:00 AM',
   hours_close: '6:00 PM',
-  open_days: [],
+  open_days: ['Wednesday', 'Thursday', 'Friday', 'Saturday'],
   note: '',
 };
 
 export function useTruckData() {
-  const [data, setData] = useState(DEFAULT);
-  const [loading, setLoading] = useState(true);
+  const [truckData, setTruckData] = useState(DEFAULT);
 
   useEffect(() => {
-    async function fetchStatus() {
-      const { data: rows, error } = await supabase
-        .from('truck_status')
-        .select('*')
-        .eq('id', 1)
-        .single();
-      if (!error && rows) setData(rows);
-      setLoading(false);
-    }
-    fetchStatus();
+    supabase
+      .from('truck_status')
+      .select('*')
+      .eq('id', 1)
+      .single()
+      .then(({ data }) => { if (data) setTruckData(data); });
 
     const channel = supabase
-      .channel('truck_status_changes')
+      .channel('truck_status_realtime')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'truck_status' }, (payload) => {
-        if (payload.new) setData(payload.new);
+        if (payload.new) setTruckData(payload.new);
       })
       .subscribe();
 
     return () => supabase.removeChannel(channel);
   }, []);
 
-  return { data, loading };
+  return truckData;
 }
 
 export async function saveTruckData(updates) {

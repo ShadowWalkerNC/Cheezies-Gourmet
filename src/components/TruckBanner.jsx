@@ -9,14 +9,13 @@ const statusConfig = {
 };
 
 export default function TruckBanner() {
-  const { data: truckData } = useTruckData();
+  const truckData = useTruckData();
   const navigate = useNavigate();
 
   const status = truckData?.status || "closed";
   const sc = statusConfig[status] || statusConfig.closed;
   const isClosed = status === "closed";
-  const hasLive = !isClosed && truckData?.latitude && truckData?.longitude;
-  const address = hasLive ? truckData.address : (truckData?.address || "Akron, Ohio");
+  const address = !isClosed && truckData?.address ? truckData.address : (truckData?.home_address || "Akron, Ohio");
 
   return (
     <div
