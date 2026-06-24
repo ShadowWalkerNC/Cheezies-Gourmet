@@ -11,7 +11,7 @@ const FieldLabel = ({ text }) => <label className="text-xs font-black uppercase 
 
 // ─── TRUCK STATUS TAB ──────────────────────────────────────
 function TruckTab() {
-  const truckData = useTruckData(); // plain object (Step 3 shape)
+  const truckData = useTruckData();
   const [form, setForm] = useState(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -50,23 +50,19 @@ function TruckTab() {
           ))}
         </div>
       </div>
-
       <div>
         <FieldLabel text="Today's Address" />
         <input value={form.address||''} onChange={e=>set('address',e.target.value)} placeholder="e.g. 123 Main St, Akron" style={inp} />
       </div>
-
       <div className="grid grid-cols-2 gap-3">
         <div><FieldLabel text="Latitude" /><input value={form.latitude||''} onChange={e=>set('latitude',e.target.value)} placeholder="41.0814" style={inp} /></div>
         <div><FieldLabel text="Longitude" /><input value={form.longitude||''} onChange={e=>set('longitude',e.target.value)} placeholder="-81.5190" style={inp} /></div>
       </div>
       <p className="text-xs" style={{color:'rgba(61,34,0,0.4)'}}>Tip: Google Maps → right-click location → copy lat/lng. Leave blank to hide map pin.</p>
-
       <div className="grid grid-cols-2 gap-3">
         <div><FieldLabel text="Opens" /><input value={form.hours_open||''} onChange={e=>set('hours_open',e.target.value)} placeholder="11:00 AM" style={inp} /></div>
         <div><FieldLabel text="Closes" /><input value={form.hours_close||''} onChange={e=>set('hours_close',e.target.value)} placeholder="6:00 PM" style={inp} /></div>
       </div>
-
       <div>
         <FieldLabel text="Open Days" />
         <div className="flex flex-wrap gap-2">
@@ -79,12 +75,10 @@ function TruckTab() {
           ))}
         </div>
       </div>
-
       <div>
         <FieldLabel text="Today's Note (optional)" />
         <textarea rows={2} value={form.note||''} onChange={e=>set('note',e.target.value)} placeholder="e.g. Cash only today!" style={{...inp, resize:'none'}} />
       </div>
-
       <button type="submit" disabled={saving} className="w-full py-4 rounded-full font-black text-sm uppercase tracking-widest" style={{background:'#1a0800',color:'#e8b800',opacity:saving?0.7:1}}>
         {saving ? 'Saving...' : saved ? '✅ Saved!' : 'Save & Publish'}
       </button>
@@ -269,33 +263,95 @@ function EventsTab() {
 }
 
 // ─── MAIN ADMIN PAGE ──────────────────────────────────────
-const ADMIN_PASS = import.meta.env.VITE_ADMIN_PASSWORD || 'cheezies2024';
-
 export default function AdminPage() {
-  const [authed, setAuthed] = useState(false);
-  const [pass, setPass] = useState('');
+  const [session, setSession] = useState(undefined); // undefined = loading
+  const [email, setEmail] = useState('');
+  const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
   const [tab, setTab] = useState(0);
 
-  if (!authed) return (
+  useEffect(() => {
+    // Restore existing session on mount
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session ?? null);
+    });
+    // Listen for auth state changes (handles magic link redirect)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleMagicLink = async (e) => {
+    e.preventDefault();
+    setSending(true);
+    await supabase.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo: `${window.location.origin}/admin` },
+    });
+    setSending(false);
+    setSent(true);
+  };
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setSession(null);
+    setSent(false);
+    setEmail('');
+  };
+
+  // Still checking session
+  if (session === undefined) return (
+    <div className="min-h-screen flex items-center justify-center" style={{background:'#fdf6e3'}}>
+      <div className="w-8 h-8 border-4 border-amber-200 border-t-amber-600 rounded-full animate-spin" />
+    </div>
+  );
+
+  // Not logged in — show magic link form
+  if (!session) return (
     <div className="min-h-screen flex items-center justify-center px-6" style={{background:'#fdf6e3'}}>
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <p className="text-3xl mb-2">🧀</p>
-          <h1 className="font-black text-2xl" style={{color:'#1a0800'}}>Admin Login</h1>
+          <p className="text-4xl mb-3">🧀</p>
+          <h1 className="font-black text-2xl mb-1" style={{color:'#1a0800'}}>Admin Login</h1>
+          <p className="text-sm" style={{color:'rgba(61,34,0,0.5)'}}>We'll email you a magic link to sign in.</p>
         </div>
-        <form onSubmit={e => { e.preventDefault(); if (pass === ADMIN_PASS) setAuthed(true); }} className="flex flex-col gap-4">
-          <input type="password" value={pass} onChange={e=>setPass(e.target.value)} placeholder="Password" style={inp} autoFocus />
-          <button type="submit" className="w-full py-4 rounded-full font-black text-sm uppercase tracking-widest" style={{background:'#1a0800',color:'#e8b800',border:'none',cursor:'pointer'}}>Enter</button>
-        </form>
+        {sent ? (
+          <div className="text-center p-6 rounded-2xl" style={{background:'#fff',border:'1.5px solid rgba(180,120,0,0.2)'}}>
+            <p className="text-2xl mb-3">📬</p>
+            <p className="font-black text-base mb-1" style={{color:'#1a0800'}}>Check your email!</p>
+            <p className="text-sm" style={{color:'rgba(61,34,0,0.55)'}}>Click the link we sent to <strong>{email}</strong> to sign in. The link expires in 1 hour.</p>
+            <button onClick={() => setSent(false)} className="mt-4 text-xs font-bold" style={{color:'#c9940a',background:'none',border:'none',cursor:'pointer'}}>Use a different email</button>
+          </div>
+        ) : (
+          <form onSubmit={handleMagicLink} className="flex flex-col gap-4">
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="your@email.com"
+              style={inp}
+              autoFocus
+            />
+            <button type="submit" disabled={sending} className="w-full py-4 rounded-full font-black text-sm uppercase tracking-widest" style={{background:'#1a0800',color:'#e8b800',border:'none',cursor:'pointer',opacity:sending?0.7:1}}>
+              {sending ? 'Sending...' : 'Send Magic Link ✨'}
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );
 
+  // Logged in — show admin panel
   return (
     <div className="min-h-screen" style={{background:'#fdf6e3'}}>
       <div className="flex items-center justify-between px-6 py-4" style={{background:'#fff',borderBottom:'1.5px solid #e8e0d0'}}>
-        <h1 className="font-black text-xl" style={{color:'#1a0800'}}>🧀 Cheezies Admin</h1>
-        <button onClick={() => setAuthed(false)} className="text-xs font-bold px-3 py-1.5 rounded-full" style={{background:'#f5f5f5',color:'#666',border:'none',cursor:'pointer'}}>Logout</button>
+        <div>
+          <h1 className="font-black text-xl" style={{color:'#1a0800'}}>🧀 Cheezies Admin</h1>
+          <p className="text-xs" style={{color:'rgba(61,34,0,0.4)'}}>{session.user.email}</p>
+        </div>
+        <button onClick={handleLogout} className="text-xs font-bold px-3 py-1.5 rounded-full" style={{background:'#f5f5f5',color:'#666',border:'none',cursor:'pointer'}}>Logout</button>
       </div>
       <div className="flex border-b" style={{background:'#fff',borderColor:'#e8e0d0'}}>
         {TABS.map((t, i) => (
