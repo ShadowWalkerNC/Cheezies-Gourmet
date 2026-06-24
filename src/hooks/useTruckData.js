@@ -1,45 +1,40 @@
-import { useState, useEffect } from 'react';
-import { supabase } from '../api/supabaseClient';
+import { useState, useEffect } from "react";
 
-const DEFAULT = {
-  status: 'closed',
-  address: 'Akron, Ohio',
-  home_address: 'Akron, Ohio',
+// Default static truck info — edit here or via the Admin page
+const STATIC_DEFAULT = {
+  status: "closed",
+  address: "Akron, Ohio",
+  home_address: "Akron, Ohio",
+  hours_open: "11:00 AM",
+  hours_close: "6:00 PM",
+  open_days: ["Wednesday", "Thursday", "Friday", "Saturday"],
+  note: "",
   latitude: null,
   longitude: null,
-  hours_open: '11:00 AM',
-  hours_close: '6:00 PM',
-  open_days: ['Wednesday', 'Thursday', 'Friday', 'Saturday'],
-  note: '',
 };
 
+function getTruckData() {
+  try {
+    const saved = localStorage.getItem("cheezies_truck");
+    if (saved) return { ...STATIC_DEFAULT, ...JSON.parse(saved) };
+  } catch {}
+  return STATIC_DEFAULT;
+}
+
+let listeners = [];
+
+export function notifyTruckUpdate(data) {
+  try { localStorage.setItem("cheezies_truck", JSON.stringify(data)); } catch {}
+  listeners.forEach(fn => fn(data));
+}
+
 export function useTruckData() {
-  const [truckData, setTruckData] = useState(DEFAULT);
+  const [truckData, setTruckData] = useState(getTruckData);
 
   useEffect(() => {
-    supabase
-      .from('truck_status')
-      .select('*')
-      .eq('id', 1)
-      .single()
-      .then(({ data }) => { if (data) setTruckData(data); });
-
-    const channel = supabase
-      .channel('truck_status_realtime')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'truck_status' }, (payload) => {
-        if (payload.new) setTruckData(payload.new);
-      })
-      .subscribe();
-
-    return () => supabase.removeChannel(channel);
+    listeners.push(setTruckData);
+    return () => { listeners = listeners.filter(fn => fn !== setTruckData); };
   }, []);
 
   return truckData;
-}
-
-export async function saveTruckData(updates) {
-  const { error } = await supabase
-    .from('truck_status')
-    .upsert({ id: 1, ...updates, updated_at: new Date().toISOString() });
-  return !error;
 }
