@@ -9,16 +9,28 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b410ceece31b13c728497b/icon-192.png",
+      "src": "/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b410ceece31b13c728497b/icon-512.png",
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
   "categories": ["food", "lifestyle"],
@@ -28,6 +40,16 @@
       "name": "View Menu",
       "url": "/Menu",
       "description": "Browse our full menu"
+    },
+    {
+      "name": "Find Us",
+      "url": "/FindUs",
+      "description": "See where the truck is today"
+    },
+    {
+      "name": "Gift Cards",
+      "url": "/GiftCards",
+      "description": "Buy a Cheezies gift card"
     },
     {
       "name": "Catering",
