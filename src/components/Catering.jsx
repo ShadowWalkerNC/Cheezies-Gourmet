@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { base44 } from "@/api/base44Client";
+import { supabase } from "@/api/supabaseClient";
 import { useToast } from "@/components/ui/use-toast";
 import { ChevronDown } from "lucide-react";
 import BottomSheet from "./BottomSheet";
@@ -90,7 +91,6 @@ function SheetSelect({ label, value, onChange, options, placeholder, required })
           style={{ color: "rgba(180,120,0,0.5)", position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)" }}
         />
       </button>
-      {/* Hidden native input for form validation */}
       {required && (
         <input
           tabIndex={-1}
@@ -120,16 +120,37 @@ export default function Catering() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Optimistic UI: immediately show success
     setSubmitting(true);
+
+    const submitted = { ...form };
+
+    // Optimistic UI — show success immediately
     setDone(true);
     setForm({ name: "", email: "", phone: "", event_type: "", date: "", guests: "", message: "" });
     toast({ title: "Inquiry Sent! 🎉", description: "We'll be in touch within 24 hours." });
-    // Fire-and-forget background send
-    base44.functions.invoke("sendNotification", {
-      type: "catering_inquiry",
-      data: { name: form.name, email: form.email, phone: form.phone, eventType: form.event_type, guestCount: form.guests, date: form.date, message: form.message },
-    }).finally(() => setSubmitting(false));
+
+    // 1) Save to Supabase catering_inquiries (primary record)
+    supabase
+      .from("catering_inquiries")
+      .insert([{
+        name: submitted.name,
+        email: submitted.email,
+        phone: submitted.phone || null,
+        event_type: submitted.event_type || null,
+        event_date: submitted.date || null,
+        guest_count: submitted.guests || null,
+        message: submitted.message || null,
+        status: "new",
+      }])
+      .then(({ error }) => { if (error) console.warn("[Supabase] catering_inquiries:", error.message); });
+
+    // 2) Fire-and-forget legacy notification (non-blocking)
+    base44.functions
+      .invoke("sendNotification", {
+        type: "catering_inquiry",
+        data: { name: submitted.name, email: submitted.email, phone: submitted.phone, eventType: submitted.event_type, guestCount: submitted.guests, date: submitted.date, message: submitted.message },
+      })
+      .finally(() => setSubmitting(false));
   };
 
   return (

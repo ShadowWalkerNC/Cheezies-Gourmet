@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { supabase } from "@/api/supabaseClient";
 
 const FORMSPREE_CONTACT = "https://formspree.io/f/xpqgqoaa";
 
@@ -15,6 +16,7 @@ export default function ContactForm() {
     e.preventDefault();
     setStatus("sending");
     try {
+      // Primary: Formspree (email notification)
       const res = await fetch(FORMSPREE_CONTACT, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -22,7 +24,13 @@ export default function ContactForm() {
       });
       if (res.ok) {
         setStatus("success");
+        const submitted = { ...form };
         setForm({ name: "", email: "", phone: "", message: "" });
+        // Secondary: Supabase log (fire-and-forget — never blocks the user)
+        supabase
+          .from("contact_submissions")
+          .insert([{ name: submitted.name, email: submitted.email, phone: submitted.phone || null, message: submitted.message, source: "contact_form" }])
+          .then(({ error }) => { if (error) console.warn("[Supabase] contact_submissions:", error.message); });
       } else {
         setStatus("error");
       }
