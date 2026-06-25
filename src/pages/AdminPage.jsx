@@ -2,10 +2,13 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../api/supabaseClient';
 import { useTruckData, saveTruckData } from '../hooks/useTruckData';
 import PnLDashboard from '../components/PnLDashboard';
+import BroadcastTab from '../components/BroadcastTab';
 
 const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-const TABS = ['Truck Status','Menu Items','Events','Reports'];
+const TABS = ['Truck Status','Menu Items','Events','Reports','Broadcast'];
 const SECTIONS = ['Signature Creations','Gourmet Melts','Sides & Refreshments','Add-Ons & Extras'];
+// Only these emails can trigger a magic link — everyone else is silently rejected
+const ALLOWED_EMAILS = ['cheeziesgourmet@gmail.com'];
 
 const inp = { background:'#fffbf0', border:'1.5px solid rgba(180,120,0,0.25)', borderRadius:10, padding:'10px 14px', color:'#2a1200', fontSize:14, outline:'none', width:'100%', boxSizing:'border-box' };
 const FieldLabel = ({ text }) => <label className="text-xs font-black uppercase tracking-widest mb-1.5 block" style={{color:'#c9940a'}}>{text}</label>;
@@ -269,6 +272,7 @@ export default function AdminPage() {
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
+  const [denied, setDenied] = useState(false);
   const [tab, setTab] = useState(0);
 
   useEffect(() => {
@@ -283,6 +287,12 @@ export default function AdminPage() {
 
   const handleMagicLink = async (e) => {
     e.preventDefault();
+    // Allowlist check — block non-approved emails before hitting Supabase
+    if (!ALLOWED_EMAILS.includes(email.trim().toLowerCase())) {
+      setDenied(true);
+      return;
+    }
+    setDenied(false);
     setSending(true);
     await supabase.auth.signInWithOtp({
       email,
@@ -296,6 +306,7 @@ export default function AdminPage() {
     await supabase.auth.signOut();
     setSession(null);
     setSent(false);
+    setDenied(false);
     setEmail('');
   };
 
@@ -326,11 +337,14 @@ export default function AdminPage() {
               type="email"
               required
               value={email}
-              onChange={e => setEmail(e.target.value)}
+              onChange={e => { setEmail(e.target.value); setDenied(false); }}
               placeholder="your@email.com"
-              style={inp}
+              style={{...inp, borderColor: denied ? '#b91c1c' : 'rgba(180,120,0,0.25)'}}
               autoFocus
             />
+            {denied && (
+              <p className="text-xs font-bold" style={{color:'#b91c1c'}}>⛔ That email is not authorized to access this admin panel.</p>
+            )}
             <button type="submit" disabled={sending} className="w-full py-4 rounded-full font-black text-sm uppercase tracking-widest" style={{background:'#1a0800',color:'#e8b800',border:'none',cursor:'pointer',opacity:sending?0.7:1}}>
               {sending ? 'Sending...' : 'Send Magic Link ✨'}
             </button>
@@ -361,6 +375,7 @@ export default function AdminPage() {
         {tab === 1 && <MenuTab />}
         {tab === 2 && <EventsTab />}
         {tab === 3 && <PnLDashboard />}
+        {tab === 4 && <BroadcastTab />}
       </div>
     </div>
   );
