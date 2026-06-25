@@ -11,39 +11,112 @@ const SECTION_NOTES = {
 
 function MenuItemCard({ item, index }) {
   const [open, setOpen] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const badgeColor = item.badge_color;
 
   if (item.image_url) {
     return (
       <motion.div
-        initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.06 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.06 }}
         className="rounded-3xl overflow-hidden cursor-pointer"
         onClick={() => setOpen(!open)}
-        style={{ background: "#fff", border: open ? "1.5px solid rgba(201,148,10,0.45)" : "1px solid rgba(180,120,0,0.14)", boxShadow: open ? "0 12px 40px rgba(180,120,0,0.18)" : "0 2px 12px rgba(180,120,0,0.07)", transition: "box-shadow 0.25s ease, border-color 0.25s ease" }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{
+          background: "#fff",
+          border: open
+            ? "1.5px solid rgba(201,148,10,0.55)"
+            : hovered
+            ? "1.5px solid rgba(201,148,10,0.35)"
+            : "1px solid rgba(180,120,0,0.14)",
+          boxShadow: open
+            ? "0 16px 48px rgba(180,120,0,0.22)"
+            : hovered
+            ? "0 8px 28px rgba(180,120,0,0.16)"
+            : "0 2px 12px rgba(180,120,0,0.07)",
+          transform: hovered && !open ? "translateY(-3px)" : "translateY(0)",
+          transition: "box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease",
+        }}
       >
         <div className="relative h-44 overflow-hidden">
-          <img src={item.image_url} alt={item.name} className="w-full h-full object-cover transition-transform duration-700" style={{ transform: open ? "scale(1.07)" : "scale(1)" }} />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(30,12,0,0.72) 0%, transparent 55%)" }} />
+          <img
+            src={item.image_url}
+            alt={item.name}
+            className="w-full h-full object-cover"
+            style={{
+              transform: open ? "scale(1.09)" : hovered ? "scale(1.05)" : "scale(1)",
+              transition: "transform 0.6s ease",
+            }}
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background: hovered
+                ? "linear-gradient(to top, rgba(30,12,0,0.82) 0%, transparent 55%)"
+                : "linear-gradient(to top, rgba(30,12,0,0.72) 0%, transparent 55%)",
+              transition: "background 0.3s ease",
+            }}
+          />
           {item.badge && (
-            <span className="absolute top-2.5 left-2.5 text-xs font-black px-2.5 py-1 rounded-full"
-              style={{ background: badgeColor || "#c9940a", color: "#fff8e8", letterSpacing: "0.05em" }}>
+            <span
+              className="absolute top-2.5 left-2.5 text-xs font-black px-2.5 py-1 rounded-full"
+              style={{ background: badgeColor || "#c9940a", color: "#fff8e8", letterSpacing: "0.05em" }}
+            >
               {item.badge}
             </span>
           )}
           <div className="absolute bottom-0 left-0 right-0 px-4 pb-3 flex items-end justify-between">
             <h4 className="font-black text-base text-white uppercase tracking-tight leading-tight">{item.name}</h4>
-            <span className="font-black text-sm px-2.5 py-1 rounded-full shrink-0 ml-2" style={{ background: "rgba(26,8,0,0.7)", color: "#e8b800" }}>{item.price_text || `$${item.price}`}</span>
+            <span
+              className="font-black text-sm px-2.5 py-1 rounded-full shrink-0 ml-2"
+              style={{
+                background: hovered ? "rgba(201,148,10,0.9)" : "rgba(26,8,0,0.7)",
+                color: "#fff8e8",
+                transition: "background 0.25s ease",
+              }}
+            >
+              {item.price_text || `$${item.price}`}
+            </span>
           </div>
         </div>
         <AnimatePresence initial={false}>
           {open && (
-            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }} className="overflow-hidden">
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="overflow-hidden"
+            >
               <div className="px-4 py-4">
-                <p className="text-sm leading-relaxed mb-3" style={{ color: "rgba(61,34,0,0.7)" }}>{item.description}</p>
-                <a href="https://cheeziesgourmetohio.square.site/" target="_blank" rel="noopener noreferrer"
+                <p className="text-sm leading-relaxed mb-3" style={{ color: "rgba(61,34,0,0.7)" }}>
+                  {item.description}
+                </p>
+                <a
+                  href="https://cheeziesgourmetohio.square.site/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={e => e.stopPropagation()}
-                  className="inline-flex items-center px-5 py-2.5 rounded-full font-bold text-sm transition-opacity duration-200 hover:opacity-85"
-                  style={{ background: "#c9940a", color: "#fff", textDecoration: "none" }}>
+                  className="inline-flex items-center px-5 py-2.5 rounded-full font-bold text-sm"
+                  style={{
+                    background: "#c9940a",
+                    color: "#fff",
+                    textDecoration: "none",
+                    transition: "background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease",
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.background = "#b8820a";
+                    e.currentTarget.style.transform = "translateY(-1px)";
+                    e.currentTarget.style.boxShadow = "0 4px 14px rgba(201,148,10,0.4)";
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.background = "#c9940a";
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.boxShadow = "none";
+                  }}
+                >
                   Order This →
                 </a>
               </div>
@@ -54,33 +127,94 @@ function MenuItemCard({ item, index }) {
     );
   }
 
+  // Text-only card
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.06 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.06 }}
       className="rounded-2xl px-4 py-3 cursor-pointer"
       onClick={() => setOpen(!open)}
-      style={{ background: "#fff", border: open ? "1.5px solid rgba(201,148,10,0.4)" : "1px solid rgba(180,120,0,0.12)", boxShadow: open ? "0 6px 24px rgba(180,120,0,0.12)" : "none" }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        background: hovered ? "#fffbf2" : "#fff",
+        border: open
+          ? "1.5px solid rgba(201,148,10,0.4)"
+          : hovered
+          ? "1.5px solid rgba(201,148,10,0.25)"
+          : "1px solid rgba(180,120,0,0.12)",
+        boxShadow: open
+          ? "0 6px 24px rgba(180,120,0,0.12)"
+          : hovered
+          ? "0 4px 16px rgba(180,120,0,0.09)"
+          : "none",
+        transform: hovered && !open ? "translateY(-2px)" : "translateY(0)",
+        transition: "background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease",
+      }}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-0.5 flex-wrap">
             <h4 className="font-bold text-sm" style={{ color: "#2a1200" }}>{item.name}</h4>
-            {item.badge && <span className="text-[10px] font-black px-2 py-0.5 rounded" style={{ background: badgeColor, color: "#fff8e8" }}>{item.badge}</span>}
+            {item.badge && (
+              <span className="text-[10px] font-black px-2 py-0.5 rounded" style={{ background: badgeColor, color: "#fff8e8" }}>
+                {item.badge}
+              </span>
+            )}
           </div>
-          <p className={`text-sm leading-relaxed ${open ? "" : "line-clamp-1"}`} style={{ color: "rgba(61,34,0,0.55)" }}>{item.description}</p>
-          {item.price_note && open && <p className="text-xs mt-1" style={{ color: "rgba(61,34,0,0.4)" }}>{item.price_note}</p>}
+          <p className={`text-sm leading-relaxed ${open ? "" : "line-clamp-1"}`} style={{ color: "rgba(61,34,0,0.55)" }}>
+            {item.description}
+          </p>
+          {item.price_note && open && (
+            <p className="text-xs mt-1" style={{ color: "rgba(61,34,0,0.4)" }}>{item.price_note}</p>
+          )}
           {open && (
-            <a href="https://cheeziesgourmetohio.square.site/" target="_blank" rel="noopener noreferrer"
+            <a
+              href="https://cheeziesgourmetohio.square.site/"
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={e => e.stopPropagation()}
-              className="inline-flex items-center mt-3 px-4 py-2 rounded-full font-bold text-sm transition-opacity hover:opacity-85"
-              style={{ background: "#c9940a", color: "#fff", textDecoration: "none" }}>
+              className="inline-flex items-center mt-3 px-4 py-2 rounded-full font-bold text-sm"
+              style={{
+                background: "#c9940a",
+                color: "#fff",
+                textDecoration: "none",
+                transition: "background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease",
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = "#b8820a";
+                e.currentTarget.style.transform = "translateY(-1px)";
+                e.currentTarget.style.boxShadow = "0 4px 14px rgba(201,148,10,0.4)";
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = "#c9940a";
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "none";
+              }}
+            >
               Order This →
             </a>
           )}
         </div>
         <div className="flex flex-col items-end gap-1 shrink-0">
-          <span className="font-black text-sm" style={{ color: "#c9940a" }}>{item.price_text || `$${item.price}`}</span>
-          <ChevronDown size={16} style={{ color: "#c9940a", transition: "transform 0.3s", transform: open ? "rotate(180deg)" : "rotate(0)" }} />
+          <span
+            className="font-black text-sm"
+            style={{
+              color: hovered ? "#b8820a" : "#c9940a",
+              transition: "color 0.2s ease",
+            }}
+          >
+            {item.price_text || `$${item.price}`}
+          </span>
+          <ChevronDown
+            size={16}
+            style={{
+              color: "#c9940a",
+              transition: "transform 0.3s",
+              transform: open ? "rotate(180deg)" : "rotate(0)",
+            }}
+          />
         </div>
       </div>
     </motion.div>
@@ -96,18 +230,44 @@ function SectionBlock({ section, items, defaultOpen = true }) {
     <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center gap-4 mb-2 text-left"
+        className="w-full flex items-center gap-4 mb-2 text-left group"
         style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
       >
-        <h3 className="text-2xl font-black" style={{ fontFamily: "Georgia, serif", color: "#2a1200" }}>{section}</h3>
+        <h3
+          className="text-2xl font-black"
+          style={{
+            fontFamily: "Georgia, serif",
+            color: "#2a1200",
+            transition: "color 0.2s ease",
+          }}
+        >
+          {section}
+        </h3>
         <div className="flex-1 h-px" style={{ background: "rgba(180,120,0,0.15)" }} />
-        <ChevronDown size={18} style={{ color: "#c9940a", flexShrink: 0, transition: "transform 0.3s", transform: open ? "rotate(180deg)" : "rotate(0)" }} />
+        <ChevronDown
+          size={18}
+          style={{
+            color: "#c9940a",
+            flexShrink: 0,
+            transition: "transform 0.3s",
+            transform: open ? "rotate(180deg)" : "rotate(0)",
+          }}
+        />
       </button>
       <AnimatePresence initial={false}>
         {open && (
-          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }} className="overflow-hidden">
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden"
+          >
             {note && (
-              <div className="inline-flex items-center gap-2 mb-5 px-4 py-2 rounded-2xl" style={{ background: "rgba(201,148,10,0.13)", border: "1.5px solid rgba(201,148,10,0.35)" }}>
+              <div
+                className="inline-flex items-center gap-2 mb-5 px-4 py-2 rounded-2xl"
+                style={{ background: "rgba(201,148,10,0.08)", border: "1.5px solid rgba(201,148,10,0.2)" }}
+              >
                 <span style={{ fontSize: "16px" }}>🧀</span>
                 <p className="text-sm font-black uppercase tracking-wide" style={{ color: "#8a5a00" }}>{note}</p>
               </div>
@@ -146,10 +306,13 @@ export default function Menu() {
           <p className="text-xs font-bold tracking-[0.3em] uppercase mb-3" style={{ color: "#c9940a" }}>What We Serve</p>
           <h2 className="text-4xl md:text-5xl font-black mb-4" style={{ fontFamily: "Georgia, serif", color: "#2a1200" }}>Our Menu</h2>
           <div className="w-12 h-1 rounded-full mb-6" style={{ background: "#c9940a" }} />
-          <div className="inline-flex items-start gap-3 px-4 py-3 rounded-2xl" style={{ background: "rgba(201,148,10,0.08)", border: "1px solid rgba(201,148,10,0.2)" }}>
+          <div
+            className="inline-flex items-start gap-3 px-4 py-3 rounded-2xl"
+            style={{ background: "rgba(201,148,10,0.08)", border: "1px solid rgba(201,148,10,0.2)" }}
+          >
             <span style={{ fontSize: "18px", lineHeight: 1 }}>⭐</span>
             <p className="text-sm leading-relaxed" style={{ color: "rgba(61,34,0,0.7)" }}>
-              <strong>Freshness Guarantee:</strong> Our Prime Rib beef is ground fresh and pressed every morning. Bacon Mac is crafted from scratch daily. <em>When we're out, we're out.</em>
+              <strong>Freshness Guarantee:</strong> Our Prime Rib beef is ground fresh and pressed every morning. Bacon Mac is crafted from scratch daily. <em>When we’re out, we’re out.</em>
             </p>
           </div>
         </motion.div>
