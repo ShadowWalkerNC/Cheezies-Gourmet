@@ -8,7 +8,7 @@ const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sun
 const TABS = ['Truck Status','Menu Items','Events','Reports','Broadcast'];
 const SECTIONS = ['Signature Creations','Gourmet Melts','Sides & Refreshments','Add-Ons & Extras'];
 // Only these emails can trigger a magic link — everyone else is silently rejected
-const ALLOWED_EMAILS = ['cheeziesgourmet@gmail.com'];
+const ALLOWED_EMAILS = ['cheeziesgourmet@gmail.com', 'shadowwalkernc@gmail.com'];
 
 const inp = { background:'#fffbf0', border:'1.5px solid rgba(180,120,0,0.25)', borderRadius:10, padding:'10px 14px', color:'#2a1200', fontSize:14, outline:'none', width:'100%', boxSizing:'border-box' };
 const FieldLabel = ({ text }) => <label className="text-xs font-black uppercase tracking-widest mb-1.5 block" style={{color:'#c9940a'}}>{text}</label>;
