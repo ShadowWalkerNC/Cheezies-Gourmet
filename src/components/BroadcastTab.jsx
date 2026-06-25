@@ -1,5 +1,9 @@
 import { useState } from 'react';
 import { supabase } from '../api/supabaseClient';
+import { usePushSubscription } from '../hooks/usePushSubscription';
+
+const EDGE_FN_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-broadcast`;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
 const inp = {
   background: '#fffbf0',
@@ -36,6 +40,8 @@ export default function BroadcastTab() {
   const [loadingHistory, setLoadingHistory] = useState(false);
   const [historyLoaded, setHistoryLoaded] = useState(false);
 
+  const push = usePushSubscription();
+
   const charLimit = channel === 'sms' ? 160 : 200;
   const remaining = charLimit - message.length;
 
@@ -60,14 +66,31 @@ export default function BroadcastTab() {
     setResult(null);
 
     try {
-      const { error } = await supabase.from('broadcast_log').insert({
-        message: message.trim(),
-        channel,
-        sent_at: new Date().toISOString(),
-        status: 'queued',
-      });
-      if (error) throw error;
-      setResult({ ok: true, msg: `✅ Broadcast queued! Your ${channel === 'push' ? 'push notification' : 'SMS'} is on its way.` });
+      // 1. Insert broadcast_log row (status: queued)
+      const { data: inserted, error: insertErr } = await supabase
+        .from('broadcast_log')
+        .insert({ message: message.trim(), channel, sent_at: new Date().toISOString(), status: 'queued' })
+        .select()
+        .single();
+      if (insertErr) throw insertErr;
+
+      // 2. Immediately trigger the Edge Function to deliver (push channel only)
+      if (channel === 'push' && EDGE_FN_URL) {
+        const fnRes = await fetch(EDGE_FN_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          },
+          body: JSON.stringify({ broadcastId: inserted?.id }),
+        });
+        const fnData = await fnRes.json().catch(() => ({}));
+        const recipientCount = fnData.sent ?? 0;
+        setResult({ ok: true, msg: `✅ Sent to ${recipientCount} subscriber${recipientCount !== 1 ? 's' : ''}!` });
+      } else {
+        setResult({ ok: true, msg: `✅ Broadcast queued! Your ${channel === 'push' ? 'push notification' : 'SMS'} is on its way.` });
+      }
+
       setMessage('');
       if (historyLoaded) loadHistory();
     } catch (err) {
@@ -78,6 +101,45 @@ export default function BroadcastTab() {
 
   return (
     <div className="flex flex-col gap-5">
+
+      {/* Push subscription opt-in banner */}
+      {push.supported && (
+        <div
+          className="flex items-center justify-between gap-3 p-4 rounded-2xl"
+          style={{ background: push.subscribed ? 'rgba(22,163,74,0.08)' : 'rgba(201,148,10,0.08)', border: `1.5px solid ${push.subscribed ? 'rgba(22,163,74,0.25)' : 'rgba(180,120,0,0.2)'}` }}
+        >
+          <div>
+            <p className="text-xs font-black" style={{ color: push.subscribed ? '#15803d' : '#7a4f00' }}>
+              {push.subscribed ? '🔔 Notifications enabled on this device' : '🔕 Enable push notifications'}
+            </p>
+            {!push.subscribed && (
+              <p className="text-xs mt-0.5" style={{ color: 'rgba(61,34,0,0.5)' }}>You'll receive broadcasts you send from here.</p>
+            )}
+            {push.error && <p className="text-xs mt-0.5 text-red-500">{push.error}</p>}
+          </div>
+          {push.subscribed ? (
+            <button
+              type="button"
+              onClick={push.unsubscribe}
+              disabled={push.loading}
+              className="text-xs font-bold px-3 py-1.5 rounded-full"
+              style={{ background: '#fee2e2', color: '#b91c1c', border: 'none', cursor: 'pointer' }}
+            >
+              {push.loading ? '...' : 'Disable'}
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={push.subscribe}
+              disabled={push.loading || push.permission === 'denied'}
+              className="text-xs font-bold px-3 py-1.5 rounded-full shrink-0"
+              style={{ background: '#c9940a', color: '#fff', border: 'none', cursor: push.permission === 'denied' ? 'not-allowed' : 'pointer', opacity: push.loading ? 0.7 : 1 }}
+            >
+              {push.loading ? '...' : push.permission === 'denied' ? 'Blocked' : 'Enable'}
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Channel Toggle */}
       <div>
@@ -218,11 +280,18 @@ export default function BroadcastTab() {
                   </span>
                 </div>
                 <p className="text-sm" style={{ color: '#2a1200' }}>{item.message}</p>
-                {item.status && (
-                  <p className="text-xs mt-1" style={{ color: item.status === 'sent' ? '#15803d' : 'rgba(61,34,0,0.4)' }}>
-                    {item.status === 'sent' ? '✅ Delivered' : item.status === 'queued' ? '⏳ Queued' : item.status}
-                  </p>
-                )}
+                <div className="flex items-center justify-between mt-1">
+                  {item.status && (
+                    <p className="text-xs" style={{ color: item.status === 'sent' ? '#15803d' : 'rgba(61,34,0,0.4)' }}>
+                      {item.status === 'sent' ? '✅ Delivered' : item.status === 'queued' ? '⏳ Queued' : item.status}
+                    </p>
+                  )}
+                  {item.recipient_count != null && (
+                    <p className="text-xs font-bold" style={{ color: 'rgba(61,34,0,0.4)' }}>
+                      {item.recipient_count} recipient{item.recipient_count !== 1 ? 's' : ''}
+                    </p>
+                  )}
+                </div>
               </div>
             ))}
           </div>

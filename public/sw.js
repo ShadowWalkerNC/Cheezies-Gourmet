@@ -67,3 +67,40 @@ self.addEventListener('fetch', event => {
     })
   );
 });
+
+// ─── PUSH NOTIFICATIONS ───────────────────────────────────
+self.addEventListener('push', event => {
+  let data = { title: 'Cheezies Gourmet 🧀', body: 'New update from the truck!', url: '/' };
+  try {
+    data = { ...data, ...event.data.json() };
+  } catch (_) {
+    if (event.data) data.body = event.data.text();
+  }
+
+  event.waitUntil(
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: '/icons/icon-192.png',
+      badge: '/icons/icon-192.png',
+      data: { url: data.url || '/' },
+      vibrate: [100, 50, 100],
+      requireInteraction: false,
+    })
+  );
+});
+
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  const target = event.notification.data?.url || '/';
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
+      const existing = list.find(c => c.url.includes(self.location.origin));
+      if (existing) {
+        existing.focus();
+        existing.navigate(target);
+      } else {
+        clients.openWindow(target);
+      }
+    })
+  );
+});
