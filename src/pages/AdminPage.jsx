@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../api/supabaseClient';
 import { useTruckData, saveTruckData } from '../hooks/useTruckData';
+import PnLDashboard from '../components/PnLDashboard';
 
 const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-const TABS = ['Truck Status','Menu Items','Events'];
+const TABS = ['Truck Status','Menu Items','Events','Reports'];
 const SECTIONS = ['Signature Creations','Gourmet Melts','Sides & Refreshments','Add-Ons & Extras'];
 
 const inp = { background:'#fffbf0', border:'1.5px solid rgba(180,120,0,0.25)', borderRadius:10, padding:'10px 14px', color:'#2a1200', fontSize:14, outline:'none', width:'100%', boxSizing:'border-box' };
@@ -264,18 +265,16 @@ function EventsTab() {
 
 // ─── MAIN ADMIN PAGE ──────────────────────────────────────
 export default function AdminPage() {
-  const [session, setSession] = useState(undefined); // undefined = loading
+  const [session, setSession] = useState(undefined);
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [tab, setTab] = useState(0);
 
   useEffect(() => {
-    // Restore existing session on mount
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session ?? null);
     });
-    // Listen for auth state changes (handles magic link redirect)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
@@ -300,14 +299,12 @@ export default function AdminPage() {
     setEmail('');
   };
 
-  // Still checking session
   if (session === undefined) return (
     <div className="min-h-screen flex items-center justify-center" style={{background:'#fdf6e3'}}>
       <div className="w-8 h-8 border-4 border-amber-200 border-t-amber-600 rounded-full animate-spin" />
     </div>
   );
 
-  // Not logged in — show magic link form
   if (!session) return (
     <div className="min-h-screen flex items-center justify-center px-6" style={{background:'#fdf6e3'}}>
       <div className="w-full max-w-sm">
@@ -343,7 +340,6 @@ export default function AdminPage() {
     </div>
   );
 
-  // Logged in — show admin panel
   return (
     <div className="min-h-screen" style={{background:'#fdf6e3'}}>
       <div className="flex items-center justify-between px-6 py-4" style={{background:'#fff',borderBottom:'1.5px solid #e8e0d0'}}>
@@ -364,6 +360,7 @@ export default function AdminPage() {
         {tab === 0 && <TruckTab />}
         {tab === 1 && <MenuTab />}
         {tab === 2 && <EventsTab />}
+        {tab === 3 && <PnLDashboard />}
       </div>
     </div>
   );
