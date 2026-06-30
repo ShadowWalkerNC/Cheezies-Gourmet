@@ -27,6 +27,7 @@ class SupabaseQueryBuilder {
     this.body = null;
     this.orderCol = null;
     this.orderAscending = true;
+    this.limitVal = undefined;
   }
 
   select(cols) {
@@ -52,7 +53,37 @@ class SupabaseQueryBuilder {
   }
 
   eq(col, val) {
-    this.filters[col] = val;
+    this.filters[col] = { operator: 'eq', value: val };
+    return this;
+  }
+
+  neq(col, val) {
+    this.filters[col] = { operator: 'neq', value: val };
+    return this;
+  }
+
+  gt(col, val) {
+    this.filters[col] = { operator: 'gt', value: val };
+    return this;
+  }
+
+  lt(col, val) {
+    this.filters[col] = { operator: 'lt', value: val };
+    return this;
+  }
+
+  gte(col, val) {
+    this.filters[col] = { operator: 'gte', value: val };
+    return this;
+  }
+
+  lte(col, val) {
+    this.filters[col] = { operator: 'lte', value: val };
+    return this;
+  }
+
+  limit(count) {
+    this.limitVal = count;
     return this;
   }
 
@@ -77,11 +108,13 @@ class SupabaseQueryBuilder {
 
     // If PUT or DELETE and we have an ID filter, append it to URL
     if ((this.method === 'PUT' || this.method === 'DELETE' || (this.method === 'GET' && this.isSingle)) && this.filters.id !== undefined) {
-      url = `${url}/${this.filters.id}`;
+      const idVal = typeof this.filters.id === 'object' ? this.filters.id.value : this.filters.id;
+      url = `${url}/${idVal}`;
     } else if (this.method === 'GET') {
       const queryParams = new URLSearchParams();
       Object.entries(this.filters).forEach(([key, val]) => {
-        queryParams.append(key, val);
+        const actualVal = (val && typeof val === 'object' && 'value' in val) ? val.value : val;
+        queryParams.append(key, actualVal);
       });
       const qs = queryParams.toString();
       if (qs) url += `?${qs}`;
@@ -101,8 +134,41 @@ class SupabaseQueryBuilder {
 
       const data = await res.json();
       
-      // Perform local sorting if client requested it
+      // Perform local filtering
       let finalData = data;
+      if (Array.isArray(finalData)) {
+        finalData = finalData.filter(item => {
+          return Object.entries(this.filters).every(([key, filterCond]) => {
+            const itemVal = item[key];
+            if (filterCond && typeof filterCond === 'object' && 'operator' in filterCond) {
+              const { operator, value } = filterCond;
+              if (operator === 'eq') return String(itemVal) === String(value);
+              if (operator === 'neq') return String(itemVal) !== String(value);
+              if (operator === 'gt') return itemVal > value;
+              if (operator === 'lt') return itemVal < value;
+              if (operator === 'gte') {
+                const itemDate = new Date(itemVal);
+                const valDate = new Date(value);
+                if (!isNaN(itemDate.getTime()) && !isNaN(valDate.getTime())) {
+                  return itemDate >= valDate;
+                }
+                return itemVal >= value;
+              }
+              if (operator === 'lte') {
+                const itemDate = new Date(itemVal);
+                const valDate = new Date(value);
+                if (!isNaN(itemDate.getTime()) && !isNaN(valDate.getTime())) {
+                  return itemDate <= valDate;
+                }
+                return itemVal <= value;
+              }
+            }
+            return String(itemVal) === String(filterCond);
+          });
+        });
+      }
+
+      // Perform local sorting if client requested it
       if (Array.isArray(finalData) && this.orderCol) {
         finalData.sort((a, b) => {
           const valA = a[this.orderCol];
@@ -111,6 +177,11 @@ class SupabaseQueryBuilder {
           if (valA > valB) return this.orderAscending ? 1 : -1;
           return 0;
         });
+      }
+
+      // Apply limit
+      if (Array.isArray(finalData) && this.limitVal !== undefined) {
+        finalData = finalData.slice(0, this.limitVal);
       }
 
       // If single element requested but backend returned list
