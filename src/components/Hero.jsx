@@ -10,31 +10,6 @@ export default function Hero() {
 
   return (
     <section className="relative flex flex-col md:flex-row min-h-screen" style={{ background: 'var(--color-surface)' }}>
-      {/* Find Us Banner */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="absolute top-0 left-0 right-0 mx-auto mt-6 px-4 max-w-md"
-        style={{ zIndex: 40 }}
-      >
-        <div className="px-5 py-4 rounded-2xl flex items-center justify-between" style={{ background: '#c9940a', border: '1.5px solid #1a0800' }}>
-          <div>
-            <p className="text-xs font-black tracking-[0.2em] uppercase mb-0.5" style={{ color: '#fff8e8' }}>\uD83D\uDCCD Live Truck Tracker</p>
-            <p className="text-xs" style={{ color: 'rgba(255,248,232,0.85)' }}>See where we are right now</p>
-          </div>
-          <button
-            onClick={() => { navigate('/FindUs'); window.scrollTo({ top: 0, behavior: 'instant' }); }}
-            className="shrink-0 ml-3 font-black text-xs tracking-widest uppercase"
-            style={{ background: '#fff8e8', color: '#1a0800', border: 'none', cursor: 'pointer', padding: '0.5rem 0.75rem', borderRadius: '0.5rem', transition: 'opacity 0.2s', }}
-            onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
-            onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-          >
-            Find Us \u2192
-          </button>
-        </div>
-      </motion.div>
-
       {/* Left \u2014 text content */}
       <div className="flex-1 flex flex-col justify-center px-8 md:px-16 py-16 md:py-0 order-2 md:order-1">
         <motion.div

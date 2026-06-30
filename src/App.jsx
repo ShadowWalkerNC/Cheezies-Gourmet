@@ -6,7 +6,6 @@ import { AnimatePresence } from "framer-motion";
 import PageNotFound from './lib/PageNotFound';
 import { ThemeProvider } from '@/lib/ThemeContext';
 import BottomTabBar from './components/BottomTabBar';
-import InstallBanner from './components/InstallBanner';
 import StickyOrderButton from './components/StickyOrderButton';
 import { usePageTracking } from '@/hooks/usePageTracking';
 
@@ -46,7 +45,6 @@ function AnimatedRoutes() {
       </AnimatePresence>
       <BottomTabBar />
       <StickyOrderButton />
-      <InstallBanner />
     </>
   );
 }
