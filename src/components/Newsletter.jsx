@@ -2,19 +2,36 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/api/supabaseClient";
 
 export default function Newsletter() {
   const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setDone(true);
+    setSubmitting(true);
+    const captured = email.trim().toLowerCase();
     setEmail("");
-    toast({ title: "You're on the list!", description: "We'll let you know when we're rolling your way." });
-    // TODO: connect to email service (Mailchimp, Resend, etc.)
+
+    const { error } = await supabase
+      .from("newsletter_subscribers")
+      .upsert(
+        { email: captured, source: "newsletter_section", subscribed_at: new Date().toISOString() },
+        { onConflict: "email", ignoreDuplicates: true }
+      );
+
+    setSubmitting(false);
+
+    if (error) {
+      toast({ title: "Something went wrong", description: "Please try again." });
+    } else {
+      setDone(true);
+      toast({ title: "You're on the list!", description: "We'll let you know when we're rolling your way." });
+    }
   };
 
   return (
@@ -24,7 +41,7 @@ export default function Newsletter() {
           <p className="text-xs font-bold tracking-[0.3em] uppercase mb-3" style={{ color: "#c9940a" }}>Stay Connected</p>
           <h2 className="text-4xl md:text-5xl font-black mb-3" style={{ fontFamily: "Georgia, serif", color: "#2a1200" }}>Know Where We Are</h2>
           <p className="text-base max-w-lg mx-auto" style={{ color: "rgba(61,34,0,0.55)" }}>
-            Follow us on Facebook or sign up for email updates — we'll keep you in the loop.
+            Follow us on Facebook or sign up for email updates — we’ll keep you in the loop.
           </p>
         </motion.div>
 
@@ -57,10 +74,22 @@ export default function Newsletter() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-                <input required type="email" placeholder="your@email.com" value={email} onChange={e => setEmail(e.target.value)} className="w-full outline-none"
+                <input
+                  required type="email" placeholder="your@email.com"
+                  value={email} onChange={e => setEmail(e.target.value)}
+                  className="w-full outline-none"
                   style={{ background: "#fffbf0", border: "1.5px solid rgba(180,120,0,0.2)", borderRadius: "10px", color: "#2a1200", padding: "11px 16px", fontSize: "14px" }}
-                  onFocus={e => (e.target.style.borderColor = "#c9940a")} onBlur={e => (e.target.style.borderColor = "rgba(180,120,0,0.2)")} />
-                <button type="submit" className="py-3 rounded-full font-bold text-sm transition-opacity duration-200 hover:opacity-85" style={{ background: "#c9940a", color: "#fff8e8", minHeight: "44px" }}>Subscribe</button>
+                  onFocus={e => (e.target.style.borderColor = "#c9940a")}
+                  onBlur={e => (e.target.style.borderColor = "rgba(180,120,0,0.2)")}
+                />
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="py-3 rounded-full font-bold text-sm transition-opacity duration-200 hover:opacity-85 disabled:opacity-60"
+                  style={{ background: "#c9940a", color: "#fff8e8", minHeight: "44px" }}
+                >
+                  {submitting ? "Subscribing…" : "Subscribe"}
+                </button>
               </form>
             )}
             <p className="text-xs mt-3" style={{ color: "rgba(61,34,0,0.3)" }}>Unsubscribe anytime.</p>
