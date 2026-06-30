@@ -7,6 +7,7 @@ import PageNotFound from './lib/PageNotFound';
 import { ThemeProvider } from '@/lib/ThemeContext';
 import BottomTabBar from './components/BottomTabBar';
 import InstallBanner from './components/InstallBanner';
+import StickyOrderButton from './components/StickyOrderButton';
 import { usePageTracking } from '@/hooks/usePageTracking';
 
 import Home from "./pages/Home";
@@ -44,6 +45,7 @@ function AnimatedRoutes() {
         </Routes>
       </AnimatePresence>
       <BottomTabBar />
+      <StickyOrderButton />
       <InstallBanner />
     </>
   );
