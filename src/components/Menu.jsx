@@ -10,7 +10,6 @@ const SECTION_NOTES = {
 };
 
 function MenuItemCard({ item, index }) {
-  const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState(false);
   const badgeColor = item.badge_color;
 
@@ -20,23 +19,18 @@ function MenuItemCard({ item, index }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: index * 0.06 }}
-        className="rounded-3xl overflow-hidden cursor-pointer card-glow"
-        onClick={() => setOpen(!open)}
+        className="rounded-3xl overflow-hidden card-glow flex flex-col h-full"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         style={{
           background: "#fff",
-          border: open
-            ? "1.5px solid rgba(201,148,10,0.55)"
-            : hovered
+          border: hovered
             ? "1.5px solid rgba(201,148,10,0.35)"
             : "1px solid rgba(180,120,0,0.14)",
-          boxShadow: open
-            ? "0 16px 48px rgba(180,120,0,0.22)"
-            : hovered
+          boxShadow: hovered
             ? "0 8px 28px rgba(180,120,0,0.16)"
             : "0 2px 12px rgba(180,120,0,0.07)",
-          transform: hovered && !open ? "translateY(-3px)" : "translateY(0)",
+          transform: hovered ? "translateY(-3px)" : "translateY(0)",
           transition: "box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease",
         }}
       >
@@ -46,7 +40,7 @@ function MenuItemCard({ item, index }) {
             alt={item.name}
             className="w-full h-full object-cover"
             style={{
-              transform: open ? "scale(1.09)" : hovered ? "scale(1.05)" : "scale(1)",
+              transform: hovered ? "scale(1.05)" : "scale(1)",
               transition: "transform 0.6s ease",
             }}
           />
@@ -81,48 +75,42 @@ function MenuItemCard({ item, index }) {
             </span>
           </div>
         </div>
-        <AnimatePresence initial={false}>
-          {open && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="overflow-hidden"
-            >
-              <div className="px-4 py-4">
-                <p className="text-sm leading-relaxed mb-3" style={{ color: "rgba(61,34,0,0.7)" }}>
-                  {item.description}
-                </p>
-                <a
-                  href="https://cheeziesgourmetohio.square.site/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={e => e.stopPropagation()}
-                  className="inline-flex items-center px-5 py-2.5 rounded-full font-bold text-sm"
-                  style={{
-                    background: "#c9940a",
-                    color: "#fff",
-                    textDecoration: "none",
-                    transition: "background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease",
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.background = "#b8820a";
-                    e.currentTarget.style.transform = "translateY(-1px)";
-                    e.currentTarget.style.boxShadow = "0 4px 14px rgba(201,148,10,0.4)";
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.background = "#c9940a";
-                    e.currentTarget.style.transform = "translateY(0)";
-                    e.currentTarget.style.boxShadow = "none";
-                  }}
-                >
-                  Order This →
-                </a>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div className="px-4 py-4 flex flex-col justify-between flex-1">
+          <div>
+            <p className="text-sm leading-relaxed mb-4" style={{ color: "rgba(61,34,0,0.7)" }}>
+              {item.description}
+            </p>
+            {item.price_note && (
+              <p className="text-xs mb-3 font-semibold" style={{ color: "rgba(61,34,0,0.4)" }}>
+                {item.price_note}
+              </p>
+            )}
+          </div>
+          <a
+            href="https://cheeziesgourmetohio.square.site/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center px-5 py-2.5 rounded-full font-bold text-sm mt-auto"
+            style={{
+              background: "#c9940a",
+              color: "#fff",
+              textDecoration: "none",
+              transition: "background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease",
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = "#b8820a";
+              e.currentTarget.style.transform = "translateY(-1px)";
+              e.currentTarget.style.boxShadow = "0 4px 14px rgba(201,148,10,0.4)";
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = "#c9940a";
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "none";
+            }}
+          >
+            Order This →
+          </a>
+        </div>
       </motion.div>
     );
   }
@@ -133,29 +121,24 @@ function MenuItemCard({ item, index }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.06 }}
-      className="rounded-2xl px-4 py-3 cursor-pointer"
-      onClick={() => setOpen(!open)}
+      className="rounded-2xl px-4 py-3 flex flex-col justify-between"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
         background: hovered ? "#fffbf2" : "#fff",
-        border: open
-          ? "1.5px solid rgba(201,148,10,0.4)"
-          : hovered
+        border: hovered
           ? "1.5px solid rgba(201,148,10,0.25)"
           : "1px solid rgba(180,120,0,0.12)",
-        boxShadow: open
-          ? "0 6px 24px rgba(180,120,0,0.12)"
-          : hovered
+        boxShadow: hovered
           ? "0 4px 16px rgba(180,120,0,0.09)"
           : "none",
-        transform: hovered && !open ? "translateY(-2px)" : "translateY(0)",
+        transform: hovered ? "translateY(-2px)" : "translateY(0)",
         transition: "background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease",
       }}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+          <div className="flex flex-wrap items-center gap-2 mb-1">
             <h4 className="font-bold text-sm" style={{ color: "#2a1200" }}>{item.name}</h4>
             {item.badge && (
               <span className="text-[10px] font-black px-2 py-0.5 rounded" style={{ background: badgeColor, color: "#fff8e8" }}>
@@ -163,39 +146,36 @@ function MenuItemCard({ item, index }) {
               </span>
             )}
           </div>
-          <p className={`text-sm leading-relaxed ${open ? "" : "line-clamp-1"}`} style={{ color: "rgba(61,34,0,0.55)" }}>
+          <p className="text-sm leading-relaxed mb-3" style={{ color: "rgba(61,34,0,0.55)" }}>
             {item.description}
           </p>
-          {item.price_note && open && (
-            <p className="text-xs mt-1" style={{ color: "rgba(61,34,0,0.4)" }}>{item.price_note}</p>
+          {item.price_note && (
+            <p className="text-xs mb-3 font-semibold" style={{ color: "rgba(61,34,0,0.4)" }}>{item.price_note}</p>
           )}
-          {open && (
-            <a
-              href="https://cheeziesgourmetohio.square.site/"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={e => e.stopPropagation()}
-              className="inline-flex items-center mt-3 px-4 py-2 rounded-full font-bold text-sm"
-              style={{
-                background: "#c9940a",
-                color: "#fff",
-                textDecoration: "none",
-                transition: "background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease",
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = "#b8820a";
-                e.currentTarget.style.transform = "translateY(-1px)";
-                e.currentTarget.style.boxShadow = "0 4px 14px rgba(201,148,10,0.4)";
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = "#c9940a";
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "none";
-              }}
-            >
-              Order This →
-            </a>
-          )}
+          <a
+            href="https://cheeziesgourmetohio.square.site/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center px-4 py-2 rounded-full font-bold text-sm"
+            style={{
+              background: "#c9940a",
+              color: "#fff",
+              textDecoration: "none",
+              transition: "background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease",
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = "#b8820a";
+              e.currentTarget.style.transform = "translateY(-1px)";
+              e.currentTarget.style.boxShadow = "0 4px 14px rgba(201,148,10,0.4)";
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = "#c9940a";
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "none";
+            }}
+          >
+            Order This →
+          </a>
         </div>
         <div className="flex flex-col items-end gap-1 shrink-0">
           <span
@@ -207,14 +187,6 @@ function MenuItemCard({ item, index }) {
           >
             {item.price_text || `$${item.price}`}
           </span>
-          <ChevronDown
-            size={16}
-            style={{
-              color: "#c9940a",
-              transition: "transform 0.3s",
-              transform: open ? "rotate(180deg)" : "rotate(0)",
-            }}
-          />
         </div>
       </div>
     </motion.div>

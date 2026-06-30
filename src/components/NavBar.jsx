@@ -81,7 +81,7 @@ export default function NavBar() {
         </button>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden lg:flex items-center lg:gap-6 gap-3">
           {tabs.map(({ label, path }) => {
             const active = location.pathname === path;
             return (
@@ -113,7 +113,7 @@ export default function NavBar() {
 
         {/* Hamburger */}
         <button
-          className="md:hidden flex flex-col gap-1.5 p-2 select-none"
+          className="lg:hidden flex flex-col gap-1.5 p-2 select-none"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
           style={{ background: "none", border: "none", cursor: "pointer", WebkitTapHighlightColor: "transparent" }}
@@ -169,7 +169,7 @@ export default function NavBar() {
       {/* Mobile menu dropdown */}
       {menuOpen && (
         <div
-          className="md:hidden px-6 pb-6 pt-2 flex flex-col gap-0"
+          className="lg:hidden px-6 pb-6 pt-2 flex flex-col gap-0"
           style={{ background: "#fff", borderTop: "1px solid #e8e0d0" }}
         >
           {tabs.map(({ label, path }) => (
