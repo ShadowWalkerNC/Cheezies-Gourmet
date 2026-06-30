@@ -20,7 +20,7 @@ function MenuItemCard({ item, index }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: index * 0.06 }}
-        className="rounded-3xl overflow-hidden cursor-pointer"
+        className="rounded-3xl overflow-hidden cursor-pointer card-glow"
         onClick={() => setOpen(!open)}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
@@ -300,7 +300,7 @@ export default function Menu() {
   ];
 
   return (
-    <section id="menu" className="py-20 px-6" style={{ background: "#fdf6e3", borderTop: "1px solid rgba(180,120,0,0.1)" }}>
+    <section id="menu" className="py-20 px-6 grain" style={{ background: "#fdf6e3", borderTop: "1px solid rgba(180,120,0,0.1)" }}>
       <div className="max-w-5xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
           <p className="text-xs font-bold tracking-[0.3em] uppercase mb-3" style={{ color: "#c9940a" }}>What We Serve</p>
@@ -312,7 +312,7 @@ export default function Menu() {
           >
             <span style={{ fontSize: "18px", lineHeight: 1 }}>⭐</span>
             <p className="text-sm leading-relaxed" style={{ color: "rgba(61,34,0,0.7)" }}>
-              <strong>Freshness Guarantee:</strong> Our Prime Rib beef is ground fresh and pressed every morning. Bacon Mac is crafted from scratch daily. <em>When we’re out, we’re out.</em>
+              <strong>Freshness Guarantee:</strong> Our Prime Rib beef is ground fresh and pressed every morning. Bacon Mac is crafted from scratch daily. <em>When we're out, we're out.</em>
             </p>
           </div>
         </motion.div>

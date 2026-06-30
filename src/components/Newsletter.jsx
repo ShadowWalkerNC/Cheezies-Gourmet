@@ -35,13 +35,13 @@ export default function Newsletter() {
   };
 
   return (
-    <section className="py-20 px-6" style={{ background: "#fff8e8", borderTop: "1px solid rgba(180,120,0,0.1)" }}>
+    <section className="py-20 px-6 grain" style={{ background: "#fff8e8", borderTop: "1px solid rgba(180,120,0,0.1)" }}>
       <div className="max-w-5xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
           <p className="text-xs font-bold tracking-[0.3em] uppercase mb-3" style={{ color: "#c9940a" }}>Stay Connected</p>
           <h2 className="text-4xl md:text-5xl font-black mb-3" style={{ fontFamily: "Georgia, serif", color: "#2a1200" }}>Know Where We Are</h2>
           <p className="text-base max-w-lg mx-auto" style={{ color: "rgba(61,34,0,0.55)" }}>
-            Follow us on Facebook or sign up for email updates — we’ll keep you in the loop.
+            Follow us on Facebook or sign up for email updates — we'll keep you in the loop.
           </p>
         </motion.div>
 
