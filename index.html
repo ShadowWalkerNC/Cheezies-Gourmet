@@ -9,25 +9,26 @@
     <meta name="description" content="Cheezies Gourmet is Akron Ohio's premier gourmet grilled cheese food truck. Handcrafted sandwiches made fresh to order. Catering available for events of all sizes. Follow us on Facebook for daily locations." />
     <meta name="keywords" content="grilled cheese, food truck, Akron Ohio, gourmet sandwiches, grilled cheese food truck, Akron food truck, catering Akron, grilled cheese sandwich, gourmet food truck Ohio, Cheezies" />
     <meta name="author" content="Cheezies Gourmet" />
-    <link rel="canonical" href="https://cheeziesgourmet.com/" />
+    <link rel="canonical" href="https://cheeziesgourmetohio.com/" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="restaurant" />
     <meta property="og:title" content="Cheezies Gourmet | Gourmet Grilled Cheese Food Truck — Akron, Ohio" />
     <meta property="og:description" content="Handcrafted gourmet grilled cheese sandwiches made fresh to order. Find us around Akron, Ohio. Catering available for all event sizes." />
-    <meta property="og:image" content="https://media.base44.com/images/public/69b410ceece31b13c728497b/03ee6d0a3_generated_image.png" />
-    <meta property="og:url" content="https://cheeziesgourmet.com/" />
+    <meta property="og:image" content="https://cheeziesgourmetohio.com/logo.png" />
+    <meta property="og:url" content="https://cheeziesgourmetohio.com/" />
     <meta property="og:site_name" content="Cheezies Gourmet" />
     <meta property="og:locale" content="en_US" />
 
-    <!-- Facebook Domain Verification -->
+    <!-- Facebook -->
     <meta name="facebook-domain-verification" content="a0a1xiskd1t9mre8i1h41wk6pfn7up" />
+    <meta property="fb:app_id" content="1523309282633633" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Cheezies Gourmet | Gourmet Grilled Cheese — Akron, Ohio" />
     <meta name="twitter:description" content="Handcrafted gourmet grilled cheese sandwiches made fresh to order. Catering for all events." />
-    <meta name="twitter:image" content="https://media.base44.com/images/public/69b410ceece31b13c728497b/03ee6d0a3_generated_image.png" />
+    <meta name="twitter:image" content="https://cheeziesgourmetohio.com/logo.png" />
 
     <!-- Local Business Structured Data -->
     <script type="application/ld+json">
@@ -36,7 +37,7 @@
       "@type": "FoodEstablishment",
       "name": "Cheezies Gourmet",
       "description": "Gourmet grilled cheese food truck based in Akron, Ohio. Handcrafted sandwiches made fresh to order.",
-      "url": "https://cheeziesgourmet.com",
+      "url": "https://cheeziesgourmetohio.com",
       "telephone": "+13305108875",
       "email": "oglmf@hotmail.com",
       "address": {
@@ -60,7 +61,7 @@
       ],
       "hasMenu": "https://cheeziesgourmetohio.square.site",
       "acceptsReservations": "Yes",
-      "image": "https://media.base44.com/images/public/69b410ceece31b13c728497b/03ee6d0a3_generated_image.png",
+      "image": "https://cheeziesgourmetohio.com/logo.png",
       "openingHoursSpecification": [
         {
           "@type": "OpeningHoursSpecification",
@@ -92,7 +93,7 @@
               {
                 "@type": "MenuItem",
                 "name": "The Truffle Melt",
-                "description": "Gruyere, sautéed mushrooms, fresh thyme & truffle oil drizzle on golden sourdough.",
+                "description": "Gruyere, saut\u00e9ed mushrooms, fresh thyme & truffle oil drizzle on golden sourdough.",
                 "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "USD" }
               }
             ]
@@ -111,7 +112,6 @@
           window.location.port !== ''
         );
         if (isDevPreview) {
-          // Unregister any stale service workers in dev/preview to prevent caching issues
           navigator.serviceWorker.getRegistrations().then(function(regs) {
             regs.forEach(function(reg) { reg.unregister(); });
           });
@@ -123,6 +123,18 @@
       }
     </script>
 
+    <!-- Facebook SDK (loads Page Plugin) -->
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId: '1523309282633633',
+          xfbml: true,
+          version: 'v19.0'
+        });
+      };
+    </script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+
     <!-- PWA / App meta -->
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#c9940a" />
@@ -130,8 +142,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Cheezies" />
-    <link rel="icon" type="image/png" href="https://media.base44.com/images/public/69b410ceece31b13c728497b/ca140a321_IMG_0974.png" />
-    <link rel="apple-touch-icon" href="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b410ceece31b13c728497b/icon-192.png" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
   </head>
   <body>
     <div id="root"></div>
