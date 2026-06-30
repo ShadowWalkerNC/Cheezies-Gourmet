@@ -26,6 +26,27 @@ git add public/ && git commit -m "chore: add images and PWA icons" && git push
 
 ---
 
+## 1b. 🚨 NavBar Logo — Rescue from base44 CDN (URGENT)
+
+The NavBar logo `<img src="...">` still points to `media.base44.com`. This is the **last base44 dependency** in the entire codebase. If their CDN goes down or your account is deleted, your logo disappears from the live site.
+
+**Fix:**
+1. Download the logo manually from:
+   ```
+   https://media.base44.com/images/public/69b410ceece31b13c728497b/03ee6d0a3_generated_image.png
+   ```
+2. Save it as `public/logo.png` in the project root
+3. Commit it:
+   ```bash
+   git add public/logo.png && git commit -m "chore: rescue navbar logo from base44 CDN" && git push
+   ```
+4. Then update `src/components/NavBar.jsx` — change the `<img src="...">` line to:
+   ```jsx
+   <img src="/logo.png" alt="Cheezies logo" className="h-9 w-9 object-contain" />
+   ```
+
+---
+
 ## 2. 🔔 Push Notifications — VAPID Keys
 
 The push notification system is fully built. Needs VAPID keys to go live.
@@ -124,6 +145,7 @@ alter table menu_items add column if not exists badge text;
 |---|---|
 | Hero + About images | ❌ Run curl commands above |
 | PWA Icons | ❌ Run curl commands above |
+| NavBar logo (base44 CDN rescue) | ❌ URGENT — last base44 dependency |
 | Push Notifications (VAPID) | ❌ |
 | Google Maps API Key | ❌ |
 | Custom domain attached | ❌ |
