@@ -244,7 +244,7 @@ function SectionBlock({ section, items, defaultOpen = true }) {
                 <p className="text-sm font-black uppercase tracking-wide" style={{ color: "#8a5a00" }}>{note}</p>
               </div>
             )}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {items.map((item, i) => (
                 <MenuItemCard key={item.id} item={item} index={i} />
               ))}
@@ -273,7 +273,7 @@ export default function Menu() {
 
   return (
     <section id="menu" className="py-20 px-6 grain" style={{ background: "#fdf6e3", borderTop: "1px solid rgba(180,120,0,0.1)" }}>
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
           <p className="text-xs font-bold tracking-[0.3em] uppercase mb-3" style={{ color: "#c9940a" }}>What We Serve</p>
           <h2 className="text-4xl md:text-5xl font-black mb-4" style={{ fontFamily: "Georgia, serif", color: "#2a1200" }}>Our Menu</h2>
