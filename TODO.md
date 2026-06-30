@@ -75,6 +75,49 @@ supabase secrets set VAPID_SUBJECT=mailto:cheeziesgourmet@gmail.com
 
 ---
 
+## 5. 🎨 CSS Responsive Pass (Dev Task)
+
+Full desktop + mobile layout audit and rebuild across all pages.
+
+**Priority pages:**
+- Home (Hero two-column layout, section spacing)
+- Menu (card grid — 1 col mobile, 2 col tablet, 3 col desktop)
+- Catering (form layout, stat blocks)
+- Find Us (map card width on desktop)
+- NavBar (desktop horizontal nav vs mobile hamburger)
+- Footer (column stacking on mobile)
+
+**Goals:**
+- Consistent max-width containers (`max-w-5xl` or `max-w-6xl`) on all pages
+- No horizontal scroll on any viewport
+- Touch-friendly tap targets (min 44px) on all buttons and links
+- Typography scales properly from 375px to 1440px+
+- Bottom tab bar hidden on desktop, visible on mobile
+
+---
+
+## 6. 🍽️ Menu Page — Ingredient & Description Rebuild (Dev Task)
+
+Current menu cards show name + price only. Need a full ingredient-focused redesign.
+
+**What's needed:**
+- Each menu item shows full ingredient list / description below the title
+- Allergen tags (gluten, dairy, etc.) as small badge pills
+- "Signature" or "Fan Favorite" badge on featured items
+- Better card layout: larger title, ingredient list in a readable style, price prominent
+- Category filter tabs (Sandwiches, Sides, Drinks, Specials) that actually filter live
+- Admin panel → Menu tab should have description + ingredients fields per item
+
+**Note:** Menu data lives in Supabase `menu_items` table. The `description` and `ingredients` columns may need to be added if not already there — check in Supabase SQL editor:
+```sql
+alter table menu_items add column if not exists description text;
+alter table menu_items add column if not exists ingredients text;
+alter table menu_items add column if not exists allergens text[];
+alter table menu_items add column if not exists badge text;
+```
+
+---
+
 ## Status
 
 | Task | Done? |
@@ -84,3 +127,5 @@ supabase secrets set VAPID_SUBJECT=mailto:cheeziesgourmet@gmail.com
 | Push Notifications (VAPID) | ❌ |
 | Google Maps API Key | ❌ |
 | Custom domain attached | ❌ |
+| CSS responsive pass | ❌ Dev task |
+| Menu ingredients rebuild | ❌ Dev task |
