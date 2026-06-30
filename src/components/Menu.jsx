@@ -244,7 +244,7 @@ function SectionBlock({ section, items, defaultOpen = true }) {
                 <p className="text-sm font-black uppercase tracking-wide" style={{ color: "#8a5a00" }}>{note}</p>
               </div>
             )}
-            <div className={hasImages ? "grid sm:grid-cols-2 md:grid-cols-3 gap-4" : "space-y-3"}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {items.map((item, i) => (
                 <MenuItemCard key={item.id} item={item} index={i} />
               ))}
