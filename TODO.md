@@ -5,17 +5,23 @@ The code is already wired — just needs the external resource added.
 
 ---
 
-## 1. 🖼️ PWA Icons (URGENT — install icon is broken)
+## 1. 🖼️ Images (URGENT — hero and about photos are missing)
 
-The manifest points to `/icon-192.png` and `/icon-512.png` in `public/`.
-Both files are missing. The resized icons are ready to download.
+Run these commands from your project root. The images have already been processed and are ready to download.
 
 ```bash
-curl -o public/icon-192.png "https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/b64f6135310aebc56134a87a34e44cb0/c6108fea-e1e2-415d-af3f-5d9f39700dce/966c2ce6.png"
+# Hero image (gray background logo — right side of homepage)
+curl -L -o public/hero_image.jpg "https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/b64f6135310aebc56134a87a34e44cb0/c6108fea-e1e2-415d-af3f-5d9f39700dce/hero_image.jpg"
 
+# About image (white background logo — about section)
+curl -L -o public/about_image.jpg "https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/b64f6135310aebc56134a87a34e44cb0/c6108fea-e1e2-415d-af3f-5d9f39700dce/about_image.jpg"
+
+# PWA icons
+curl -o public/icon-192.png "https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/b64f6135310aebc56134a87a34e44cb0/c6108fea-e1e2-415d-af3f-5d9f39700dce/966c2ce6.png"
 curl -o public/icon-512.png "https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/b64f6135310aebc56134a87a34e44cb0/c6108fea-e1e2-415d-af3f-5d9f39700dce/db1b1e57.png"
 
-git add public/icon-192.png public/icon-512.png && git commit -m "chore: add PWA icons" && git push
+# Commit all at once
+git add public/ && git commit -m "chore: add images and PWA icons" && git push
 ```
 
 ---
@@ -47,18 +53,25 @@ supabase secrets set VAPID_SUBJECT=mailto:cheeziesgourmet@gmail.com
 
 ## 3. 🗺️ Google Maps API Key (Find Us embedded map)
 
-Currently shows a tap-to-open card. With this key it shows a full embedded map.
-
 1. Go to [console.cloud.google.com](https://console.cloud.google.com)
 2. Create project → enable **Maps Static API**
 3. Create API key → restrict to your domains + Maps Static API
-4. Add to `.env` locally:
+4. Add to Netlify environment variables:
    ```
    VITE_GOOGLE_MAPS_KEY=AIza...yourkey...
    ```
-5. Add same variable in **Netlify → Site Settings → Environment Variables**
 
-Free tier: $200/month credit → ~100,000 map loads. You won’t hit it.
+---
+
+## 4. 🌐 Custom Domain — cheeziesgourmetohio.com
+
+1. Go to **Netlify → Site Settings → Domain Management**
+2. Click **Add custom domain**
+3. Enter `cheeziesgourmetohio.com`
+4. Point your domain DNS to Netlify:
+   - If using Netlify DNS: change nameservers at your registrar
+   - If keeping registrar DNS: add a CNAME record pointing `www` to your Netlify subdomain, and an A record for the apex domain
+5. Netlify auto-provisions SSL (HTTPS) — takes ~10 min
 
 ---
 
@@ -66,6 +79,8 @@ Free tier: $200/month credit → ~100,000 map loads. You won’t hit it.
 
 | Task | Done? |
 |---|---|
-| PWA Icons | ❌ |
+| Hero + About images | ❌ Run curl commands above |
+| PWA Icons | ❌ Run curl commands above |
 | Push Notifications (VAPID) | ❌ |
 | Google Maps API Key | ❌ |
+| Custom domain attached | ❌ |

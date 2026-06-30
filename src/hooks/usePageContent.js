@@ -6,7 +6,7 @@ export const DEFAULTS = {
     headline:        'ARTISAN\nGRILLED\nCHEESE.',
     headline_accent: 'REIMAGINED.',
     subline:         'Akron, Ohio\'s gourmet food truck making every sandwich an experience that stops you in your tracks.',
-    image_url:       'https://placehold.co/600x500/fdf6e3/c9940a?text=Hero+Photo+Coming+Soon',
+    image_url:       '/hero_image.jpg',
     order_url:       'https://cheeziesgourmetohio.square.site/',
     review_url:      'https://maps.app.goo.gl/dUyof854YsHaKcNE9',
   },
@@ -14,7 +14,7 @@ export const DEFAULTS = {
     eyebrow:      'Our Story',
     headline:     'More Than Just a Grilled Cheese',
     body:         'Cheezies started with one idea \u2014 take the most comforting food in the world and make it extraordinary. We blend bold flavors, premium ingredients, and a whole lot of heart into every sandwich. Born and raised in Akron, Ohio, proud to serve our community fresh to order.',
-    image_url:    'https://placehold.co/600x500/fdf6e3/c9940a?text=About+Photo+Coming+Soon',
+    image_url:    '/about_image.jpg',
     fan_fav_text: 'From The Patty Meltdown to The Mac Attack \u2014 every sandwich is a showstopper. Come hungry.',
     stat1_val:    'Made Fresh',     stat1_desc: 'Crafted to order.',
     stat2_val:    'Premium Cheese', stat2_desc: 'Melted perfectly.',
@@ -32,7 +32,7 @@ export const DEFAULTS = {
     eyebrow:   'See Us in Action',
     headline:  'Truck Life',
     caption:   'From prep to plate, watch the craft behind every gourmet creation. This is Cheezies.',
-    video_url: '',
+    video_url: 'https://www.facebook.com/share/v/192fyFLP26/',
   },
 };
 
@@ -57,7 +57,7 @@ export function usePageContent() {
       .from('site_content')
       .select('section, field, value')
       .then(({ data, error }) => {
-        if (error || !data?.length) return; // fall back to DEFAULTS silently
+        if (error || !data?.length) return;
         setContent(buildMerged(data));
       });
   }, []);
