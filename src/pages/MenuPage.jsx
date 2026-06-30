@@ -9,13 +9,12 @@ export default function MenuPage() {
     new Promise((resolve) => setTimeout(resolve, 900));
 
   return (
-    <div className="min-h-screen font-sans" style={{ background: "#1c1008" }}>
+    <div className="min-h-screen font-sans" style={{ background: "#fdf6e3" }}>
       <NavBar />
+      <div style={{ height: "calc(93px + var(--safe-top))" }} />
       <PageTransition>
         <PullToRefresh onRefresh={handleRefresh}>
-          <div style={{ paddingTop: "80px" }}>
-            <Menu />
-          </div>
+          <Menu />
           <Footer />
           <div className="md:hidden" style={{ height: "var(--tab-bar-h)" }} />
         </PullToRefresh>
