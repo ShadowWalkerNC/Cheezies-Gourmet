@@ -10,7 +10,7 @@ export default function Hero() {
 
   return (
     <section className="relative flex flex-col md:flex-row min-h-screen" style={{ background: 'var(--color-surface)' }}>
-      {/* Left \u2014 text content */}
+      {/* Left — text content */}
       <div className="flex-1 flex flex-col justify-center px-8 md:px-16 py-16 md:py-0 order-2 md:order-1">
         <motion.div
           initial={{ opacity: 0, y: 32 }}
@@ -55,7 +55,7 @@ export default function Hero() {
               className="text-xs font-bold underline-offset-2 hover:underline"
               style={{ color: '#c9940a' }}
             >
-              Leave a Review \u2197
+              Leave a Review ↗
             </a>
           </div>
 
@@ -78,7 +78,7 @@ export default function Hero() {
               onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
               onMouseLeave={e => e.currentTarget.style.opacity = '1'}
             >
-              \uD83D\uDCC5 Events
+              Events
             </button>
             <button
               onClick={() => { navigate('/GiftCards'); window.scrollTo({ top: 0, behavior: 'instant' }); }}
@@ -87,14 +87,14 @@ export default function Hero() {
               onMouseEnter={e => e.currentTarget.style.background = 'rgba(201,148,10,0.08)'}
               onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
             >
-              \uD83C\uDF81 Gift Cards
+              Gift Cards
             </button>
           </div>
 
           {/* Weekly Specials strip */}
           {specials.length > 0 && (
             <div className="mt-8 flex flex-col gap-2">
-              <p className="text-xs font-black tracking-[0.2em] uppercase" style={{ color: '#c9940a' }}>\uD83D\uDD25 This Week\'s Specials</p>
+              <p className="text-xs font-black tracking-[0.2em] uppercase" style={{ color: '#c9940a' }}>This Week's Specials</p>
               <div className="flex flex-wrap gap-2">
                 {specials.map(s => (
                   <div
@@ -102,7 +102,9 @@ export default function Hero() {
                     className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold"
                     style={{ background: 'rgba(201,148,10,0.12)', border: '1.5px solid rgba(201,148,10,0.35)', color: '#7a4f00' }}
                   >
-                    {s.is_top_seller && <span>\u2B50</span>}
+                    {s.is_top_seller && (
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="#c9940a"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+                    )}
                     <span style={{ color: '#2a1200' }}>{s.title}</span>
                     {(s.price_text || s.price) && (
                       <span style={{ color: '#c9940a' }}>{s.price_text || `$${s.price}`}</span>
@@ -115,7 +117,7 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Right \u2014 food image */}
+      {/* Right — food image */}
       <motion.div
         className="flex-1 order-1 md:order-2 flex items-center justify-center px-8 py-12 md:py-0"
         initial={{ opacity: 0 }}
