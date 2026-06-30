@@ -20,34 +20,36 @@ curl -L -o public/about_image.jpg "https://ppl-ai-code-interpreter-files.s3.amaz
 curl -o public/icon-192.png "https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/b64f6135310aebc56134a87a34e44cb0/c6108fea-e1e2-415d-af3f-5d9f39700dce/966c2ce6.png"
 curl -o public/icon-512.png "https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/b64f6135310aebc56134a87a34e44cb0/c6108fea-e1e2-415d-af3f-5d9f39700dce/db1b1e57.png"
 
+# NavBar + Footer logo (last base44 CDN reference)
+curl -L -o public/logo.png "https://media.base44.com/images/public/69b410ceece31b13c728497b/03ee6d0a3_generated_image.png"
+
 # Commit all at once
-git add public/ && git commit -m "chore: add images and PWA icons" && git push
+git add public/ && git commit -m "chore: add images, PWA icons, and local logo" && git push
 ```
 
 ---
 
-## 1b. 🚨 NavBar Logo — Rescue from base44 CDN (URGENT)
+## 2. 💾 Supabase — Create newsletter_subscribers table
 
-The NavBar logo `<img src="...">` still points to `media.base44.com`. This is the **last base44 dependency** in the entire codebase. If their CDN goes down or your account is deleted, your logo disappears from the live site.
+The Footer and Newsletter section now write signups directly to Supabase. Run this once in your **Supabase SQL editor** to create the table:
 
-**Fix:**
-1. Download the logo manually from:
-   ```
-   https://media.base44.com/images/public/69b410ceece31b13c728497b/03ee6d0a3_generated_image.png
-   ```
-2. Save it as `public/logo.png` in the project root
-3. Commit it:
-   ```bash
-   git add public/logo.png && git commit -m "chore: rescue navbar logo from base44 CDN" && git push
-   ```
-4. Then update `src/components/NavBar.jsx` — change the `<img src="...">` line to:
-   ```jsx
-   <img src="/logo.png" alt="Cheezies logo" className="h-9 w-9 object-contain" />
-   ```
+```sql
+create table if not exists newsletter_subscribers (
+  id uuid default gen_random_uuid() primary key,
+  email text unique not null,
+  source text,
+  subscribed_at timestamptz default now()
+);
+```
+
+Optional but recommended — enable Row Level Security so only your service role can read it:
+```sql
+alter table newsletter_subscribers enable row level security;
+```
 
 ---
 
-## 2. 🔔 Push Notifications — VAPID Keys
+## 3. 🔔 Push Notifications — VAPID Keys
 
 The push notification system is fully built. Needs VAPID keys to go live.
 
@@ -72,7 +74,7 @@ supabase secrets set VAPID_SUBJECT=mailto:cheeziesgourmet@gmail.com
 
 ---
 
-## 3. 🗺️ Google Maps API Key (Find Us embedded map)
+## 4. 🗺️ Google Maps API Key (Find Us embedded map)
 
 1. Go to [console.cloud.google.com](https://console.cloud.google.com)
 2. Create project → enable **Maps Static API**
@@ -84,7 +86,7 @@ supabase secrets set VAPID_SUBJECT=mailto:cheeziesgourmet@gmail.com
 
 ---
 
-## 4. 🌐 Custom Domain — cheeziesgourmetohio.com
+## 5. 🌐 Custom Domain — cheeziesgourmetohio.com
 
 1. Go to **Netlify → Site Settings → Domain Management**
 2. Click **Add custom domain**
@@ -96,7 +98,7 @@ supabase secrets set VAPID_SUBJECT=mailto:cheeziesgourmet@gmail.com
 
 ---
 
-## 5. 🎨 CSS Responsive Pass (Dev Task)
+## 6. 🎨 CSS Responsive Pass (Dev Task)
 
 Full desktop + mobile layout audit and rebuild across all pages.
 
@@ -117,7 +119,7 @@ Full desktop + mobile layout audit and rebuild across all pages.
 
 ---
 
-## 6. 🍽️ Menu Page — Ingredient & Description Rebuild (Dev Task)
+## 7. 🍽️ Menu Page — Ingredient & Description Rebuild (Dev Task)
 
 Current menu cards show name + price only. Need a full ingredient-focused redesign.
 
@@ -143,11 +145,16 @@ alter table menu_items add column if not exists badge text;
 
 | Task | Done? |
 |---|---|
-| Hero + About images | ❌ Run curl commands above |
-| PWA Icons | ❌ Run curl commands above |
-| NavBar logo (base44 CDN rescue) | ❌ URGENT — last base44 dependency |
-| Push Notifications (VAPID) | ❌ |
-| Google Maps API Key | ❌ |
-| Custom domain attached | ❌ |
-| CSS responsive pass | ❌ Dev task |
-| Menu ingredients rebuild | ❌ Dev task |
+| NavBar logo — swapped to /logo.png in code | ✅ Code done — drop the file (see §1) |
+| Footer base44 removed — wired to Supabase | ✅ Done |
+| Newsletter section — wired to Supabase | ✅ Done |
+| CSS polish (grain, shimmer, glow, sticky CTA) | ✅ Done |
+| Hero + About images | ❌ Run curl commands in §1 |
+| PWA Icons | ❌ Run curl commands in §1 |
+| logo.png file in public/ | ❌ Run curl command in §1 |
+| newsletter_subscribers Supabase table | ❌ Run SQL in §2 |
+| Push Notifications (VAPID) | ❌ See §3 |
+| Google Maps API Key | ❌ See §4 |
+| Custom domain attached | ❌ See §5 |
+| CSS responsive pass | ❌ Dev task — §6 |
+| Menu ingredients rebuild | ❌ Dev task — §7 |
