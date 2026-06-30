@@ -90,22 +90,11 @@ function MenuItemCard({ item, index }) {
             href="https://cheeziesgourmetohio.square.site/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-5 py-2.5 rounded-full font-bold text-sm mt-auto"
+            className="inline-flex items-center justify-center px-5 py-2.5 rounded-full font-bold text-sm mt-auto btn-bounce"
             style={{
               background: "#c9940a",
               color: "#fff",
               textDecoration: "none",
-              transition: "background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease",
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.background = "#b8820a";
-              e.currentTarget.style.transform = "translateY(-1px)";
-              e.currentTarget.style.boxShadow = "0 4px 14px rgba(201,148,10,0.4)";
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.background = "#c9940a";
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "none";
             }}
           >
             Order This →
@@ -156,22 +145,11 @@ function MenuItemCard({ item, index }) {
             href="https://cheeziesgourmetohio.square.site/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center px-4 py-2 rounded-full font-bold text-sm"
+            className="inline-flex items-center px-4 py-2 rounded-full font-bold text-sm btn-bounce"
             style={{
               background: "#c9940a",
               color: "#fff",
               textDecoration: "none",
-              transition: "background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease",
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.background = "#b8820a";
-              e.currentTarget.style.transform = "translateY(-1px)";
-              e.currentTarget.style.boxShadow = "0 4px 14px rgba(201,148,10,0.4)";
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.background = "#c9940a";
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "none";
             }}
           >
             Order This →
