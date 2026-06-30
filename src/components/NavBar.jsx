@@ -68,7 +68,7 @@ export default function NavBar() {
           style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
         >
           <img
-            src="https://media.base44.com/images/public/69b410ceece31b13c728497b/03ee6d0a3_generated_image.png"
+            src="/logo.png"
             alt="Cheezies logo"
             className="h-9 w-9 object-contain"
           />
@@ -111,7 +111,7 @@ export default function NavBar() {
           </a>
         </div>
 
-        {/* Hamburger — inline styles so Tailwind purge doesn't break transforms */}
+        {/* Hamburger */}
         <button
           className="md:hidden flex flex-col gap-1.5 p-2 select-none"
           onClick={() => setMenuOpen(!menuOpen)}
