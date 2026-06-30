@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { base44 } from "@/api/base44Client";
+import { supabase } from "@/api/supabaseClient";
 import { useToast } from "@/components/ui/use-toast";
 import { useTruckData } from "@/hooks/useTruckData";
 
@@ -18,14 +18,15 @@ export default function Footer() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const captured = email;
+    const captured = email.trim().toLowerCase();
     setEmail("");
-    const res = await base44.functions.invoke("sendNotification", {
-      type: "newsletter_signup",
-      data: { email: captured, source: "footer" },
-    });
-    if (res.data?.error === "already_subscribed") {
-      toast({ title: "Already subscribed!", description: "You're already on our list." });
+
+    const { error } = await supabase
+      .from("newsletter_subscribers")
+      .upsert({ email: captured, source: "footer", subscribed_at: new Date().toISOString() }, { onConflict: "email", ignoreDuplicates: true });
+
+    if (error) {
+      toast({ title: "Something went wrong", description: "Please try again." });
     } else {
       setDone(true);
       toast({ title: "You're subscribed!", description: "We'll keep you in the loop." });
@@ -40,7 +41,7 @@ export default function Footer() {
         <div>
           <div className="flex items-center gap-2.5 mb-3">
             <img
-              src="https://media.base44.com/images/public/69b410ceece31b13c728497b/03ee6d0a3_generated_image.png"
+              src="/logo.png"
               alt="Cheezies logo"
               className="h-9 w-9 object-contain"
             />
@@ -57,7 +58,7 @@ export default function Footer() {
               { href: "https://instagram.com/cheeziesohio", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg> },
               { href: "https://twitter.com/cheeziesohio", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> },
               { href: "https://tiktok.com/@cheeziesohio", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.27 8.27 0 004.84 1.54V6.84a4.85 4.85 0 01-1.07-.15z"/></svg> },
-              { href: "https://maps.app.goo.gl/dUyof854YsHaKcNE9", title: "⭐ Google Review", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg> },
+              { href: "https://maps.app.goo.gl/dUyof854YsHaKcNE9", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg> },
             ].map(({ href, icon }) => (
               <a key={href} href={href} target="_blank" rel="noopener noreferrer"
                 className="w-8 h-8 flex items-center justify-center transition-all duration-200 hover:scale-110"
@@ -85,7 +86,7 @@ export default function Footer() {
         <div>
           <p className="font-black text-xs tracking-[0.2em] uppercase mb-4" style={{ color: "rgba(255,248,232,0.4)" }}>Sign Up Newsletter</p>
           {done ? (
-            <p className="text-sm" style={{ color: "#e8b800" }}>You're subscribed! See you at the truck.</p>
+            <p className="text-sm" style={{ color: "#e8b800" }}>You're subscribed! See you at the truck. 🧀</p>
           ) : (
             <form onSubmit={handleSubmit} className="flex gap-2">
               <input
