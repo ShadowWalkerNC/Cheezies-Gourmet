@@ -60,11 +60,11 @@ export default function VideoShowcase() {
 
           <div style={{ textAlign: "center" }}>
             <p className="font-black text-lg" style={{ color: "#fff8e8" }}>Watch on Facebook</p>
-            <p className="text-sm mt-1" style={{ color: "rgba(255,248,232,0.55)" }}>See the truck, the food, the vibe \u2014 live on our Facebook page.</p>
+            <p className="text-sm mt-1" style={{ color: "rgba(255,248,232,0.55)" }}>See the truck, the food, the vibe - live on our Facebook page.</p>
           </div>
 
           <div className="flex items-center gap-2 px-5 py-2.5 rounded-full font-black text-sm uppercase tracking-widest" style={{ background: "#c9940a", color: "#fff8e8" }}>
-            Watch Now \u2197
+            Watch Now
           </div>
         </motion.a>
       </div>

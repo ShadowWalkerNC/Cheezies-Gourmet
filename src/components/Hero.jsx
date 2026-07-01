@@ -10,7 +10,7 @@ export default function Hero() {
 
   return (
     <section className="relative flex flex-col md:flex-row min-h-screen" style={{ background: 'var(--color-surface)' }}>
-      {/* Left — text content */}
+      {/* Left - text content */}
       <div className="flex-1 flex flex-col justify-center px-8 md:px-16 py-16 md:py-0 order-2 md:order-1">
         <motion.div
           initial={{ opacity: 0, y: 32 }}
@@ -55,7 +55,7 @@ export default function Hero() {
               className="text-xs font-bold underline-offset-2 hover:underline"
               style={{ color: '#c9940a' }}
             >
-              Leave a Review ↗
+              Leave a Review
             </a>
           </div>
 
@@ -117,7 +117,7 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Right — food image */}
+      {/* Right - food image */}
       <motion.div
         className="flex-1 order-1 md:order-2 flex items-center justify-center px-8 py-12 md:py-0"
         initial={{ opacity: 0 }}
